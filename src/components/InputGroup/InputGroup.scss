@@ -1,0 +1,26 @@
+@import '../../variables';
+.inputGroup {
+  position: relative;
+  text-align: left;
+  margin-bottom: 20px;
+  input {
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: solid $border-color 1px;
+    font-size: 14px;
+    background-color: $input-background;
+  }
+  input:focus {
+    border: solid $border-color-focused 1px;
+    outline: none;
+  }
+  input.invalidInput {
+    border: solid $border-color-invalid 1px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: $medium-color;
+  }
+}

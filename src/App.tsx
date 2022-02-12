@@ -1,18 +1,24 @@
 import Layout from './Layout/Layout';
-import Register from './pages/Register/Register';
+import Register from './Pages/Register/Register';
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Login/Login';
+import { ContextWrapper } from './Context/Context';
+import RequireAuth from './Components/RequireAuth';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-      </Route>
-    </Routes>
+    <ContextWrapper>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route element={<RequireAuth />}>
+            <Route index element={<Home />} />
+          </Route>
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+      </Routes>
+    </ContextWrapper>
   );
 }
 

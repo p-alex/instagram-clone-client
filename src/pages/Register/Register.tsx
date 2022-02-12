@@ -6,12 +6,44 @@ import {
   FULLNAME_REGEX,
   PASSWORD_REGEX,
   USERNAME_REGEX,
-} from '../../util/validationRegex';
+} from '../../Util/validationRegex';
 import './Register.scss';
-import InputGroup from '../../components/InputGroup/InputGroup';
-import { Link } from 'react-router-dom';
+import InputGroup from '../../Components/InputGroup/InputGroup';
+import { Link, useNavigate } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
+
+const REGISTER_USER = gql`
+  mutation RegisterUser(
+    $email: String!
+    $fullname: String!
+    $username: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    registerUser(
+      email: $email
+      fullname: $fullname
+      username: $username
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
+      success
+      errors {
+        message
+      }
+      user {
+        id
+        fullname
+        username
+        email
+      }
+    }
+  }
+`;
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -59,13 +91,18 @@ const Register = () => {
     setIsValidConfirmPassword(confirmPassword === password);
   }, [confirmPassword, password]);
 
+  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER, {
+    variables: { email, fullname, username, password, confirmPassword },
+  });
+
   useEffect(() => {
     setIsSubmitDisabled(
       isValidEmail &&
         isValidFullname &&
         isValidUsername &&
         isValidPassword &&
-        isValidConfirmPassword
+        isValidConfirmPassword &&
+        !loading
         ? false
         : true
     );
@@ -75,10 +112,39 @@ const Register = () => {
     isValidUsername,
     isValidPassword,
     isValidConfirmPassword,
+    loading,
   ]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const resetForm = () => {
+    setEmail('');
+    setFullname('');
+    setUsername('');
+    setPassword('');
+    setConfirmPassword('');
+  };
+
+  useEffect(() => {
+    if (data?.registerUser?.user) {
+      resetForm();
+      navigate('/login');
+    }
+  }, [data, navigate]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (
+      isValidEmail &&
+      isValidFullname &&
+      isValidUsername &&
+      isValidPassword &&
+      isValidConfirmPassword
+    ) {
+      try {
+        registerUser();
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
   };
 
   return (

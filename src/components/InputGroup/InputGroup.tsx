@@ -34,6 +34,7 @@ const InputGroup = ({
         autoComplete="off"
         aria-invalid={isValid ? 'false' : 'true'}
         aria-describedby={`${label.toLowerCase()}notes`}
+        value={value}
         onChange={(e) => setValue(e.target.value)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}

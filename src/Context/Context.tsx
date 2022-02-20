@@ -1,19 +1,28 @@
-import { createContext, useState } from 'react';
+import { createContext, Dispatch, SetStateAction, useState } from 'react';
+
+export interface IUser {
+  userId: string;
+  username: string;
+  profileImg: string;
+  accessToken: string;
+}
 
 const AppContext = createContext<{
-  user: { userId: ''; accessToken: '' };
-  setUser: any;
+  user: IUser;
+  setUser: Dispatch<SetStateAction<IUser>>;
 }>({
-  user: { userId: '', accessToken: '' },
+  user: { userId: '', username: '', profileImg: '', accessToken: '' },
   setUser: () => {},
 });
 
-const ContextWrapper = ({ children }: { children: any }) => {
-  const [user, setUser] = useState<{ userId: ''; accessToken: '' }>({
+const ContextProvider = ({ children }: { children: any }) => {
+  const [user, setUser] = useState<IUser>({
     userId: '',
+    username: '',
+    profileImg: '',
     accessToken: '',
   });
   return <AppContext.Provider value={{ user, setUser }}>{children}</AppContext.Provider>;
 };
 
-export { AppContext, ContextWrapper };
+export { AppContext, ContextProvider };

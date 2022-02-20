@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -10,9 +10,11 @@ import {
 import './Register.scss';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
+import { AppContext } from '../../Context/Context';
+import useAxios from '../../Hooks/useAxios';
+import Logo from '../../Components/Logo/Logo';
 
-const REGISTER_USER = gql`
+const REGISTER_USER = `
   mutation RegisterUser(
     $email: String!
     $fullname: String!
@@ -28,14 +30,10 @@ const REGISTER_USER = gql`
       confirmPassword: $confirmPassword
     ) {
       success
-      errors {
-        message
-      }
+      message
       user {
         id
-        fullname
         username
-        email
       }
     }
   }
@@ -43,6 +41,13 @@ const REGISTER_USER = gql`
 
 const Register = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AppContext);
+
+  useEffect(() => {
+    if (user?.userId) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -91,7 +96,8 @@ const Register = () => {
     setIsValidConfirmPassword(confirmPassword === password);
   }, [confirmPassword, password]);
 
-  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER, {
+  const [registerUser, { data, isLoading, error }] = useAxios({
+    query: REGISTER_USER,
     variables: { email, fullname, username, password, confirmPassword },
   });
 
@@ -102,7 +108,7 @@ const Register = () => {
         isValidUsername &&
         isValidPassword &&
         isValidConfirmPassword &&
-        !loading
+        !isLoading
         ? false
         : true
     );
@@ -112,20 +118,11 @@ const Register = () => {
     isValidUsername,
     isValidPassword,
     isValidConfirmPassword,
-    loading,
+    isLoading,
   ]);
 
-  const resetForm = () => {
-    setEmail('');
-    setFullname('');
-    setUsername('');
-    setPassword('');
-    setConfirmPassword('');
-  };
-
   useEffect(() => {
-    if (data?.registerUser?.user) {
-      resetForm();
+    if (data?.user) {
       navigate('/login');
     }
   }, [data, navigate]);
@@ -150,7 +147,7 @@ const Register = () => {
   return (
     <main className="registerMain">
       <section className="register">
-        <h1 className="register__logo">Bubble</h1>
+        <Logo />
         <h2 className="register__message">Sign up to see photos from your friends.</h2>
         <form className="register__form" onSubmit={handleSubmit}>
           {/* ========================== EMAIL INPUT ========================== */}
@@ -307,6 +304,7 @@ const Register = () => {
             Sign Up
           </button>
         </form>
+        {error && <p className="register__errorMessage">{error}</p>}
       </section>
       <div className="register__login">
         <p>

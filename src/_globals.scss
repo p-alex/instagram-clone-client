@@ -5,12 +5,13 @@
   box-sizing: border-box;
   font-weight: normal;
 }
+
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   background-color: $site-background;
-  min-height: 100vh;
 }
+
 h1,
 h2,
 h3 {

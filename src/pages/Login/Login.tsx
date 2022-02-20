@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
 import './Login.scss';
-import { AppContext } from '../../Context/Context';
+import { AppContext, IUser } from '../../Context/Context';
+import useAxios from '../../Hooks/useAxios';
+import Logo from '../../Components/Logo/Logo';
 
-const LOGIN_USER = gql`
+const LOGIN_USER = `
   mutation LoginUser($username: String!, $password: String!) {
     loginUser(username: $username, password: $password) {
       success
       message
       userId
+      username
+      profileImg
       accessToken
     }
   }
@@ -18,7 +21,9 @@ const LOGIN_USER = gql`
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
+
+  const [errMessage, setErrMessage] = useState('');
 
   const [username, setUsername] = useState('');
   const [isValidUsername, setIsValidUsername] = useState(false);
@@ -28,27 +33,30 @@ const Login = () => {
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
+  const [loginUser, { data, isLoading, error }] = useAxios({
+    query: LOGIN_USER,
     variables: { username, password },
   });
 
   useEffect(() => {
-    if (data?.loginUser?.success) {
-      setUser((prevState: { userId: string; accessToken: string }) => ({
+    if (data?.success) {
+      setUser((prevState: IUser) => ({
         ...prevState,
-        userId: data.loginUser.userId,
-        accessToken: data.loginUser.accessToken,
+        userId: data.userId,
+        username: data.username,
+        profileImg: data.profileImg,
+        accessToken: data.accessToken,
       }));
       navigate('/');
     }
-  }, [data, navigate]);
+  }, [data, navigate, setUser]);
 
   useEffect(() => {
-    setIsValidUsername(username !== '');
+    setIsValidUsername(username.length >= 6);
   }, [username]);
 
   useEffect(() => {
-    setIsValidPassword(password !== '');
+    setIsValidPassword(password.length >= 8);
   }, [password]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -65,7 +73,7 @@ const Login = () => {
   return (
     <main className="loginMain">
       <section className="login">
-        <h1 className="login__logo">Bubble</h1>
+        <Logo />
         <form className="login__form" onSubmit={handleSubmit}>
           <InputGroup
             label="Username"
@@ -87,11 +95,12 @@ const Login = () => {
           />
           <button
             className="login__submit"
-            disabled={!isValidUsername || !isValidPassword || loading ? true : false}
+            disabled={!isValidUsername || !isValidPassword || isLoading ? true : false}
           >
             Log In
           </button>
         </form>
+        {error && <p className="login__errorMessage">{error}</p>}
       </section>
       <div className="login__register">
         <p>

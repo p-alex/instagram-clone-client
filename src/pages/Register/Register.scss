@@ -15,15 +15,14 @@
   border: solid $border-color 1px;
   padding: 45px;
   text-align: center;
-  &__logo {
-    font-family: 'Roboto', sans-serif;
-    font-size: 2.5rem;
-    margin-bottom: var(--marginBottom);
-  }
   &__message {
     color: $medium-color;
     font-size: $HTwoFontSize;
+    margin-top: 30px;
     margin-bottom: var(--marginBottom);
+  }
+  &__form {
+    margin-top: 30px;
   }
   &__notes {
     display: block;
@@ -56,6 +55,10 @@
     opacity: 0.3;
     cursor: not-allowed;
   }
+  &__errorMessage {
+    color: $invalid-color;
+    margin-top: 40px;
+  }
   &__login {
     background-color: $light-color;
     border: solid $border-color 1px;
@@ -66,5 +69,13 @@
       color: $primary-color;
       text-decoration: none;
     }
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .registerMain {
+    position: relative;
+    margin: 20px auto;
+    transform: translateY(0);
   }
 }

@@ -12,11 +12,11 @@
     background-color: $input-background;
   }
   input:focus {
-    border: solid $border-color-focused 1px;
+    border: solid $border-color-dark 1px;
     outline: none;
   }
   input.invalidInput {
-    border: solid $border-color-invalid 1px;
+    border: solid $invalid-color 1px;
   }
   label {
     display: block;

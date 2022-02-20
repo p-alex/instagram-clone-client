@@ -1,0 +1,15 @@
+@import '../../variables.scss';
+.navBar {
+  position: fixed;
+  width: 100%;
+  border-bottom: solid $border-color 1px;
+  background: #fff;
+  padding: 12px 20px;
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    max-width: 950px;
+  }
+}

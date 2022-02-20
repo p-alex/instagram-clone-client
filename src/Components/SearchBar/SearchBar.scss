@@ -1,0 +1,43 @@
+@import '../../variables.scss';
+.search {
+  &__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: $input-background-darker;
+    padding: 5px 10px;
+    border-radius: 5px;
+    @media (max-width: 800px) {
+      position: fixed;
+      top: 71px;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  &__icon {
+    color: gray;
+  }
+  &__input {
+    margin: 0 5px;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 1rem;
+    @media (max-width: 800px) {
+      width: 100%;
+    }
+  }
+  &__clearBtn {
+    padding: 5px;
+    background: none;
+    border: none;
+    color: gray;
+    cursor: pointer;
+    transition: opacity 300ms ease-in-out;
+  }
+  &__clearBtn:disabled {
+    opacity: 0;
+  }
+}

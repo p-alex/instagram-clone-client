@@ -1,0 +1,20 @@
+@import '../../../variables.scss';
+.navBarCreatePostBtn {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 10px;
+  color: $medium-color;
+  border: solid $border-color 1px;
+  transition: background 300ms ease-in-out, color 300ms ease-in-out,
+    border 300ms ease-in-out;
+  &:hover {
+    background-color: $primary-color;
+    color: $light-color;
+    border: solid transparent 1px;
+  }
+}

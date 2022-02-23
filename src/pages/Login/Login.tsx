@@ -2,26 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { AppContext, IUser } from '../../Context/GlobalContext';
+import { GlobalContext, IUser } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
-
-const LOGIN_USER = `
-  mutation LoginUser($username: String!, $password: String!) {
-    loginUser(username: $username, password: $password) {
-      success
-      message
-      userId
-      username
-      profileImg
-      accessToken
-    }
-  }
-`;
+import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(GlobalContext);
 
   const [errMessage, setErrMessage] = useState('');
 
@@ -34,7 +22,7 @@ const Login = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const [loginUser, { data, isLoading, error }] = useAxios({
-    query: LOGIN_USER,
+    query: LOGIN_USER_MUTATION,
     variables: { username, password },
   });
 

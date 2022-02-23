@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import axios from '../Api/axios';
-import { AppContext } from '../Context/GlobalContext';
+import { GlobalContext } from '../Context/GlobalContext';
 
 const useAxios = ({
   query,
@@ -9,7 +9,7 @@ const useAxios = ({
   query: string;
   variables: any;
 }): [() => Promise<void>, { data: any; isLoading: boolean; error: any }] => {
-  const { user } = useContext(AppContext);
+  const { user } = useContext(GlobalContext);
   const [data, setData] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');

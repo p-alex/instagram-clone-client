@@ -10,38 +10,14 @@ import {
 import './Register.scss';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppContext } from '../../Context/GlobalContext';
+import { GlobalContext } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
-
-const REGISTER_USER = `
-  mutation RegisterUser(
-    $email: String!
-    $fullname: String!
-    $username: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    registerUser(
-      email: $email
-      fullname: $fullname
-      username: $username
-      password: $password
-      confirmPassword: $confirmPassword
-    ) {
-      success
-      message
-      user {
-        id
-        username
-      }
-    }
-  }
-`;
+import { REGISTER_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AppContext);
+  const { user } = useContext(GlobalContext);
 
   useEffect(() => {
     if (user?.userId) {
@@ -97,7 +73,7 @@ const Register = () => {
   }, [confirmPassword, password]);
 
   const [registerUser, { data, isLoading, error }] = useAxios({
-    query: REGISTER_USER,
+    query: REGISTER_USER_MUTATION,
     variables: { email, fullname, username, password, confirmPassword },
   });
 

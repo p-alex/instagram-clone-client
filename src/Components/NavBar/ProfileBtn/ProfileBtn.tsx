@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
-import { AppContext } from '../../../Context/GlobalContext';
+import { GlobalContext } from '../../../Context/GlobalContext';
 import './ProfileBtn.scss';
 
 const ProfileBtn = () => {
-  const { user, handleLogout } = useContext(AppContext);
+  const { user, handleLogout } = useContext(GlobalContext);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   return (
     <div className="profileBtn">

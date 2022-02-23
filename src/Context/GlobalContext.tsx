@@ -9,7 +9,7 @@ export interface IUser {
   accessToken: string;
 }
 
-const AppContext = createContext<{
+const GlobalContext = createContext<{
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
   handleLogout: () => Promise<void>;
@@ -54,10 +54,10 @@ const GlobalContextProvider = ({ children }: { children: any }) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser, handleLogout }}>
+    <GlobalContext.Provider value={{ user, setUser, handleLogout }}>
       {children}
-    </AppContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 
-export { AppContext, GlobalContextProvider };
+export { GlobalContext, GlobalContextProvider };

@@ -1,0 +1,189 @@
+@import '../../variables.scss';
+.createModal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: 15;
+  margin: auto;
+  max-width: 1100px;
+  transform-origin: center;
+  transform: translateY(-50%);
+  border-radius: 10px;
+  background: white;
+  animation: scale 300ms;
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    animation: backdropFadeIn 300ms forwards;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+  &__topBar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    border-bottom: solid $border-color 1px;
+  }
+  &__title {
+    margin: auto;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  &__chooseFile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    svg {
+      color: $medium-color;
+      margin-bottom: 40px;
+    }
+    input[type='file'] {
+      display: none;
+    }
+    label {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: $primary-color;
+      color: $light-color;
+      cursor: pointer;
+    }
+  }
+  &__postDetails {
+    position: relative;
+    width: 100%;
+    display: flex;
+    background: black;
+  }
+  &__imagePreview {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: black;
+    min-height: 400px;
+    max-height: 700px;
+    animation: fadeIn 300ms;
+    img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  &__btn {
+    border: none;
+    background: none;
+    color: $primary-color;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  &__details {
+    position: relative;
+    padding: 20px;
+    width: 0;
+    transform-origin: right;
+    animation: scaleX 300ms forwards;
+    background: white;
+  }
+  &__user {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 10px;
+    }
+  }
+  &__caption {
+    width: 100%;
+    margin-top: 20px;
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 100px;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      resize: vertical;
+      font-family: inherit;
+      outline: none;
+    }
+  }
+  &__loading {
+    padding: 150px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 150px 0;
+    svg {
+      font-size: 100px;
+      color: rgb(24, 179, 24);
+    }
+    p {
+      font-size: 2rem;
+      margin-top: 40px;
+      color: $medium-color;
+    }
+    button {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: $primary-color;
+      color: $light-color;
+      cursor: pointer;
+      border: none;
+      margin-top: 20px;
+    }
+  }
+}
+
+@keyframes scaleX {
+  from {
+    transform: scaleX(0);
+    width: 0px;
+  }
+  to {
+    transform: scaleX(1);
+    width: 400px;
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0) translateY(-50%);
+  }
+  to {
+    transform: scale(1) translateY(-50%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}

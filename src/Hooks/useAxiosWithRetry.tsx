@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { isNullOrUndefined } from 'util';
 import axios from '../Api/axios';
-import { AppContext } from '../Context/GlobalContext';
+import { GlobalContext } from '../Context/GlobalContext';
 import useRefreshToken from './useRefreshToken';
 
 const useAxiosWithRetry = (
@@ -9,7 +9,7 @@ const useAxiosWithRetry = (
   variables: any
 ): [() => Promise<any>, { isLoading: boolean; error: string }] => {
   const refresh = useRefreshToken();
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(GlobalContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');

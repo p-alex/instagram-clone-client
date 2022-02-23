@@ -12,4 +12,8 @@
     margin: auto;
     max-width: 950px;
   }
+  &__buttons {
+    display: flex;
+    align-items: center;
+  }
 }

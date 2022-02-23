@@ -1,8 +1,8 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import { useContext } from 'react';
-import { AppContext } from '../Context/GlobalContext';
+import { GlobalContext } from '../Context/GlobalContext';
 const RequireAuth = () => {
-  const { user } = useContext(AppContext);
+  const { user } = useContext(GlobalContext);
   const location = useLocation();
 
   return user.userId !== '' ? (

@@ -2,6 +2,7 @@ import Logo from '../Logo/Logo';
 import SearchBar from '../SearchBar/SearchBar';
 import ProfileBtn from './ProfileBtn/ProfileBtn';
 import './NavBar.scss';
+import CreatePostBtn from './CreatePostBtn/CreatePostBtn';
 
 const NavBar = () => {
   return (
@@ -10,6 +11,7 @@ const NavBar = () => {
         <Logo />
         <SearchBar />
         <div className="navBar__buttons">
+          <CreatePostBtn />
           <ProfileBtn />
         </div>
       </div>

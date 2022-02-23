@@ -1,29 +1,17 @@
 import axios from '../Api/axios';
 import { useContext } from 'react';
-import { AppContext } from '../Context/GlobalContext';
-
-const REFRESH_TOKEN_QUERY = `
-    mutation {
-        refreshToken {
-            success
-            message
-            userId
-            username
-            profileImg
-            accessToken
-        }
-    }
-`;
+import { GlobalContext } from '../Context/GlobalContext';
+import { REFRESH_TOKEN_MUTATION } from '../GraphQL/Mutations/authMutations';
 
 const useRefreshToken = () => {
-  const { setUser } = useContext(AppContext);
+  const { setUser } = useContext(GlobalContext);
 
   const refresh = async () => {
     try {
       const response = await axios.post(
         '',
         {
-          query: REFRESH_TOKEN_QUERY,
+          query: REFRESH_TOKEN_MUTATION,
         },
         {
           withCredentials: true,

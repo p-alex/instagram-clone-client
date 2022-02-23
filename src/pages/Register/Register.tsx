@@ -6,11 +6,11 @@ import {
   FULLNAME_REGEX,
   PASSWORD_REGEX,
   USERNAME_REGEX,
-} from '../../Util/validationRegex';
+} from '../../Util/registerValidationRegex';
 import './Register.scss';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppContext } from '../../Context/Context';
+import { AppContext } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
 

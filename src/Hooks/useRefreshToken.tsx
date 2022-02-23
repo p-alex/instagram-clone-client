@@ -1,6 +1,6 @@
 import axios from '../Api/axios';
 import { useContext } from 'react';
-import { AppContext } from '../Context/Context';
+import { AppContext } from '../Context/GlobalContext';
 
 const REFRESH_TOKEN_QUERY = `
     mutation {
@@ -8,6 +8,8 @@ const REFRESH_TOKEN_QUERY = `
             success
             message
             userId
+            username
+            profileImg
             accessToken
         }
     }

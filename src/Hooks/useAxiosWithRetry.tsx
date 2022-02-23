@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
+import { isNullOrUndefined } from 'util';
 import axios from '../Api/axios';
-import { AppContext } from '../Context/Context';
+import { AppContext } from '../Context/GlobalContext';
 import useRefreshToken from './useRefreshToken';
 
 const useAxiosWithRetry = (
@@ -30,7 +31,6 @@ const useAxiosWithRetry = (
       return data.data[queryName];
     } catch (error: any) {
       console.log(error.message);
-      setUser({ userId: '', username: '', profileImg: '', accessToken: '' });
       return null;
     }
   };
@@ -48,7 +48,7 @@ const useAxiosWithRetry = (
       if (!data) return;
       if (data.statusCode === 401) {
         const data = await retryRequest();
-        if (data.statusCode === 200) {
+        if (data.statusCode === 200 || data.statusCode === 201) {
           return data;
         }
         return {};

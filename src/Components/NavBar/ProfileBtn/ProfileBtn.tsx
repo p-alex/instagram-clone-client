@@ -1,17 +1,35 @@
-import { useContext } from 'react';
-import { AppContext } from '../../../Context/Context';
+import { useState, useContext } from 'react';
+import { AppContext } from '../../../Context/GlobalContext';
 import './ProfileBtn.scss';
 
 const ProfileBtn = () => {
-  const { user } = useContext(AppContext);
+  const { user, handleLogout } = useContext(AppContext);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
   return (
-    <button className="profileBtn">
-      <img
-        src={user.profileImg ? user.profileImg : '/images/default-profile-picture.png'}
-        className="profileBtn__image"
-        alt=""
-      />
-    </button>
+    <div className="profileBtn">
+      <button
+        className="profileBtn__btn"
+        onClick={() => setIsDropdownActive(!isDropdownActive)}
+      >
+        <img
+          src={user.profileImg ? user.profileImg : '/images/default-profile-picture.png'}
+          className="profileBtn__image"
+          alt=""
+        />
+      </button>
+      {isDropdownActive && (
+        <div className="profileBtn__dropdown">
+          <button
+            onClick={() => {
+              handleLogout();
+              setIsDropdownActive(false);
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

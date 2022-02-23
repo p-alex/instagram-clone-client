@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { AppContext, IUser } from '../../Context/Context';
+import { AppContext, IUser } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
 

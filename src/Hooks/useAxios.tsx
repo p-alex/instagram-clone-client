@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import axios from '../Api/axios';
-import { AppContext } from '../Context/Context';
+import { AppContext } from '../Context/GlobalContext';
 
 const useAxios = ({
   query,

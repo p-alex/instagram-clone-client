@@ -23,9 +23,13 @@ const CreatePost = () => {
   );
   const [imageError, setImageError] = useState('');
 
-  const [createPost, { isLoading, error }] = useAxiosWithRetry(CREATE_POST_MUTATION, {
-    caption,
-    image: imageBase64,
+  const [createPost, { isLoading, error }] = useAxiosWithRetry({
+    query: CREATE_POST_MUTATION,
+    variables: {
+      caption,
+      image: imageBase64,
+    },
+    accessToken: user?.accessToken,
   });
 
   useEffect(() => {
@@ -82,7 +86,7 @@ const CreatePost = () => {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     try {
-      if (user.userId && imageBase64 && selectedFile) {
+      if (user?.userId && imageBase64 && selectedFile) {
         handleSteps('next');
         await createPost();
       }

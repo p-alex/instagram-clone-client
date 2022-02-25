@@ -24,7 +24,7 @@ const useAxios = ({
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `${user.accessToken && 'Bearer ' + user.accessToken}`,
+            Authorization: `${user?.accessToken && 'Bearer ' + user.accessToken}`,
           },
         }
       );

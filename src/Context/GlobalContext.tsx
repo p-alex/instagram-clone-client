@@ -1,5 +1,4 @@
 import { createContext, Dispatch, SetStateAction, useState } from 'react';
-import useAxios from '../Hooks/useAxios';
 import useAxiosWithRetry from '../Hooks/useAxiosWithRetry';
 
 export interface IUser {
@@ -10,14 +9,15 @@ export interface IUser {
 }
 
 const GlobalContext = createContext<{
-  user: IUser;
-  setUser: Dispatch<SetStateAction<IUser>>;
+  user: IUser | null;
+  setUser: Dispatch<SetStateAction<IUser | null>>;
   handleLogout: () => Promise<void>;
 }>({
-  user: { userId: '', username: '', profileImg: '', accessToken: '' },
+  user: null,
   setUser: () => {},
   handleLogout: async () => {},
 });
+
 const LOGOUT_USER = `
   mutation {
     logoutUser {
@@ -28,31 +28,29 @@ const LOGOUT_USER = `
   }
 `;
 const GlobalContextProvider = ({ children }: { children: any }) => {
-  const [logoutUser] = useAxiosWithRetry(LOGOUT_USER, {});
+  const [user, setUser] = useState<IUser | null>(null);
 
-  const [user, setUser] = useState<IUser>({
-    userId: '',
-    username: '',
-    profileImg: '',
-    accessToken: '',
+  const [logoutUser] = useAxiosWithRetry({
+    query: LOGOUT_USER,
+    variables: {},
+    accessToken: user?.accessToken,
   });
 
-  const handleResetUser = () =>
-    setUser({ username: '', userId: '', profileImg: '', accessToken: '' });
+  const handleResetUser = () => setUser(null);
 
   const handleLogout = async () => {
-    try {
-      const { success, message } = await logoutUser();
-      if (success) {
-        handleResetUser();
-      } else {
-        throw new Error(message);
+    if (user?.accessToken) {
+      try {
+        const { statusCode } = await logoutUser();
+
+        if (statusCode === 200 || statusCode === 401) {
+          handleResetUser();
+        }
+      } catch (error: any) {
+        console.log(error.message);
       }
-    } catch (error: any) {
-      console.log(error.message);
     }
   };
-
   return (
     <GlobalContext.Provider value={{ user, setUser, handleLogout }}>
       {children}

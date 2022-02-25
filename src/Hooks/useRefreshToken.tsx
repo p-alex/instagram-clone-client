@@ -6,7 +6,7 @@ import { REFRESH_TOKEN_MUTATION } from '../GraphQL/Mutations/authMutations';
 const useRefreshToken = () => {
   const { setUser } = useContext(GlobalContext);
 
-  const refresh = async () => {
+  const refresh = async (): Promise<string> => {
     try {
       const response = await axios.post(
         '',
@@ -25,15 +25,20 @@ const useRefreshToken = () => {
         profileImg: string;
         accessToken: string;
       } = response.data.data.refreshToken;
-      setUser({
-        userId: data.userId,
-        username: data.username,
-        profileImg: data.profileImg,
-        accessToken: data.accessToken,
-      });
-      return data.accessToken;
+      if (data.success) {
+        setUser({
+          userId: data.userId,
+          username: data.username,
+          profileImg: data.profileImg,
+          accessToken: data.accessToken,
+        });
+        return data.accessToken;
+      } else {
+        setUser(null);
+        return '';
+      }
     } catch (error: any) {
-      setUser({ userId: '', username: '', profileImg: '', accessToken: '' });
+      setUser(null);
       return '';
     }
   };

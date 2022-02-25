@@ -20,7 +20,7 @@ const PersistLogin = () => {
       }
     };
 
-    if (!user.userId) {
+    if (!user?.userId) {
       verifyRefreshToken();
     } else {
       isMounted && setIsLoading(false);

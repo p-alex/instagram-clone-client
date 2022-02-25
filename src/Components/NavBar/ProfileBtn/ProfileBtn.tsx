@@ -12,7 +12,7 @@ const ProfileBtn = () => {
         onClick={() => setIsDropdownActive(!isDropdownActive)}
       >
         <img
-          src={user.profileImg ? user.profileImg : '/images/default-profile-picture.png'}
+          src={user?.profileImg ? user.profileImg : '/images/default-profile-picture.png'}
           className="profileBtn__image"
           alt=""
         />

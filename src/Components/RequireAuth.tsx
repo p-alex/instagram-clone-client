@@ -5,7 +5,7 @@ const RequireAuth = () => {
   const { user } = useContext(GlobalContext);
   const location = useLocation();
 
-  return user.userId !== '' ? (
+  return user?.userId !== '' ? (
     <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

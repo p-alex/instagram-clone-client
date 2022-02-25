@@ -1,60 +1,78 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import axios from '../Api/axios';
-import { GlobalContext } from '../Context/GlobalContext';
 import useRefreshToken from './useRefreshToken';
 
-const useAxiosWithRetry = (
-  query: string,
-  variables: any
-): [() => Promise<any>, { isLoading: boolean; error: string }] => {
+const useAxiosWithRetry = ({
+  query,
+  variables,
+  accessToken,
+}: {
+  query: string;
+  variables: any;
+  accessToken: string | undefined;
+}): [() => Promise<any>, { isLoading: boolean; error: string }] => {
   const refresh = useRefreshToken();
-  const { user } = useContext(GlobalContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const request = async (accessToken: string): Promise<any> => {
     try {
-      const { data }: any = await axios.post(
-        '',
-        { query, variables },
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
+      if (accessToken) {
+        const { data }: any = await axios.post(
+          '',
+          { query, variables },
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (data) {
+          const queryName = Object.keys(data.data)[0];
+          const requestData = data.data[queryName];
+          return requestData;
         }
-      );
-      const queryName = Object.keys(data.data)[0];
-      return data.data[queryName];
+        return { statusCode: 401, success: false, message: 'Unauthorized' };
+      } else {
+        throw new Error('No access token');
+      }
     } catch (error: any) {
-      console.log(error.message);
-      return null;
+      return { statusCode: 401, success: false, message: 'Unauthorized' };
     }
   };
 
-  const retryRequest = async () => {
-    const newAccessToken = await refresh();
-    const newRequest = await request(newAccessToken);
-    return newRequest;
+  const retryRequest = async (): Promise<any | null> => {
+    try {
+      const newAccessToken = await refresh();
+      if (newAccessToken) {
+        const retryRequestData = await request(newAccessToken);
+        return retryRequestData;
+      }
+      return null;
+    } catch (error: any) {
+      return null;
+    }
   };
 
   const getData = async () => {
     try {
       setIsLoading(true);
-      const data = await request(user.accessToken);
-      if (!data) return;
-      if (data.statusCode === 401) {
-        const data = await retryRequest();
-        if (data.statusCode === 200 || data.statusCode === 201) {
-          return data;
+      if (accessToken) {
+        const data: { statusCode: number; success: boolean; message: string } =
+          await request(accessToken);
+        if (data?.statusCode === 401) {
+          const data = await retryRequest();
+          if (!data) return { statusCode: 401, success: false, message: 'Unauthorized' };
+          if (data.statusCode === 200 || data.statusCode === 201) return data;
         }
-        return {};
+        return data;
       }
-      return data;
     } catch (error: any) {
       setError(error.message);
+      return { statusCode: 401, success: false, message: 'Unauthorized' };
     } finally {
       setIsLoading(false);
     }

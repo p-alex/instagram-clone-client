@@ -10,14 +10,14 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user.userId) {
+    if (!user?.userId) {
       navigate('/login');
     }
   }, [user, navigate]);
 
   return (
     <>
-      {user.userId && (
+      {user?.userId && (
         <>
           <NavBarContextProvider>
             <NavBar />

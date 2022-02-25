@@ -19,14 +19,14 @@ const CreatePostDetails = ({
           <div className="createModal__user">
             <img
               src={
-                user.profileImg ? user.profileImg : '/images/default-profile-picture.png'
+                user?.profileImg ? user.profileImg : '/images/default-profile-picture.png'
               }
               alt=""
               width={30}
               height={30}
               className="createModal__userImage"
             />
-            <p>{user.username}</p>
+            <p>{user?.username}</p>
           </div>
           <div className="createModal__caption">
             <textarea

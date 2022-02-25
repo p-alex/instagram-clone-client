@@ -8,7 +8,7 @@ import {
   USERNAME_REGEX,
 } from '../../Util/registerValidationRegex';
 import './Register.scss';
-import InputGroup from '../../Components/InputGroupComponent/InputGroup';
+import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';

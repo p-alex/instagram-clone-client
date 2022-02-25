@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import InputGroup from '../../Components/InputGroupComponent/InputGroup';
+import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.scss';
 import { GlobalContext, IUser } from '../../Context/GlobalContext';

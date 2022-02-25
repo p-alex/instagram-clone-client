@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import { GlobalContextProvider } from './Context/GlobalContext';
-import RequireAuth from './Components/RequireAuth';
+import RequireAuthentication from './Components/RequireAuthentication';
 import PersistLogin from './Components/PersistLogin';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth />}>
+            <Route element={<RequireAuthentication />}>
               <Route index element={<Home />} />
             </Route>
           </Route>

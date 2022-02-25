@@ -23,7 +23,6 @@ const InputGroup = ({
 }: IInputGroupProps) => {
   return (
     <div className="inputGroup">
-      {/* ============= EMAIL INPUT ============= */}
       <label htmlFor={label.toLowerCase().replace(' ', '')}>{label}</label>
       <input
         id={label.toLowerCase().replace(' ', '')}

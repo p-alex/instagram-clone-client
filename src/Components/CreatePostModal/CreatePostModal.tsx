@@ -64,7 +64,16 @@ const CreatePost = () => {
     if (step === 1 || step === 3) {
       setTitle('Create new post');
     }
-  }, [step]);
+    if (step === 4 && isLoading) {
+      setTitle('Loading...');
+    }
+    if (step === 4 && !isLoading && !error) {
+      setTitle('Success');
+    }
+    if (step === 4 && !isLoading && error) {
+      setTitle(error);
+    }
+  }, [step, isLoading, error]);
 
   const handleSteps = (direction: 'prev' | 'next') => {
     if (direction === 'prev' && step - 1 >= 1) {

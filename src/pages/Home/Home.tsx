@@ -1,9 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CreatePost from '../../Components/CreatePostModal/CreatePostModal';
-import NavBar from '../../Components/NavBar/NavBar';
 import { GlobalContext } from '../../Context/GlobalContext';
-import { NavBarContextProvider } from '../../Context/NavBarContext';
+import Layout from '../../Layout/Layout';
 
 const Home = () => {
   const { user } = useContext(GlobalContext);
@@ -15,18 +13,7 @@ const Home = () => {
     }
   }, [user, navigate]);
 
-  return (
-    <>
-      {user?.userId && (
-        <>
-          <NavBarContextProvider>
-            <NavBar />
-            <CreatePost />
-          </NavBarContextProvider>
-        </>
-      )}
-    </>
-  );
+  return <Layout>stuff</Layout>;
 };
 
 export default Home;

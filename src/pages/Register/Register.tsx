@@ -10,20 +10,18 @@ import {
 import './Register.scss';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
 import { REGISTER_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
+import { GlobalContext } from '../../Context/GlobalContext';
 
 const Register = () => {
-  const navigate = useNavigate();
   const { user } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.userId) {
-      navigate('/');
-    }
-  }, [user, navigate]);
+    user?.userId && navigate('/');
+  }, [user]);
 
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);

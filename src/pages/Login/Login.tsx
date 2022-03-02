@@ -9,7 +9,7 @@ import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useContext(GlobalContext);
+  const { user, setUser } = useContext(GlobalContext);
 
   const [errMessage, setErrMessage] = useState('');
 
@@ -25,6 +25,10 @@ const Login = () => {
     query: LOGIN_USER_MUTATION,
     variables: { username, password },
   });
+
+  useEffect(() => {
+    user?.userId && navigate('/');
+  }, [user]);
 
   useEffect(() => {
     if (data?.success) {

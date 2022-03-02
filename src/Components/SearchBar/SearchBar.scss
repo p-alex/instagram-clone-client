@@ -39,5 +39,6 @@
   }
   &__clearBtn:disabled {
     opacity: 0;
+    cursor: default;
   }
 }

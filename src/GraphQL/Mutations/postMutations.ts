@@ -4,11 +4,6 @@ export const CREATE_POST_MUTATION = `
       statusCode
       success
       message
-      post {
-        id
-        userId
-        postedAt
-      }
     }
   }
 `;

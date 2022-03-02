@@ -40,19 +40,26 @@
     justify-content: center;
     align-items: center;
     min-height: 350px;
+    input[type='File'] {
+      display: none;
+    }
     svg {
       color: $medium-color;
       margin-bottom: 40px;
     }
-    input[type='file'] {
-      display: none;
-    }
-    label {
+    button {
       padding: 5px 10px;
       border-radius: 5px;
       background: $primary-color;
       color: $light-color;
+      border: none;
       cursor: pointer;
+    }
+  }
+  &__imageErrorMessage {
+    a {
+      color: $primary-color;
+      text-decoration: none;
     }
   }
   &__postDetails {
@@ -120,8 +127,13 @@
   &__loading {
     height: 350px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+  &__loadingMessage {
+    font-size: 2rem;
+    margin-top: 20px;
   }
   &__success {
     display: flex;

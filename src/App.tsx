@@ -11,15 +11,21 @@ function App() {
   return (
     <GlobalContextProvider>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth />}>
-              <Route index element={<Home />} />
-            </Route>
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route index element={<Home />} />
           </Route>
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
         </Route>
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: '1rem' }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
       </Routes>
     </GlobalContextProvider>
   );

@@ -1,10 +1,19 @@
-import { Outlet } from 'react-router-dom';
+import { useContext } from 'react';
+import CreatePostModal from '../Components/CreatePostModal/CreatePostModal';
+import NavBar from '../Components/NavBar/NavBar';
+import { GlobalContext } from '../Context/GlobalContext';
+import { NavBarContextProvider } from '../Context/NavBarContext';
 
-const Layout = () => {
+const Layout = ({ children }: { children: any }) => {
+  const { user } = useContext(GlobalContext);
   return (
-    <div className="App">
-      <Outlet />
-    </div>
+    <>
+      <NavBarContextProvider>
+        <NavBar />
+        {user?.userId && <CreatePostModal />}
+      </NavBarContextProvider>
+      {children}
+    </>
   );
 };
 

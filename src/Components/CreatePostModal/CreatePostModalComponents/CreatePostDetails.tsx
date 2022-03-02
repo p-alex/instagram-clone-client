@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { CreateModalContext } from '../../../Context/CreateModalContext';
 import { GlobalContext } from '../../../Context/GlobalContext';
 
 const CreatePostDetails = ({
@@ -11,6 +12,7 @@ const CreatePostDetails = ({
   setCaption: (value: React.SetStateAction<string>) => void;
 }) => {
   const { user } = useContext(GlobalContext);
+  const { lastFocusableElementRef, handleFocusTrap } = useContext(CreateModalContext);
   return (
     <div className="createModal__postDetails">
       <div className="createModal__imagePreview"></div>
@@ -33,10 +35,12 @@ const CreatePostDetails = ({
               placeholder="Write a caption..."
               value={caption}
               onChange={(event) => setCaption(event.target.value)}
+              ref={lastFocusableElementRef}
             ></textarea>
           </div>
         </div>
       )}
+      <div tabIndex={0} onFocus={() => handleFocusTrap('bottomTrap')}></div>
     </div>
   );
 };

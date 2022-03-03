@@ -26,56 +26,60 @@ const CreatePostTopBar = ({
         tabIndex={0}
         onFocus={() => handleFocusTrap('topTrap')}
       ></div>
-      {step === 2 && (
-        <button
-          className="createModal__btn"
-          onClick={handleDiscard}
-          ref={firstFocusableElementRef}
-        >
-          Discard
-        </button>
-      )}
+      <div className="createModal__leftSideBtns">
+        {step === 2 && (
+          <button
+            className="createModal__btn"
+            onClick={handleDiscard}
+            ref={firstFocusableElementRef}
+          >
+            Discard
+          </button>
+        )}
 
-      {step === 3 && (
-        <button
-          className="createModal__btn"
-          onClick={() => handleSteps('prev')}
-          ref={firstFocusableElementRef}
-        >
-          Back
-        </button>
-      )}
+        {step === 3 && (
+          <button
+            className="createModal__btn"
+            onClick={() => handleSteps('prev')}
+            ref={firstFocusableElementRef}
+          >
+            Back
+          </button>
+        )}
+      </div>
 
       <h2 className="createModal__title">{title}</h2>
 
-      {(step === 1 || (step === 4 && !isLoading)) && (
-        <button
-          className="createModal__btn"
-          onClick={() => {
-            handleDiscard();
-            handleToggleCreatePostModal();
-          }}
-          ref={firstFocusableElementRef}
-        >
-          Close
-        </button>
-      )}
+      <div className="createModal__rightSideBtns">
+        {(step === 1 || (step === 4 && !isLoading)) && (
+          <button
+            className="createModal__btn"
+            onClick={() => {
+              handleDiscard();
+              handleToggleCreatePostModal();
+            }}
+            ref={firstFocusableElementRef}
+          >
+            Close
+          </button>
+        )}
 
-      {step === 2 && (
-        <button
-          className="createModal__btn"
-          onClick={() => handleSteps('next')}
-          ref={lastFocusableElementRef}
-        >
-          Next
-        </button>
-      )}
+        {step === 2 && (
+          <button
+            className="createModal__btn"
+            onClick={() => handleSteps('next')}
+            ref={lastFocusableElementRef}
+          >
+            Next
+          </button>
+        )}
 
-      {step === 3 && (
-        <button className="createModal__btn" onClick={(event) => handleSubmit(event)}>
-          Share
-        </button>
-      )}
+        {step === 3 && (
+          <button className="createModal__btn" onClick={(event) => handleSubmit(event)}>
+            Share
+          </button>
+        )}
+      </div>
     </div>
   );
 };

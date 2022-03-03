@@ -6,6 +6,7 @@ import Login from './Pages/Login/Login';
 import { GlobalContextProvider } from './Context/GlobalContext';
 import RequireAuth from './Components/RequireAuth';
 import PersistLogin from './Components/PersistLogin';
+import Profile from './Pages/Profile/Profile';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
         </Route>
+        <Route path="users/:username" element={<Profile />} />
+
         <Route
           path="*"
           element={

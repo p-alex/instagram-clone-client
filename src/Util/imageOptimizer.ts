@@ -30,7 +30,7 @@ const optimizeBase64 = async (base64: string, MAX_WIDTH = 1248, MAX_HEIGHT = 124
       canvas.height = height;
       let ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0, width, height);
-      resolve(canvas.toDataURL('image/jpeg', 0.75));
+      resolve(canvas.toDataURL('image/jpeg', 0.7));
     };
   });
   return optimized_base64;

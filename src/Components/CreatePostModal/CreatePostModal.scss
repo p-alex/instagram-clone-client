@@ -29,10 +29,21 @@
     padding: 10px;
     border-bottom: solid $border-color 1px;
   }
+  &__leftSideBtns {
+    position: absolute;
+    left: 10px;
+  }
   &__title {
-    margin: auto;
+    position: relative;
+    text-align: center;
+    width: max-content;
+    margin: 4px auto 0 auto;
     font-size: 1rem;
     font-weight: 700;
+  }
+  &__rightSideBtns {
+    position: absolute;
+    right: 10px;
   }
   &__chooseFile {
     display: flex;
@@ -135,7 +146,7 @@
     font-size: 2rem;
     margin-top: 20px;
   }
-  &__success {
+  &__result {
     display: flex;
     flex-direction: column;
     justify-content: center;

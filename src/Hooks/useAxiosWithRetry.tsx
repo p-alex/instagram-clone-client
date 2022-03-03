@@ -17,6 +17,7 @@ const useAxiosWithRetry = ({
   const [error, setError] = useState('');
 
   const request = async (accessToken: string): Promise<any> => {
+    setError('');
     try {
       if (accessToken) {
         const { data }: any = await axios.post(
@@ -40,7 +41,12 @@ const useAxiosWithRetry = ({
         throw new Error('No access token');
       }
     } catch (error: any) {
-      return { statusCode: 401, success: false, message: 'Unauthorized' };
+      if (error.response.status === 413) {
+        setError('Your image is too large.');
+        return { statusCode: 413, success: false, message: 'Your image is to large.' };
+      }
+      setError(error.message);
+      return { statusCode: 500, success: false, message: 'Something went wrong.' };
     }
   };
 

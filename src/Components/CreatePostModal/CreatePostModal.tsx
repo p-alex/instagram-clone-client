@@ -9,7 +9,7 @@ import './CreatePostModal.scss';
 import CreatePostChooseFile from './CreatePostModalComponents/CreatePostChooseFile';
 import CreatePostDetails from './CreatePostModalComponents/CreatePostDetails';
 import CreatePostLoading from './CreatePostModalComponents/CreatePostLoading';
-import CreatePostSuccess from './CreatePostModalComponents/CreatePostSuccess';
+import CreatePostResult from './CreatePostModalComponents/CreatePostResult';
 import CreatePostTopBar from './CreatePostModalComponents/CreatePostTopBar';
 
 const CreatePostModal = () => {
@@ -129,7 +129,7 @@ const CreatePostModal = () => {
             {step === 4 && (
               <>
                 {isLoading && <CreatePostLoading />}
-                {!error && !isLoading && <CreatePostSuccess />}
+                {!isLoading && <CreatePostResult error={error} />}
               </>
             )}
           </div>

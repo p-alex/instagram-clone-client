@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { GlobalContext, IUser } from '../../Context/GlobalContext';
+import { GlobalContext, ILoggedInUser } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
 import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
@@ -21,7 +21,7 @@ const Login = () => {
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const [loginUser, { data, isLoading, error }] = useAxios({
+  const [loginUser, { isLoading, error }] = useAxios({
     query: LOGIN_USER_MUTATION,
     variables: { username, password },
   });
@@ -31,19 +31,6 @@ const Login = () => {
   }, [user]);
 
   useEffect(() => {
-    if (data?.success) {
-      setUser((prevState: IUser | null) => ({
-        ...prevState,
-        userId: data.userId,
-        username: data.username,
-        profileImg: data.profileImg,
-        accessToken: data.accessToken,
-      }));
-      navigate('/');
-    }
-  }, [data, navigate, setUser]);
-
-  useEffect(() => {
     setIsValidUsername(username.length >= 6);
   }, [username]);
 
@@ -51,11 +38,21 @@ const Login = () => {
     setIsValidPassword(password.length >= 8);
   }, [password]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isValidUsername && isValidPassword) {
       try {
-        loginUser();
+        const response = await loginUser();
+        if (response?.success) {
+          setUser((prevState: ILoggedInUser | null) => ({
+            ...prevState,
+            userId: response.userId,
+            username: response.username,
+            profileImg: response.profileImg,
+            accessToken: response.accessToken,
+          }));
+          navigate('/');
+        }
       } catch (error: any) {
         console.log(error.message);
       }

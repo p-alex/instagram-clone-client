@@ -70,7 +70,7 @@ const Register = () => {
     setIsValidConfirmPassword(confirmPassword === password);
   }, [confirmPassword, password]);
 
-  const [registerUser, { data, isLoading, error }] = useAxios({
+  const [registerUser, { isLoading, error }] = useAxios({
     query: REGISTER_USER_MUTATION,
     variables: { email, fullname, username, password, confirmPassword },
   });
@@ -95,12 +95,6 @@ const Register = () => {
     isLoading,
   ]);
 
-  useEffect(() => {
-    if (data?.user) {
-      navigate('/login');
-    }
-  }, [data, navigate]);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
@@ -111,7 +105,10 @@ const Register = () => {
       isValidConfirmPassword
     ) {
       try {
-        registerUser();
+        const response = await registerUser();
+        if (response.success) {
+          navigate('/login');
+        }
       } catch (error: any) {
         console.log(error.message);
       }

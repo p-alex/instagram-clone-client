@@ -1,0 +1,46 @@
+.profilePosts {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-top: 50px;
+  padding-top: 50px;
+  border-top: solid silver 1px;
+  &__post {
+    position: relative;
+    display: flex;
+    max-width: 293px;
+    max-height: 293px;
+    aspect-ratio: 1;
+    color: white;
+    cursor: pointer;
+  }
+  &__post:hover .profilePosts__postOverlay {
+    display: flex;
+  }
+  &__image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__postOverlay {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    font-size: 1.5rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  &__postsLikes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

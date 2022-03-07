@@ -8,9 +8,8 @@ const useAxios = ({
 }: {
   query: string;
   variables: any;
-}): [() => Promise<void>, { data: any; isLoading: boolean; error: any }] => {
+}): [() => Promise<any>, { isLoading: boolean; error: any }] => {
   const { user } = useContext(GlobalContext);
-  const [data, setData] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -31,10 +30,8 @@ const useAxios = ({
       const queryName = Object.keys(data.data)[0];
       const responseData = data.data[queryName];
       if (responseData.success) {
-        setData(data.data[queryName]);
-        return;
+        return responseData;
       }
-      setError(responseData.message);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -42,7 +39,7 @@ const useAxios = ({
     }
   };
 
-  return [apiRequest, { data, isLoading, error }];
+  return [apiRequest, { isLoading, error }];
 };
 
 export default useAxios;

@@ -7,7 +7,7 @@ const getImageBase64 = async (selectedFile: any): Promise<any> => {
   return result_base64;
 };
 
-const optimizeBase64 = async (base64: string, MAX_WIDTH = 1248, MAX_HEIGHT = 1248) => {
+const optimizeBase64 = async (base64: string, maxWidth: number, maxHeight: number) => {
   let optimized_base64 = await new Promise((resolve) => {
     let img = new Image();
     img.src = base64;
@@ -16,14 +16,14 @@ const optimizeBase64 = async (base64: string, MAX_WIDTH = 1248, MAX_HEIGHT = 124
       let height = img.height;
       let canvas = document.createElement('canvas');
       if (width > height) {
-        if (width > MAX_WIDTH) {
-          height *= MAX_WIDTH / width;
-          width = MAX_WIDTH;
+        if (width > maxWidth) {
+          height *= maxWidth / width;
+          width = maxWidth;
         }
       } else {
-        if (height > MAX_HEIGHT) {
-          width *= MAX_HEIGHT / height;
-          height = MAX_HEIGHT;
+        if (height > maxHeight) {
+          width *= maxHeight / height;
+          height = maxHeight;
         }
       }
       canvas.width = width;
@@ -36,9 +36,13 @@ const optimizeBase64 = async (base64: string, MAX_WIDTH = 1248, MAX_HEIGHT = 124
   return optimized_base64;
 };
 
-export const imageOptimizer = async (selectedFile: any) => {
+export const imageOptimizer = async (
+  selectedFile: any,
+  maxWidth: number,
+  maxHeight: number
+) => {
   const base64 = await getImageBase64(selectedFile);
   if (selectedFile.size <= 275000) return base64;
-  const optimizedBase64 = await optimizeBase64(base64);
+  const optimizedBase64 = await optimizeBase64(base64, maxWidth, maxHeight);
   return optimizedBase64;
 };

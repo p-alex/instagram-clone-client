@@ -1,0 +1,29 @@
+.comment {
+  display: flex;
+  gap: 15px;
+  &__body {
+    font-size: 14px;
+  }
+  &__usernameAndText {
+  }
+  &__usernameLink {
+    margin-right: 5px;
+    color: black;
+    font-weight: 700;
+    text-decoration: none;
+    float: left;
+  }
+  &__text {
+    width: 100%;
+    text-align: justify;
+  }
+  &__profileImg {
+    border-radius: 50%;
+  }
+  &__text {
+    margin: 5px 0;
+  }
+  &__postedAt {
+    display: block;
+  }
+}

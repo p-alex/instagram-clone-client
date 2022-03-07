@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction, useState } from 'react';
 import useAxiosWithRetry from '../Hooks/useAxiosWithRetry';
 
-export interface IUser {
+export interface ILoggedInUser {
   userId: string;
   username: string;
   profileImg: string;
@@ -9,8 +9,8 @@ export interface IUser {
 }
 
 const GlobalContext = createContext<{
-  user: IUser | null;
-  setUser: Dispatch<SetStateAction<IUser | null>>;
+  user: ILoggedInUser | null;
+  setUser: Dispatch<SetStateAction<ILoggedInUser | null>>;
   handleLogout: () => Promise<void>;
 }>({
   user: null,
@@ -27,8 +27,9 @@ const LOGOUT_USER = `
     }
   }
 `;
+
 const GlobalContextProvider = ({ children }: { children: any }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<ILoggedInUser | null>(null);
 
   const [logoutUser] = useAxiosWithRetry({
     query: LOGOUT_USER,

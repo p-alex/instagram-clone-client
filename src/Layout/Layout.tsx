@@ -3,6 +3,7 @@ import CreatePostModal from '../Components/CreatePostModal/CreatePostModal';
 import NavBar from '../Components/NavBar/NavBar';
 import { GlobalContext } from '../Context/GlobalContext';
 import { NavBarContextProvider } from '../Context/NavBarContext';
+import './Layout.scss';
 
 const Layout = ({ children }: { children: any }) => {
   const { user } = useContext(GlobalContext);
@@ -12,7 +13,7 @@ const Layout = ({ children }: { children: any }) => {
         <NavBar />
         {user?.userId && <CreatePostModal />}
       </NavBarContextProvider>
-      {children}
+      <main className="mainContainer">{children}</main>
     </>
   );
 };

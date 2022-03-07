@@ -41,7 +41,7 @@ const CreatePostModal = () => {
   };
 
   const processImage = async (selectedFile: any) => {
-    const image: any = await imageOptimizer(selectedFile);
+    const image: any = await imageOptimizer(selectedFile, 1680, 1680);
     handleAddPreviewImage(image);
     setOptimizedImageBase64(image);
   };

@@ -1,5 +1,6 @@
 @import '../../variables.scss';
 .search {
+  display: none;
   &__container {
     position: relative;
     display: flex;

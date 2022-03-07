@@ -1,5 +1,7 @@
 import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../../Context/GlobalContext';
+import { DEFAULT_PROFILE_PICTURE_URL } from '../../../default-profile-pic-url';
 import './ProfileBtn.scss';
 
 const ProfileBtn = () => {
@@ -12,13 +14,16 @@ const ProfileBtn = () => {
         onClick={() => setIsDropdownActive(!isDropdownActive)}
       >
         <img
-          src={user?.profileImg ? user.profileImg : '/images/default-profile-picture.png'}
+          src={user?.profileImg ? user.profileImg : DEFAULT_PROFILE_PICTURE_URL}
           className="profileBtn__image"
           alt=""
+          width="40"
+          height="40"
         />
       </button>
       {isDropdownActive && (
         <div className="profileBtn__dropdown">
+          <Link to={`/users/${user?.username}`}>Profile</Link>
           <button
             onClick={() => {
               handleLogout();

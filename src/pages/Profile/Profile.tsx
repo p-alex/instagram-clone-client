@@ -1,12 +1,16 @@
-import { useParams } from 'react-router-dom';
+import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails';
+import ProfilePosts from '../../Components/ProfilePosts/ProfilePosts';
+import { ProfileContextProvider } from '../../Context/ProfileContext';
 import Layout from '../../Layout/Layout';
 import './Profile.scss';
 
 const Profile = () => {
-  const params = useParams();
   return (
     <Layout>
-      <div>{params.username}'s Profile</div>
+      <ProfileContextProvider>
+        <ProfileDetails />
+        <ProfilePosts />
+      </ProfileContextProvider>
     </Layout>
   );
 };

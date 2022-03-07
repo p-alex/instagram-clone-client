@@ -1,0 +1,41 @@
+.profileDetails {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  &__picture {
+    margin: 0 70px;
+  }
+  &__picture img {
+    border-radius: 50%;
+    border: solid silver 2px;
+  }
+  &__username {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  &__nameAndSettings {
+    display: flex;
+  }
+  &__stats {
+    display: flex;
+    margin: 30px 0;
+  }
+  &__stat {
+    margin-right: 20px;
+    :last-child {
+      margin-right: none;
+    }
+    span {
+      font-weight: 700;
+    }
+  }
+  &__fullname {
+    text-transform: capitalize;
+    font-weight: 700;
+  }
+  &__bio {
+    margin-top: 20px;
+  }
+}

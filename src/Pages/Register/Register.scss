@@ -1,0 +1,81 @@
+@import '../../globals';
+@import '../../variables';
+.registerMain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin: auto;
+  transform: translateY(-50%);
+  max-width: 350px;
+}
+.register {
+  --marginBottom: 20px;
+  background-color: $light-color;
+  border: solid $border-color 1px;
+  padding: 45px;
+  text-align: center;
+  &__message {
+    color: $medium-color;
+    font-size: $HTwoFontSize;
+    margin-top: 30px;
+    margin-bottom: var(--marginBottom);
+  }
+  &__form {
+    margin-top: 30px;
+  }
+  &__notes {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    p {
+      display: flex;
+      margin-bottom: 5px;
+    }
+  }
+  &__notes.hide-notes {
+    display: none;
+  }
+  &__infoIcon {
+    margin-right: 10px;
+  }
+  &__submit {
+    display: block;
+    width: 100%;
+    padding: 7px;
+    background: $primary-color;
+    border: none;
+    border-radius: 5px;
+    color: $light-color;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  &__submit:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  &__errorMessage {
+    color: $invalid-color;
+    margin-top: 40px;
+  }
+  &__login {
+    background-color: $light-color;
+    border: solid $border-color 1px;
+    padding: 25px;
+    text-align: center;
+    margin-top: 20px;
+    a {
+      color: $primary-color;
+      text-decoration: none;
+    }
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .registerMain {
+    position: relative;
+    margin: 20px auto;
+    transform: translateY(0);
+  }
+}

@@ -18,7 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://instagram-clone-9021.herokuapp.com/graphql",
+  "proxy": "https://instagram-clone-9021.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",

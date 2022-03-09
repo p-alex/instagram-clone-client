@@ -1,7 +1,9 @@
 import { useState, useContext } from 'react';
-import axios from '../Api/axios';
 import { GlobalContext } from '../Context/GlobalContext';
-
+const BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5000/graphql'
+    : 'https://instagram-clone-9021.herokuapp.com/graphql';
 const useAxios = ({
   query,
   variables,
@@ -16,19 +18,19 @@ const useAxios = ({
   const apiRequest = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.post(
-        '',
-        { query, variables },
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${user?.accessToken && 'Bearer ' + user.accessToken}`,
-          },
-        }
-      );
-      const queryName = Object.keys(data.data)[0];
-      const responseData = data.data[queryName];
+      const response = await fetch(BASE_URL, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${user?.accessToken && 'Bearer ' + user.accessToken}`,
+        },
+        body: JSON.stringify({ query, variables }),
+      });
+      const responseJson = await response.json();
+      const queryName = Object.keys(responseJson.data)[0];
+      const responseData = responseJson.data[queryName];
       if (responseData.success) {
         return responseData;
       }

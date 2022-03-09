@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import axios from '../Api/axios';
 import useRefreshToken from './useRefreshToken';
-
+const BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5000/graphql'
+    : 'https://instagram-clone-9021.herokuapp.com/graphql';
 const useAxiosWithRetry = ({
   query,
   variables,
@@ -20,20 +22,20 @@ const useAxiosWithRetry = ({
     setError('');
     try {
       if (accessToken) {
-        const { data }: any = await axios.post(
-          '',
-          { query, variables },
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        if (data) {
-          const queryName = Object.keys(data.data)[0];
-          const requestData = data.data[queryName];
+        const response = await fetch(BASE_URL, {
+          method: 'POST',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({ query, variables }),
+        });
+        const responseJson = await response.json();
+        if (responseJson) {
+          const queryName = Object.keys(responseJson.data)[0];
+          const requestData = responseJson.data[queryName];
           return requestData;
         }
         return { statusCode: 401, success: false, message: 'Unauthorized' };

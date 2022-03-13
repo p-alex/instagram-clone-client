@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import useRefreshToken from '../Hooks/useRefreshToken';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../Context/GlobalContext';
+import Spinner from '../Ui/Spinner';
 
 const PersistLogin = () => {
   const { user } = useContext(GlobalContext);
@@ -31,7 +32,7 @@ const PersistLogin = () => {
     };
   }, []);
 
-  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+  return <>{isLoading ? <Spinner /> : <Outlet />}</>;
 };
 
 export default PersistLogin;

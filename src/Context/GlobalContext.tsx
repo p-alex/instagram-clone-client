@@ -1,5 +1,6 @@
 import { createContext, Dispatch, SetStateAction, useState } from 'react';
 import useAxiosWithRetry from '../Hooks/useAxiosWithRetry';
+import { useNavigate } from 'react-router-dom';
 
 export interface ILoggedInUser {
   userId: string;
@@ -29,6 +30,7 @@ const LOGOUT_USER = `
 `;
 
 const GlobalContextProvider = ({ children }: { children: any }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<ILoggedInUser | null>(null);
 
   const [logoutUser] = useAxiosWithRetry({
@@ -46,6 +48,7 @@ const GlobalContextProvider = ({ children }: { children: any }) => {
 
         if (statusCode === 200 || statusCode === 401) {
           handleResetUser();
+          navigate('/login');
         }
       } catch (error: any) {
         console.log(error.message);

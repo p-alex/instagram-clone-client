@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   EMAIL_REGEX,
   FULLNAME_REGEX,
@@ -140,7 +138,7 @@ const Register = () => {
               }
             >
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 Must be a valid email address.
               </p>
             </div>
@@ -165,11 +163,11 @@ const Register = () => {
               }
             >
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 Between 1 and 35 characters long.
               </p>
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 Must start with a letter.
               </p>
             </div>
@@ -194,15 +192,15 @@ const Register = () => {
               }
             >
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />4 to
+                <i className="fa-solid fa-circle-info"></i>
                 24 characters.
               </p>
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 Must begin with a letter.
               </p>
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 Letters, numbers, underscores, hyphens allowed.
               </p>
             </div>
@@ -227,16 +225,16 @@ const Register = () => {
               }
             >
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />8 to
+                <i className="fa-solid fa-circle-info"></i>
                 24 characters.
               </p>
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 Must include uppercase and lowercase letters, a number and a special
                 character.
               </p>
               <p>
-                <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+                <i className="fa-solid fa-circle-info"></i>
                 <span>Allowed special characters: </span>
                 <span aria-label="exclamation mark">!</span>
                 <span aria-label="question mark">?</span>
@@ -266,7 +264,7 @@ const Register = () => {
                   : 'register__notes hide-notes'
               }
             >
-              <FontAwesomeIcon icon={faInfoCircle} className="register__infoIcon" />
+              <i className="fa-solid fa-circle-info"></i>
               <span>Passwords must match.</span>
             </p>
           </InputGroup>

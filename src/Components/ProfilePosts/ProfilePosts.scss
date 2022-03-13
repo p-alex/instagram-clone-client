@@ -7,6 +7,10 @@
   margin-top: 50px;
   padding-top: 50px;
   border-top: solid silver 1px;
+
+  @media (max-width: 980px) {
+    gap: 5px;
+  }
   &__post {
     position: relative;
     display: flex;
@@ -15,6 +19,9 @@
     aspect-ratio: 1;
     color: white;
     cursor: pointer;
+    &:focus .profilePosts__postOverlay {
+      display: flex;
+    }
   }
   &__post:hover .profilePosts__postOverlay {
     display: flex;
@@ -37,6 +44,9 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    i {
+      margin-right: 5px;
+    }
   }
   &__postsLikes {
     display: flex;

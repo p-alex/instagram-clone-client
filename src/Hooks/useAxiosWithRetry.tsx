@@ -1,9 +1,7 @@
 import { useState } from 'react';
+import { BASE_URL } from '../Util/baseURL';
 import useRefreshToken from './useRefreshToken';
-const BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000/graphql'
-    : 'https://instagram-clone-9021.herokuapp.com/graphql';
+
 const useAxiosWithRetry = ({
   query,
   variables,

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { CreateModalContext } from '../../../Context/CreateModalContext';
 import { GlobalContext } from '../../../Context/GlobalContext';
+import FocusTrapRedirectFocus from '../../FocusTrap';
 
 const CreatePostDetails = ({
   step,
@@ -12,7 +13,8 @@ const CreatePostDetails = ({
   setCaption: (value: React.SetStateAction<string>) => void;
 }) => {
   const { user } = useContext(GlobalContext);
-  const { lastFocusableElementRef, handleFocusTrap } = useContext(CreateModalContext);
+  const { lastFocusableElementRef, firstFocusableElementRef } =
+    useContext(CreateModalContext);
   return (
     <div className="createModal__postDetails">
       <div className="createModal__imagePreview"></div>
@@ -40,7 +42,7 @@ const CreatePostDetails = ({
           </div>
         </div>
       )}
-      <div tabIndex={0} onFocus={() => handleFocusTrap('bottomTrap')}></div>
+      <FocusTrapRedirectFocus element={firstFocusableElementRef} />
     </div>
   );
 };

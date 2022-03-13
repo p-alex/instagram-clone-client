@@ -1,10 +1,8 @@
 import { useContext } from 'react';
 import { GlobalContext } from '../Context/GlobalContext';
 import { REFRESH_TOKEN_MUTATION } from '../GraphQL/Mutations/authMutations';
-const BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000/graphql'
-    : 'https://instagram-clone-9021.herokuapp.com/graphql';
+import { BASE_URL } from '../Util/baseURL';
+
 const useRefreshToken = () => {
   const { setUser } = useContext(GlobalContext);
 

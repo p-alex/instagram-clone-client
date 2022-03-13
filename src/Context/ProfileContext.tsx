@@ -11,6 +11,9 @@ const ProfileContext = createContext<{
   setIsPostModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   selectedPostId: string | null;
   setSelectedPostId: React.Dispatch<React.SetStateAction<string | null>>;
+  handleClosePostModal: () => void;
+  lastFocusedPostIndex: number | null;
+  setLastFocusedPostIndex: React.Dispatch<React.SetStateAction<number | null>>;
   isLoading: boolean;
   error: string;
 }>({
@@ -20,6 +23,9 @@ const ProfileContext = createContext<{
   setIsPostModalActive: () => {},
   selectedPostId: '',
   setSelectedPostId: () => {},
+  handleClosePostModal: () => {},
+  lastFocusedPostIndex: 0,
+  setLastFocusedPostIndex: () => {},
   isLoading: false,
   error: '',
 });
@@ -39,6 +45,16 @@ const ProfileContextProvider = ({ children }: { children: any }) => {
   const [isPostModalActive, setIsPostModalActive] = useState(false);
 
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+
+  const [lastFocusedPostIndex, setLastFocusedPostIndex] = useState<number | null>(null);
+
+  const handleClosePostModal = () => {
+    setSelectedPostId(null);
+    const lastFocusedPost = document.querySelector(
+      `#profile-post-${lastFocusedPostIndex}`
+    ) as HTMLButtonElement;
+    lastFocusedPost.focus();
+  };
 
   const handleGetProfileData = async () => {
     try {
@@ -64,6 +80,9 @@ const ProfileContextProvider = ({ children }: { children: any }) => {
         setIsPostModalActive,
         selectedPostId,
         setSelectedPostId,
+        handleClosePostModal,
+        lastFocusedPostIndex,
+        setLastFocusedPostIndex,
         isLoading,
         error,
       }}

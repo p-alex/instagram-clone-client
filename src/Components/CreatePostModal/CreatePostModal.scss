@@ -11,7 +11,18 @@
   transform: translateY(-50%);
   border-radius: 10px;
   background: white;
-  animation: scale 300ms;
+  @media (max-width: 1140px) {
+    margin: 0 20px 0 20px;
+  }
+  @media (max-width: 980px) {
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+  }
   &__backdrop {
     position: fixed;
     top: 0;
@@ -96,6 +107,10 @@
       top: 50%;
       transform: translateY(-50%);
     }
+    @media (max-width: 980px) {
+      min-height: auto;
+      max-height: auto;
+    }
   }
   &__btn {
     border: none;
@@ -106,7 +121,10 @@
     font-size: 1rem;
   }
   &__details {
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
     padding: 20px;
     width: 0;
     transform-origin: right;
@@ -152,7 +170,7 @@
     justify-content: center;
     align-items: center;
     height: 350px;
-    svg {
+    i {
       font-size: 100px;
       color: rgb(24, 179, 24);
     }
@@ -180,7 +198,7 @@
   }
   to {
     transform: scaleX(1);
-    width: 400px;
+    width: 250px;
   }
 }
 

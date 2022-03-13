@@ -54,11 +54,11 @@ const CreatePostModal = () => {
   }, [selectedFile]);
 
   useEffect(() => {
-    if (step === 2) {
-      setTitle('Preview');
-    }
     if (step === 1 || step === 3) {
       setTitle('Create new post');
+    }
+    if (step === 2) {
+      setTitle('Preview');
     }
     if (step === 4 && isLoading) {
       setTitle('Loading...');
@@ -67,13 +67,14 @@ const CreatePostModal = () => {
       setTitle('Success');
     }
     if (step === 4 && !isLoading && error) {
-      setTitle(error);
+      setTitle('Error');
     }
   }, [step, isLoading, error]);
 
   const handleSteps = (direction: 'prev' | 'next') => {
     if (direction === 'prev' && step - 1 >= 1) {
       setStep(step - 1);
+      return;
     }
     if (direction === 'next' && step + 1 <= 4) {
       setStep(step + 1);
@@ -126,6 +127,7 @@ const CreatePostModal = () => {
             {step > 1 && step < 4 && (
               <CreatePostDetails step={step} caption={caption} setCaption={setCaption} />
             )}
+
             {step === 4 && (
               <>
                 {isLoading && <CreatePostLoading />}

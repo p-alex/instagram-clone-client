@@ -1,12 +1,14 @@
 import { useEffect, useContext } from 'react';
 import { CreateModalContext } from '../../../Context/CreateModalContext';
+import FocusTrapRedirectFocus from '../../FocusTrap';
 
 const CreatePostChooseFile = ({
   setSelectedFile,
 }: {
   setSelectedFile: (value: React.SetStateAction<File | null>) => void;
 }) => {
-  const { lastFocusableElementRef, handleFocusTrap } = useContext(CreateModalContext);
+  const { lastFocusableElementRef, firstFocusableElementRef } =
+    useContext(CreateModalContext);
   const handleChooseFile = () => {
     const realBtn = document.querySelector('#file') as HTMLInputElement;
     realBtn.click();
@@ -46,7 +48,7 @@ const CreatePostChooseFile = ({
       >
         Select from computer
       </button>
-      <div tabIndex={0} onFocus={() => handleFocusTrap('bottomTrap')}></div>
+      <FocusTrapRedirectFocus element={firstFocusableElementRef} />
     </div>
   );
 };

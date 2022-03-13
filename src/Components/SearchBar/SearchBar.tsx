@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import './SearchBar.scss';
 import { useState } from 'react';
 
@@ -9,7 +7,7 @@ const SearchBar = () => {
   return (
     <div className="search">
       <div className="search__container">
-        <FontAwesomeIcon icon={faSearch} className="search__icon" />
+        {/* <FontAwesomeIcon icon={faSearch} className="search__icon" /> */}
         <input
           className="search__input"
           type="text"
@@ -23,7 +21,7 @@ const SearchBar = () => {
           disabled={!value}
           onClick={handleClearInput}
         >
-          <FontAwesomeIcon icon={faTimesCircle} />
+          {/* <FontAwesomeIcon icon={faTimesCircle} /> */}
         </button>
       </div>
     </div>

@@ -1,9 +1,7 @@
 import { useState, useContext } from 'react';
 import { GlobalContext } from '../Context/GlobalContext';
-const BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000/graphql'
-    : 'https://instagram-clone-9021.herokuapp.com/graphql';
+import { BASE_URL } from '../Util/baseURL';
+
 const useAxios = ({
   query,
   variables,

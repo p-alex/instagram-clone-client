@@ -1,4 +1,3 @@
-import Layout from './Layout/Layout';
 import Register from './Pages/Register/Register';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -7,6 +6,7 @@ import { GlobalContextProvider } from './Context/GlobalContext';
 import RequireAuth from './Components/RequireAuth';
 import PersistLogin from './Components/PersistLogin';
 import Profile from './Pages/Profile/Profile';
+import Post from './Pages/Post/Post';
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="users/:username" element={<Profile />} />
+          <Route path="posts/:postId" element={<Post />} />
         </Route>
         <Route
           path="*"

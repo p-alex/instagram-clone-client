@@ -1,10 +1,10 @@
-import { faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useEffect } from 'react';
 import { CreateModalContext } from '../../../Context/CreateModalContext';
+import FocusTrapRedirectFocus from '../../FocusTrap';
 
 const CreatePostResult = ({ error }: { error: string }) => {
-  const { lastFocusableElementRef, handleFocusTrap } = useContext(CreateModalContext);
+  const { lastFocusableElementRef, firstFocusableElementRef } =
+    useContext(CreateModalContext);
   useEffect(() => {
     const resultMessage = document.querySelector(
       '.createModal__resultMessage'
@@ -14,9 +14,9 @@ const CreatePostResult = ({ error }: { error: string }) => {
   return (
     <div className="createModal__result">
       {!error ? (
-        <FontAwesomeIcon icon={faCheckCircle} />
+        <i className="fa-solid fa-circle-check"></i>
       ) : (
-        <FontAwesomeIcon icon={faExclamationCircle} style={{ color: 'red' }} />
+        <i className="fa-solid fa-circle-exclamation" style={{ color: 'red' }}></i>
       )}
       <p
         tabIndex={0}
@@ -25,7 +25,7 @@ const CreatePostResult = ({ error }: { error: string }) => {
       >
         {!error ? 'Your post has been shared.' : error}
       </p>
-      <div tabIndex={0} onFocus={() => handleFocusTrap('bottomTrap')}></div>
+      <FocusTrapRedirectFocus element={firstFocusableElementRef} />
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { useEffect, useContext } from 'react';
 import { CreateModalContext } from '../../../Context/CreateModalContext';
 import Spinner from '../../../Ui/Spinner';
+import FocusTrapRedirectFocus from '../../FocusTrap';
 
 const CreatePostLoading = () => {
-  const { lastFocusableElementRef, handleFocusTrap } = useContext(CreateModalContext);
+  const { lastFocusableElementRef } = useContext(CreateModalContext);
   useEffect(() => {
     const statusMessage = document.querySelector(
       '.createModal__loadingMessage'
@@ -20,11 +21,7 @@ const CreatePostLoading = () => {
       >
         Loading
       </p>
-      <div
-        id="bottomFocusTrap"
-        tabIndex={0}
-        onFocus={() => handleFocusTrap('bottomTrap')}
-      ></div>
+      <FocusTrapRedirectFocus element={lastFocusableElementRef} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { CreateModalContext } from '../../../Context/CreateModalContext';
+import FocusTrapRedirectFocus from '../../FocusTrap';
 const CreatePostTopBar = ({
   step,
   isLoading,
@@ -17,15 +18,11 @@ const CreatePostTopBar = ({
   title: string;
   handleSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }) => {
-  const { firstFocusableElementRef, lastFocusableElementRef, handleFocusTrap } =
+  const { firstFocusableElementRef, lastFocusableElementRef } =
     useContext(CreateModalContext);
   return (
     <div className="createModal__topBar">
-      <div
-        id="topFocusTrap"
-        tabIndex={0}
-        onFocus={() => handleFocusTrap('topTrap')}
-      ></div>
+      <FocusTrapRedirectFocus element={lastFocusableElementRef} />
       <div className="createModal__leftSideBtns">
         {step === 2 && (
           <button

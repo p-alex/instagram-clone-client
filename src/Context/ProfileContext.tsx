@@ -4,7 +4,7 @@ import { IPost, IUser } from '../interfaces';
 import { useParams } from 'react-router-dom';
 import { GET_USER_QUERY } from '../GraphQL/Queries/userQueries';
 
-const ProfileContext = createContext<{
+interface IProfileContext {
   profileData: IUser | null;
   profilePosts: IPost[] | undefined;
   isPostModalActive: boolean;
@@ -16,7 +16,9 @@ const ProfileContext = createContext<{
   setLastFocusedPostIndex: React.Dispatch<React.SetStateAction<number | null>>;
   isLoading: boolean;
   error: string;
-}>({
+}
+
+const ProfileContext = createContext<IProfileContext>({
   profileData: null,
   profilePosts: [],
   isPostModalActive: false,
@@ -69,7 +71,7 @@ const ProfileContextProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     handleGetProfileData();
-  }, [params]);
+  }, []);
 
   return (
     <ProfileContext.Provider

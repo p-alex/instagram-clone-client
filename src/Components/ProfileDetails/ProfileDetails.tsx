@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { ProfileContext } from '../../Context/ProfileContext';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
 import './ProfileDetails.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/Store';
 
 const ProfileDetails = () => {
-  const { profileData, isLoading } = useContext(ProfileContext);
+  const profileData = useSelector((state: RootState) => state.profile.user);
   return (
     <>
       {profileData ? (

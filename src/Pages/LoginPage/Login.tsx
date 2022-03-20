@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { GlobalContext, ILoggedInUser } from '../../Context/GlobalContext';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
 import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
+import { loginUser } from '../../Redux/Auth';
+import useRedux from '../../Hooks/useRedux';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(GlobalContext);
+  const { authState, dispatch } = useRedux();
 
   const [errMessage, setErrMessage] = useState('');
 
@@ -21,14 +22,14 @@ const Login = () => {
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const [loginUser, { isLoading, error }] = useAxios({
+  const [loginUserRequest, { isLoading, error }] = useAxios({
     query: LOGIN_USER_MUTATION,
     variables: { username, password },
   });
 
   useEffect(() => {
-    user?.userId && navigate('/');
-  }, [user]);
+    authState.user?.id && navigate('/');
+  }, [authState.user]);
 
   useEffect(() => {
     setIsValidUsername(username.length >= 6);
@@ -42,15 +43,19 @@ const Login = () => {
     event.preventDefault();
     if (isValidUsername && isValidPassword) {
       try {
-        const response = await loginUser();
+        const response = await loginUserRequest();
+        console.log(response);
         if (response?.success) {
-          setUser((prevState: ILoggedInUser | null) => ({
-            ...prevState,
-            userId: response.userId,
-            username: response.username,
-            profileImg: response.profileImg,
-            accessToken: response.accessToken,
-          }));
+          dispatch(
+            loginUser({
+              user: {
+                id: response.userId,
+                username: response.username,
+                profilePicture: response.profileImg,
+              },
+              accessToken: response.accessToken,
+            })
+          );
           navigate('/');
         }
       } catch (error: any) {

@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { CreateModalContextProvider } from '../../Context/CreateModalContext';
-import { GlobalContext } from '../../Context/GlobalContext';
 import { NavBarContext } from '../../Context/NavBarContext';
 import { CREATE_POST_MUTATION } from '../../GraphQL/Mutations/postMutations';
 import useAxiosWithRetry from '../../Hooks/useAxiosWithRetry';
+import { RootState } from '../../Redux/Store';
 import { imageOptimizer } from '../../Util/imageOptimizer';
 import './CreatePostModal.scss';
 import CreatePostChooseFile from './CreatePostModalComponents/CreatePostChooseFile';
@@ -13,7 +14,7 @@ import CreatePostResult from './CreatePostModalComponents/CreatePostResult';
 import CreatePostTopBar from './CreatePostModalComponents/CreatePostTopBar';
 
 const CreatePostModal = () => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
   const { isCreatePostModalActive, handleToggleCreatePostModal } =
     useContext(NavBarContext);
   const [title, setTitle] = useState('Create new post');
@@ -30,7 +31,7 @@ const CreatePostModal = () => {
       caption,
       image: optimizedImageBase64,
     },
-    accessToken: user?.accessToken,
+    accessToken: authState.accessToken,
   });
 
   const handleAddPreviewImage = (base64: string) => {
@@ -41,7 +42,7 @@ const CreatePostModal = () => {
   };
 
   const processImage = async (selectedFile: any) => {
-    const image: any = await imageOptimizer(selectedFile, 1680, 1680);
+    const image: any = await imageOptimizer(selectedFile, 1280, 1280);
     handleAddPreviewImage(image);
     setOptimizedImageBase64(image);
   };
@@ -91,7 +92,7 @@ const CreatePostModal = () => {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     try {
-      if (user?.userId && optimizedImageBase64 && selectedFile) {
+      if (authState.user?.id && optimizedImageBase64 && selectedFile) {
         handleSteps('next');
         await createPost();
       }

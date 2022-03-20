@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { GlobalContext } from '../Context/GlobalContext';
 import { REFRESH_TOKEN_MUTATION } from '../GraphQL/Mutations/authMutations';
 import { BASE_URL } from '../Util/baseURL';
+import { useDispatch } from 'react-redux';
+import { logoutUser, refreshToken } from '../Redux/Auth';
 
 const useRefreshToken = () => {
-  const { setUser } = useContext(GlobalContext);
-
+  const dispatch = useDispatch();
   const refresh = async (): Promise<string> => {
     try {
       const response = await fetch(BASE_URL, {
@@ -27,19 +26,23 @@ const useRefreshToken = () => {
         accessToken: string;
       } = responseJson.data.refreshToken;
       if (data.success) {
-        setUser({
-          userId: data.userId,
-          username: data.username,
-          profileImg: data.profileImg,
-          accessToken: data.accessToken,
-        });
+        dispatch(
+          refreshToken({
+            user: {
+              id: data.userId,
+              username: data.username,
+              profilePicture: data.profileImg,
+            },
+            accessToken: data.accessToken,
+          })
+        );
         return data.accessToken;
       } else {
-        setUser(null);
+        dispatch(logoutUser());
         return '';
       }
     } catch (error: any) {
-      setUser(null);
+      dispatch(logoutUser());
       return '';
     }
   };

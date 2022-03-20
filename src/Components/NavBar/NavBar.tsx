@@ -3,18 +3,19 @@ import SearchBar from '../SearchBar/SearchBar';
 import ProfileBtn from './ProfileBtn/ProfileBtn';
 import './NavBar.scss';
 import CreatePostBtn from './CreatePostBtn/CreatePostBtn';
-import { useContext } from 'react';
-import { GlobalContext } from '../../Context/GlobalContext';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/Store';
 const NavBar = () => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
+
   return (
     <nav className="navBar">
       <div className="navBar__container">
         <Logo />
         <SearchBar />
         <div className="navBar__buttonsAndLinks">
-          {user?.userId ? (
+          {authState.user?.id ? (
             <>
               <CreatePostBtn />
               <ProfileBtn />

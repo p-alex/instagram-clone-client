@@ -1,22 +1,24 @@
-import { useContext, useEffect, useState } from 'react';
-import { ProfileContext } from '../../Context/ProfileContext';
+import { useEffect, useState } from 'react';
 import PostModal from '../PostModal/PostModal';
 import './ProfilePosts.scss';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../Redux/Store';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPostId, setLastFocusedPostIndex } from '../../Redux/Profile';
 
 const ProfilePosts = () => {
   const navigate = useNavigate();
-  const { profileData, setSelectedPostId, selectedPostId, setLastFocusedPostIndex } =
-    useContext(ProfileContext);
+  const profileState = useSelector((state: RootState) => state.profile);
+  const dispatch = useDispatch();
   const [isMobileWidth, setIsMobileWidth] = useState(false);
 
   const handleViewPost = (postId: string, postIndex: number) => {
     if (isMobileWidth) {
-      setLastFocusedPostIndex(null);
+      dispatch(setLastFocusedPostIndex(null));
       navigate(`/posts/${postId}`);
     }
-    setLastFocusedPostIndex(postIndex);
-    setSelectedPostId(postId);
+    dispatch(setLastFocusedPostIndex(postIndex));
+    dispatch(selectPostId(postId));
   };
 
   const handleSetIsMobileWidth = () => {
@@ -44,8 +46,8 @@ const ProfilePosts = () => {
   return (
     <>
       <section className="profilePosts">
-        {profileData?.posts.postsList &&
-          profileData?.posts.postsList.map((post, index) => (
+        {profileState.user &&
+          profileState.user.posts.postsList.map((post, index) => (
             <button
               className="profilePosts__post"
               role={isMobileWidth ? 'link' : 'button'}
@@ -79,7 +81,7 @@ const ProfilePosts = () => {
             </button>
           ))}
       </section>
-      {selectedPostId && <PostModal postId={selectedPostId} />}
+      {profileState.selectedPostId && <PostModal postId={profileState.selectedPostId} />}
     </>
   );
 };

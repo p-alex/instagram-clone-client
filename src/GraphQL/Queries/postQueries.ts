@@ -21,6 +21,21 @@ query GetPost($postId: String!) {
         }
         comments {
           count
+          comments {
+            id
+            isReply
+            user {
+              id
+              username
+              profilePicture
+            }
+            comment
+            likes {
+              count
+              users
+            }
+            postedAt
+          }
         }
         postedAt
       }

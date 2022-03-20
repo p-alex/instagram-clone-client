@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
+import { dateConverter } from '../../Util/dateConverter';
 import './Comment.scss';
 
 const Comment = ({
   profilePicture,
   username,
-  description,
+  comment,
   postedAt,
 }: {
   profilePicture: string;
   username: string;
-  description?: string;
-  postedAt: number | string;
+  comment?: string;
+  postedAt: string;
 }) => {
   return (
     <div className="comment">
@@ -28,11 +29,11 @@ const Comment = ({
             <Link to={`/users/${username} `} className="comment__usernameLink">
               {username}
             </Link>{' '}
-            {description}
+            {comment}
           </p>
         </div>
 
-        <small className="comment__postedAt">{postedAt}</small>
+        <small className="comment__postedAt">{dateConverter(parseInt(postedAt))}</small>
       </div>
     </div>
   );

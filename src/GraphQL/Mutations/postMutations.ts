@@ -7,3 +7,13 @@ export const CREATE_POST_MUTATION = `
     }
   }
 `;
+
+export const LIKE_POST_MUTATION = `
+  mutation LikePost($uid: String, $postId: String) {
+    likePost(uid: $uid, postId: $postId) {
+      statusCode
+      success
+      message
+    }
+  }
+`;

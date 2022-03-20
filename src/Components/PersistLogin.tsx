@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import useRefreshToken from '../Hooks/useRefreshToken';
-import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../Context/GlobalContext';
+import { useEffect, useState } from 'react';
 import Spinner from '../Ui/Spinner';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/Store';
 
 const PersistLogin = () => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
 
@@ -21,7 +22,7 @@ const PersistLogin = () => {
       }
     };
 
-    if (!user?.userId) {
+    if (!authState.user?.id) {
       verifyRefreshToken();
     } else {
       isMounted && setIsLoading(false);

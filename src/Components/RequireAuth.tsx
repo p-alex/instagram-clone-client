@@ -1,11 +1,12 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { useContext } from 'react';
-import { GlobalContext } from '../Context/GlobalContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/Store';
 const RequireAuth = () => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
+
   const location = useLocation();
 
-  return user?.userId !== '' ? (
+  return authState.user?.id !== '' ? (
     <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

@@ -36,6 +36,16 @@ export const LOGIN_USER_MUTATION = `
     }
 `;
 
+export const LOGOUT_USER_MUTATION = `
+mutation LogoutUser {
+  logoutUser {
+    statusCode
+    success
+    message
+  }
+}
+`;
+
 export const REFRESH_TOKEN_MUTATION = `
 mutation {
     refreshToken {

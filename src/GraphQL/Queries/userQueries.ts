@@ -20,15 +20,9 @@ export const GET_USER_QUERY = `
                 count
                 postsList {
                   id
-                  user {
-                    id
-                    username
-                    profilePicture
-                  }
                   images {
                     croppedImage
                   }
-                  description
                   likes {
                     count
                     users

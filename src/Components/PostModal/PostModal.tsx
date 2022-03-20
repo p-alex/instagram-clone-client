@@ -1,17 +1,24 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
 import useAxios from '../../Hooks/useAxios';
 import { IPost } from '../../interfaces';
 import './PostModal.scss';
-import { ProfileContext } from '../../Context/ProfileContext';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
 import Comment from '../Comment/Comment';
 import Spinner from '../../Ui/Spinner';
 import FocusTrapRedirectFocus from '../FocusTrap';
+import { closePostModal, selectPostId } from '../../Redux/Profile';
+import { dateConverter } from '../../Util/dateConverter';
+import useRedux from '../../Hooks/useRedux';
+import PostImage from '../Post/PostComponents/PostImage/PostImage';
+import PostUser from '../Post/PostComponents/PostUser/PostUser';
+import PostComments from '../Post/PostComponents/PostComments/PostComments';
 
 const PostModal = ({ postId }: { postId: string }) => {
-  const { selectedPostId, setSelectedPostId, profilePosts, handleClosePostModal } =
-    useContext(ProfileContext);
+  const { profileState, dispatch } = useRedux();
+  const { selectedPostId, lastFocusedPostIndex, user } = profileState;
+  const selectedPost = user?.posts.postsList.find((post) => post.id === selectedPostId);
+  const userPosts = user?.posts.postsList;
 
   const [getPost, { isLoading, error }] = useAxios({
     query: GET_POST_QUERY,
@@ -25,7 +32,7 @@ const PostModal = ({ postId }: { postId: string }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState<number | undefined>(0);
 
   useEffect(() => {
-    setCurrentPostIndex(profilePosts?.findIndex((post) => post.id === selectedPostId));
+    setCurrentPostIndex(userPosts!.findIndex((post) => post.id === selectedPost?.id));
   }, [selectedPostId]);
 
   const handleGetPost = async () => {
@@ -55,13 +62,21 @@ const PostModal = ({ postId }: { postId: string }) => {
     handleGetPost();
   }, [postId]);
 
+  const handleCloseModal = () => {
+    const lastFocusedPost = document.querySelector(
+      `#profile-post-${lastFocusedPostIndex}`
+    ) as HTMLButtonElement;
+    dispatch(closePostModal());
+    lastFocusedPost.focus();
+  };
+
   const handleNavigatePosts = (direction: 'prev' | 'next') => {
-    if (profilePosts?.length && !isLoading) {
+    if (userPosts?.length && !isLoading) {
       if (typeof currentPostIndex === 'number') {
         if (direction === 'prev' && currentPostIndex > 0)
-          return setSelectedPostId(profilePosts[currentPostIndex - 1].id);
-        if (direction === 'next' && currentPostIndex < profilePosts.length - 1)
-          return setSelectedPostId(profilePosts[currentPostIndex + 1].id);
+          return dispatch(selectPostId(userPosts[currentPostIndex - 1].id));
+        if (direction === 'next' && currentPostIndex < userPosts.length - 1)
+          return dispatch(selectPostId(userPosts[currentPostIndex + 1].id));
       }
     }
   };
@@ -70,10 +85,10 @@ const PostModal = ({ postId }: { postId: string }) => {
     <div className="postModal__container">
       <FocusTrapRedirectFocus element={lastFocusableElement} />
 
-      <div className="postModal__backdrop" onClick={handleClosePostModal}></div>
+      <div className="postModal__backdrop" onClick={handleCloseModal}></div>
       <button
         className="postModal__closeBtn"
-        onClick={handleClosePostModal}
+        onClick={handleCloseModal}
         ref={firstFocusableElement}
       >
         <i className="fa-solid fa-xmark"></i>
@@ -88,8 +103,8 @@ const PostModal = ({ postId }: { postId: string }) => {
       ) : null}
 
       {typeof currentPostIndex === 'number' &&
-      profilePosts &&
-      currentPostIndex < profilePosts?.length - 1 ? (
+      userPosts &&
+      currentPostIndex < userPosts?.length - 1 ? (
         <button
           className="postModal__ctrl ctrl--right"
           onClick={() => handleNavigatePosts('next')}
@@ -106,40 +121,21 @@ const PostModal = ({ postId }: { postId: string }) => {
           </div>
         )}
 
-        <div className="postModal__image">
-          <img src={post?.images[0].fullImage} alt="" />
-        </div>
+        <PostImage imageUrl={post?.images[0].fullImage} />
 
         <div className="postModal__panel">
-          <div className="postModal__owner">
-            <div className="postModal__ownerContainer">
-              <img
-                src={
-                  post?.user.profilePicture
-                    ? post?.user.profilePicture
-                    : DEFAULT_PROFILE_PICTURE_URL
-                }
-                alt=""
-                width="35"
-                height="35"
-              />
-              <p>{post?.user.username}</p>
-            </div>
-            <button className="postModal__moreOptionsBtn">
-              <i className="fa-solid fa-ellipsis"></i>
-            </button>
-          </div>
+          <PostUser
+            username={post?.user.username}
+            profilePicture={post?.user.profilePicture}
+          />
 
-          <div className="postModal__comments">
-            {post?.description && (
-              <Comment
-                profilePicture={post.user.profilePicture}
-                username={post.user.username}
-                description={post.description}
-                postedAt={post.postedAt}
-              />
-            )}
-          </div>
+          <PostComments
+            profilePicture={post?.user.profilePicture}
+            username={post?.user.username}
+            comment={post?.description}
+            postedAt={post?.postedAt}
+            comments={post?.comments.commentsList ? post.comments.commentsList : []}
+          />
 
           <div className="postModal__react">
             <button aria-label="like post">
@@ -149,7 +145,7 @@ const PostModal = ({ postId }: { postId: string }) => {
               <i className="fa-regular fa-comment"></i>
             </button>
             <p>{post?.likes.count} likes</p>
-            <small>{post?.postedAt}</small>
+            {post?.postedAt && <small>{dateConverter(parseInt(post.postedAt))}</small>}
           </div>
 
           <form className="postModal__form">

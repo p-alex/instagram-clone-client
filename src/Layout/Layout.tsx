@@ -1,17 +1,18 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import CreatePostModal from '../Components/CreatePostModal/CreatePostModal';
 import NavBar from '../Components/NavBar/NavBar';
-import { GlobalContext } from '../Context/GlobalContext';
 import { NavBarContextProvider } from '../Context/NavBarContext';
+import { RootState } from '../Redux/Store';
 import './Layout.scss';
 
 const Layout = ({ children }: { children: any }) => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
+
   return (
     <>
       <NavBarContextProvider>
         <NavBar />
-        {user?.userId && <CreatePostModal />}
+        {authState.user?.id && <CreatePostModal />}
       </NavBarContextProvider>
       <main className="mainContainer">{children}</main>
     </>

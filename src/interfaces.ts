@@ -47,7 +47,7 @@ export interface IImage {
 }
 export interface IComments {
   count: number;
-  commentsList: [string];
+  commentsList: IComment[];
 }
 export interface IComment {
   id: string;
@@ -65,7 +65,7 @@ export interface ICommentCreator {
 }
 export interface ILikes {
   count: number;
-  users: [string];
+  users?: [string];
 }
 export interface IFollowers {
   count: number;

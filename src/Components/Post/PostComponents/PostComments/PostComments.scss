@@ -1,0 +1,15 @@
+.postComments {
+  position: relative;
+  border-top: solid silver 1px;
+  border-bottom: solid silver 1px;
+  padding: 15px;
+  flex-grow: 1;
+  overflow-y: scroll;
+
+  max-height: 500px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -42,7 +42,7 @@ export const imageOptimizer = async (
   maxHeight: number
 ) => {
   const base64 = await getImageBase64(selectedFile);
-  if (selectedFile.size <= 275000) return base64;
+  if (selectedFile.size <= 200000) return base64;
   const optimizedBase64 = await optimizeBase64(base64, maxWidth, maxHeight);
   return optimizedBase64;
 };

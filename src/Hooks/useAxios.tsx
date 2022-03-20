@@ -1,5 +1,6 @@
-import { useState, useContext } from 'react';
-import { GlobalContext } from '../Context/GlobalContext';
+import { useState } from 'react';
+import { RootState } from '../Redux/Store';
+import { useSelector } from 'react-redux';
 import { BASE_URL } from '../Util/baseURL';
 
 const useAxios = ({
@@ -9,7 +10,7 @@ const useAxios = ({
   query: string;
   variables: any;
 }): [() => Promise<any>, { isLoading: boolean; error: any }] => {
-  const { user } = useContext(GlobalContext);
+  const { accessToken } = useSelector((state: RootState) => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -22,7 +23,7 @@ const useAxios = ({
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `${user?.accessToken && 'Bearer ' + user.accessToken}`,
+          Authorization: `${accessToken && 'Bearer ' + accessToken}`,
         },
         body: JSON.stringify({ query, variables }),
       });
@@ -32,6 +33,7 @@ const useAxios = ({
       if (responseData.success) {
         return responseData;
       }
+      setError(responseData.message);
     } catch (error: any) {
       setError(error.message);
     } finally {

@@ -9,7 +9,7 @@ const useAxiosWithRetry = ({
 }: {
   query: string;
   variables: any;
-  accessToken: string | undefined;
+  accessToken: string | null;
 }): [() => Promise<any>, { isLoading: boolean; error: string }] => {
   const refresh = useRefreshToken();
 

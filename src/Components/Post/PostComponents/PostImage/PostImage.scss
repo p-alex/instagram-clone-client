@@ -1,0 +1,19 @@
+.postImage {
+  position: relative;
+  width: 100%;
+  min-width: 450px;
+  max-height: 850px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  background: black;
+  @media (max-width: 980px) {
+    min-height: auto;
+    min-width: auto;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}

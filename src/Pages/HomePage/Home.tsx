@@ -1,17 +1,18 @@
 import { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../Context/GlobalContext';
 import Layout from '../../Layout/Layout';
+import { RootState } from '../../Redux/Store';
 
 const Home = () => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user?.userId) {
+    if (!authState.user?.id) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [authState.user, navigate]);
 
   return <Layout>stuff</Layout>;
 };

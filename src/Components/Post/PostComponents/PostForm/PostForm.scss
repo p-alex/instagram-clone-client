@@ -1,0 +1,15 @@
+@import '../../../../variables.scss';
+.postForm {
+  border-top: solid silver 1px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  input {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  button {
+    color: $primary-color;
+  }
+}

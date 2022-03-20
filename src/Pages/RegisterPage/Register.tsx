@@ -11,15 +11,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
 import Logo from '../../Components/Logo/Logo';
 import { REGISTER_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
-import { GlobalContext } from '../../Context/GlobalContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/Store';
 
 const Register = () => {
-  const { user } = useContext(GlobalContext);
+  const authState = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    user?.userId && navigate('/');
-  }, [user]);
+    authState.user?.id && navigate('/');
+  }, [authState.user]);
 
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);

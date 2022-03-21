@@ -3,7 +3,7 @@ import Post from '../../Components/Post/Post';
 import './PostPage.scss';
 import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
 import { useParams } from 'react-router-dom';
-import useAxios from '../../Hooks/useAxios';
+import useFetch from '../../Hooks/useFetch';
 import { useEffect } from 'react';
 import useRedux from '../../Hooks/useRedux';
 import { loadingPost, loadingPostError, resetPostState, setPost } from '../../Redux/Post';
@@ -11,7 +11,7 @@ import { IPost } from '../../interfaces';
 
 const PostPage = () => {
   const params = useParams();
-  const [getPost, { error }] = useAxios({
+  const [getPost, { error }] = useFetch({
     query: GET_POST_QUERY,
     variables: { postId: params.postId },
   });

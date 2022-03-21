@@ -1,18 +1,19 @@
 import { dateConverter } from '../../../../Util/dateConverter';
+import LikeBtn from '../../../LikeBtn/LikeBtn';
 import './PostReact.scss';
 
 const PostReact = ({
   likesCount,
   postedAt,
+  postId,
 }: {
   likesCount: number | undefined;
   postedAt: string | undefined;
+  postId: string | undefined;
 }) => {
   return (
     <div className="postReact">
-      <button aria-label="like post">
-        <i className="fa-regular fa-heart"></i>
-      </button>
+      <LikeBtn postId={postId ? postId : ''} />
       <button aria-label="add a comment">
         <i className="fa-regular fa-comment"></i>
       </button>

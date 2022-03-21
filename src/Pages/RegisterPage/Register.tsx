@@ -8,7 +8,7 @@ import {
 import './Register.scss';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
-import useAxios from '../../Hooks/useAxios';
+import useFetch from '../../Hooks/useFetch';
 import Logo from '../../Components/Logo/Logo';
 import { REGISTER_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
 import { useSelector } from 'react-redux';
@@ -69,7 +69,7 @@ const Register = () => {
     setIsValidConfirmPassword(confirmPassword === password);
   }, [confirmPassword, password]);
 
-  const [registerUser, { isLoading, error }] = useAxios({
+  const [registerUser, { isLoading, error }] = useFetch({
     query: REGISTER_USER_MUTATION,
     variables: { email, fullname, username, password, confirmPassword },
   });

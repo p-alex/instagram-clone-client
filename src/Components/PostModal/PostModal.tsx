@@ -1,33 +1,34 @@
 import { useEffect, useState, useRef } from 'react';
 import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
-import useAxios from '../../Hooks/useAxios';
+import useFetch from '../../Hooks/useFetch';
 import { IPost } from '../../interfaces';
 import './PostModal.scss';
-import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
-import Comment from '../Comment/Comment';
-import Spinner from '../../Ui/Spinner';
 import FocusTrapRedirectFocus from '../FocusTrap';
 import { closePostModal, selectPostId } from '../../Redux/Profile';
-import { dateConverter } from '../../Util/dateConverter';
 import useRedux from '../../Hooks/useRedux';
 import PostImage from '../Post/PostComponents/PostImage/PostImage';
 import PostUser from '../Post/PostComponents/PostUser/PostUser';
 import PostComments from '../Post/PostComponents/PostComments/PostComments';
+import PostReact from '../Post/PostComponents/PostReact/PostReact';
+import PostForm from '../Post/PostComponents/PostForm/PostForm';
+import { setPost, loadingPost, loadingPostError, resetPostState } from '../../Redux/Post';
+import PostLoader from '../Post/PostComponents/PostLoader/PostLoader';
+import PostPanel from '../Post/PostComponents/PostPanel/PostPanel';
+import PostModalCtrl from './PostModalComponents/PostModalCtrl';
 
 const PostModal = ({ postId }: { postId: string }) => {
-  const { profileState, dispatch } = useRedux();
+  const { profileState, postState, dispatch } = useRedux();
   const { selectedPostId, lastFocusedPostIndex, user } = profileState;
+  const { post, isLoading } = postState;
   const selectedPost = user?.posts.postsList.find((post) => post.id === selectedPostId);
   const userPosts = user?.posts.postsList;
 
-  const [getPost, { isLoading, error }] = useAxios({
+  const [getPost] = useFetch({
     query: GET_POST_QUERY,
     variables: {
       postId,
     },
   });
-
-  const [post, setPost] = useState<IPost | null>(null);
 
   const [currentPostIndex, setCurrentPostIndex] = useState<number | undefined>(0);
 
@@ -37,17 +38,18 @@ const PostModal = ({ postId }: { postId: string }) => {
 
   const handleGetPost = async () => {
     try {
+      dispatch(loadingPost);
       const response: {
         statusCode: number;
         success: boolean;
         message: string;
         post: IPost;
       } = await getPost();
-      if (response.success) {
-        setPost(response.post);
-      }
+      if (response.success) return dispatch(setPost(response.post));
+      dispatch(loadingPostError(response.message));
     } catch (error: any) {
       console.log(error.message);
+      dispatch(loadingPostError('Something went wrong'));
     }
   };
 
@@ -56,6 +58,9 @@ const PostModal = ({ postId }: { postId: string }) => {
 
   useEffect(() => {
     firstFocusableElement.current.focus();
+    return () => {
+      dispatch(resetPostState());
+    };
   }, []);
 
   useEffect(() => {
@@ -84,8 +89,8 @@ const PostModal = ({ postId }: { postId: string }) => {
   return (
     <div className="postModal__container">
       <FocusTrapRedirectFocus element={lastFocusableElement} />
-
       <div className="postModal__backdrop" onClick={handleCloseModal}></div>
+
       <button
         className="postModal__closeBtn"
         onClick={handleCloseModal}
@@ -93,42 +98,25 @@ const PostModal = ({ postId }: { postId: string }) => {
       >
         <i className="fa-solid fa-xmark"></i>
       </button>
+
       {currentPostIndex && currentPostIndex > 0 ? (
-        <button
-          className="postModal__ctrl ctrl--left"
-          onClick={() => handleNavigatePosts('prev')}
-        >
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
+        <PostModalCtrl direction="prev" handleNavigatePosts={handleNavigatePosts} />
       ) : null}
 
       {typeof currentPostIndex === 'number' &&
       userPosts &&
       currentPostIndex < userPosts?.length - 1 ? (
-        <button
-          className="postModal__ctrl ctrl--right"
-          onClick={() => handleNavigatePosts('next')}
-        >
-          <i className="fa-solid fa-chevron-right"></i>
-        </button>
+        <PostModalCtrl direction="next" handleNavigatePosts={handleNavigatePosts} />
       ) : null}
+
       <div className="postModal">
-        {isLoading && (
-          <div className="postModal__loading">
-            <div className="postModal__spinnerContainer">
-              <Spinner />
-            </div>
-          </div>
-        )}
-
+        {isLoading && <PostLoader />}
         <PostImage imageUrl={post?.images[0].fullImage} />
-
-        <div className="postModal__panel">
+        <PostPanel>
           <PostUser
             username={post?.user.username}
             profilePicture={post?.user.profilePicture}
           />
-
           <PostComments
             profilePicture={post?.user.profilePicture}
             username={post?.user.username}
@@ -136,25 +124,13 @@ const PostModal = ({ postId }: { postId: string }) => {
             postedAt={post?.postedAt}
             comments={post?.comments.commentsList ? post.comments.commentsList : []}
           />
-
-          <div className="postModal__react">
-            <button aria-label="like post">
-              <i className="fa-regular fa-heart"></i>
-            </button>
-            <button aria-label="add a comment">
-              <i className="fa-regular fa-comment"></i>
-            </button>
-            <p>{post?.likes.count} likes</p>
-            {post?.postedAt && <small>{dateConverter(parseInt(post.postedAt))}</small>}
-          </div>
-
-          <form className="postModal__form">
-            <input type="text" placeholder="Add a comment..."></input>
-            <button type="submit" ref={lastFocusableElement}>
-              Post
-            </button>
-          </form>
-        </div>
+          <PostReact
+            likesCount={post?.likes.count}
+            postedAt={post?.postedAt}
+            postId={post?.id}
+          />
+          <PostForm />
+        </PostPanel>
       </div>
       <FocusTrapRedirectFocus element={firstFocusableElement} />
     </div>

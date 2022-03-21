@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { CreateModalContextProvider } from '../../Context/CreateModalContext';
 import { NavBarContext } from '../../Context/NavBarContext';
 import { CREATE_POST_MUTATION } from '../../GraphQL/Mutations/postMutations';
-import useAxiosWithRetry from '../../Hooks/useAxiosWithRetry';
+import useFetchWithRetry from '../../Hooks/useFetchWithRetry';
 import { RootState } from '../../Redux/Store';
 import { imageOptimizer } from '../../Util/imageOptimizer';
 import './CreatePostModal.scss';
@@ -25,7 +25,7 @@ const CreatePostModal = () => {
     string | ArrayBuffer | null | undefined
   >('');
 
-  const [createPost, { isLoading, error }] = useAxiosWithRetry({
+  const [createPost, { isLoading, error }] = useFetchWithRetry({
     query: CREATE_POST_MUTATION,
     variables: {
       caption,

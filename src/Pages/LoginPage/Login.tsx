@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import InputGroup from '../../Components/InputGroup/InputGroup';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.scss';
-import useAxios from '../../Hooks/useAxios';
+import useFetch from '../../Hooks/useFetch';
 import Logo from '../../Components/Logo/Logo';
 import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
 import { loginUser } from '../../Redux/Auth';
@@ -22,7 +22,7 @@ const Login = () => {
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const [loginUserRequest, { isLoading, error }] = useAxios({
+  const [loginUserRequest, { isLoading, error }] = useFetch({
     query: LOGIN_USER_MUTATION,
     variables: { username, password },
   });

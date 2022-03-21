@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails';
 import ProfilePosts from '../../Components/ProfilePosts/ProfilePosts';
 import { GET_USER_QUERY } from '../../GraphQL/Queries/userQueries';
-import useAxios from '../../Hooks/useAxios';
+import useFetch from '../../Hooks/useFetch';
 import useRedux from '../../Hooks/useRedux';
 import { IUserProfileInfo } from '../../interfaces';
 import Layout from '../../Layout/Layout';
@@ -26,7 +26,7 @@ const Profile = () => {
   const params = useParams();
   const { dispatch } = useRedux();
 
-  const [getProfile, { error }] = useAxios({
+  const [getProfile, { error }] = useFetch({
     query: GET_USER_QUERY,
     variables: {
       username: params.username,

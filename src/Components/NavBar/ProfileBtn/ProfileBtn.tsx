@@ -1,19 +1,17 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../../default-profile-pic-url';
 import { LOGOUT_USER_MUTATION } from '../../../GraphQL/Mutations/authMutations';
-import useAxios from '../../../Hooks/useAxios';
+import useFetch from '../../../Hooks/useFetch';
 import { logoutUser } from '../../../Redux/Auth';
-import { RootState } from '../../../Redux/Store';
 import { useNavigate } from 'react-router-dom';
 import './ProfileBtn.scss';
+import useRedux from '../../../Hooks/useRedux';
 
 const ProfileBtn = () => {
   const navigate = useNavigate();
-  const authState = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  const { authState, dispatch } = useRedux();
   const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const [logoutUserRequest, { error }] = useAxios({
+  const [logoutUserRequest, { error }] = useFetch({
     query: LOGOUT_USER_MUTATION,
     variables: {},
   });

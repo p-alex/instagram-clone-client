@@ -10,6 +10,7 @@ const LikeBtn = ({ postId }: { postId: string }) => {
     variables: { uid: authState.user?.id, postId },
     accessToken: authState.accessToken,
   });
+  const handleLikePost = () => {};
   return (
     <button aria-label="like post" className="likeBtn">
       <i className="fa-regular fa-heart"></i>

@@ -10,7 +10,7 @@ const PostModalCtrl = ({
       className={`postModal__ctrl ctrl--${direction}`}
       onClick={() => handleNavigatePosts(direction)}
     >
-      <i className={`fa-solid fa-chevron-${direction}`}></i>
+      <i className={`fa-solid fa-chevron-${direction === 'prev' ? 'left' : 'right'}`}></i>
     </button>
   );
 };

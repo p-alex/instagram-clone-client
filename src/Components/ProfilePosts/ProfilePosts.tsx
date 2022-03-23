@@ -16,6 +16,7 @@ const ProfilePosts = () => {
     if (isMobileWidth) {
       dispatch(setLastFocusedPostIndex(null));
       navigate(`/posts/${postId}`);
+      return;
     }
     dispatch(setLastFocusedPostIndex(postIndex));
     dispatch(selectPostId(postId));

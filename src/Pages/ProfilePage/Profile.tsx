@@ -24,7 +24,7 @@ interface IUserProfileResponse {
 
 const Profile = () => {
   const params = useParams();
-  const { dispatch } = useRedux();
+  const { authState, profileState, dispatch } = useRedux();
 
   const [getProfile, { error }] = useFetch({
     query: GET_USER_QUERY,
@@ -45,10 +45,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    handleGetProfileData();
-    return () => {
-      dispatch(resetProfileState());
-    };
+    if (profileState.user?.username !== params.username) handleGetProfileData();
   }, []);
 
   return (

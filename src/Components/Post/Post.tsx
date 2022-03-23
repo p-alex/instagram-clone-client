@@ -27,11 +27,7 @@ const Post = () => {
           postedAt={post?.postedAt}
           comments={post?.comments.commentsList}
         />
-        <PostReact
-          likesCount={post?.likes.count}
-          postedAt={post?.postedAt}
-          postId={postState.post?.id}
-        />
+        <PostReact />
         <PostForm />
       </PostPanel>
     </article>

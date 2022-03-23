@@ -28,6 +28,32 @@ const PostSlice = createSlice({
       isLoading: false,
       post: action.payload,
     }),
+    likePost: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        post: {
+          ...state.post!,
+          likes: {
+            ...state.post!.likes,
+            count: state.post!.likes.count + 1,
+            users: [action.payload, ...state.post!.likes.users!],
+          },
+        },
+      };
+    },
+    dislikePost: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        post: {
+          ...state.post!,
+          likes: {
+            ...state.post!.likes,
+            count: state.post!.likes.count - 1,
+            users: state.post!.likes.users.filter((id) => id !== action.payload),
+          },
+        },
+      };
+    },
     resetPostState: (state) => ({
       ...state,
       post: null,
@@ -37,7 +63,13 @@ const PostSlice = createSlice({
   },
 });
 
-export const { loadingPost, loadingPostError, setPost, resetPostState } =
-  PostSlice.actions;
+export const {
+  loadingPost,
+  loadingPostError,
+  setPost,
+  likePost,
+  dislikePost,
+  resetPostState,
+} = PostSlice.actions;
 
 export default PostSlice.reducer;

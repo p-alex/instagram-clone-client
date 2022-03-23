@@ -65,13 +65,13 @@ export interface ICommentCreator {
 }
 export interface ILikes {
   count: number;
-  users?: [string];
+  users: string[];
 }
 export interface IFollowers {
   count: number;
-  followersList: [string];
+  followersList: string[];
 }
 export interface IFollowing {
   count: number;
-  followingList: [string];
+  followingList: string[];
 }

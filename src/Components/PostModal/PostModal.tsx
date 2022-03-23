@@ -124,11 +124,7 @@ const PostModal = ({ postId }: { postId: string }) => {
             postedAt={post?.postedAt}
             comments={post?.comments.commentsList ? post.comments.commentsList : []}
           />
-          <PostReact
-            likesCount={post?.likes.count}
-            postedAt={post?.postedAt}
-            postId={post?.id}
-          />
+          <PostReact />
           <PostForm />
         </PostPanel>
       </div>

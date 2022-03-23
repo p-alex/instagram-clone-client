@@ -6,6 +6,7 @@ import { logoutUser } from '../../../Redux/Auth';
 import { useNavigate } from 'react-router-dom';
 import './ProfileBtn.scss';
 import useRedux from '../../../Hooks/useRedux';
+import { resetProfileState } from '../../../Redux/Profile';
 
 const ProfileBtn = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const ProfileBtn = () => {
       const response = await logoutUserRequest();
       if (response.success) {
         dispatch(logoutUser());
+        dispatch(resetProfileState());
         navigate('/login');
       }
     } catch (err) {

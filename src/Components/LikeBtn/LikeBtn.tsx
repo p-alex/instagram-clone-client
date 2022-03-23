@@ -14,7 +14,7 @@ const LikeBtn = ({ postId }: { postId: string }) => {
       setIsLiked(postState.post.likes.users.includes(authState.user.id));
   }, [authState, postState]);
 
-  const userId = authState.user!.id;
+  const userId = authState?.user?.id;
 
   const [likePostRequest] = useFetchWithRetry({
     query: LIKE_OR_DISLIKE_POST_MUTATION,
@@ -25,9 +25,9 @@ const LikeBtn = ({ postId }: { postId: string }) => {
   const handleLikePost = async () => {
     try {
       if (isLiked) {
-        dispatch(dislikePost(userId));
+        dispatch(dislikePost(userId!));
       } else {
-        dispatch(likePost(userId));
+        dispatch(likePost(userId!));
       }
       await likePostRequest();
     } catch (error) {

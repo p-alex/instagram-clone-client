@@ -1,13 +1,16 @@
 @import '../../variables.scss';
 .postModal {
   position: relative;
-  max-width: 1750px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto 0 auto;
+  max-width: 80%;
   display: flex;
   z-index: $postModalZ;
+  max-height: 70%;
   @media (max-width: 1900px) {
-    max-width: 82%;
+    max-width: 90%;
   }
-
   &__closeBtn {
     position: absolute;
     width: 50px;
@@ -26,8 +29,6 @@
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: 100;
     @media (max-width: 980px) {
       display: none;

@@ -1,6 +1,7 @@
 @import '../../../../variables.scss';
 .postPanel {
-  width: 500px;
+  position: relative;
+  min-width: 350px;
   background: $light-color;
   display: flex;
   flex-direction: column;

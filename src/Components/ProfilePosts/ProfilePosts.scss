@@ -4,8 +4,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-  margin-top: 50px;
-  padding-top: 50px;
+  padding-top: 35px;
   border-top: solid silver 1px;
 
   @media (max-width: 980px) {

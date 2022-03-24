@@ -38,7 +38,7 @@ const PostModal = ({ postId }: { postId: string }) => {
 
   const handleGetPost = async () => {
     try {
-      dispatch(loadingPost);
+      dispatch(loadingPost());
       const response: {
         statusCode: number;
         success: boolean;
@@ -108,26 +108,27 @@ const PostModal = ({ postId }: { postId: string }) => {
       currentPostIndex < userPosts?.length - 1 ? (
         <PostModalCtrl direction="next" handleNavigatePosts={handleNavigatePosts} />
       ) : null}
-
-      <div className="postModal">
-        {isLoading && <PostLoader />}
-        <PostImage imageUrl={post?.images[0].fullImage} />
-        <PostPanel>
-          <PostUser
-            username={post?.user.username}
-            profilePicture={post?.user.profilePicture}
-          />
-          <PostComments
-            profilePicture={post?.user.profilePicture}
-            username={post?.user.username}
-            comment={post?.description}
-            postedAt={post?.postedAt}
-            comments={post?.comments.commentsList ? post.comments.commentsList : []}
-          />
-          <PostReact />
-          <PostForm />
-        </PostPanel>
-      </div>
+      {isLoading && <PostLoader />}
+      {!isLoading && (
+        <div className="postModal">
+          <PostImage imageUrl={post?.images[0].fullImage} />
+          <PostPanel>
+            <PostUser
+              username={post?.user.username}
+              profilePicture={post?.user.profilePicture}
+            />
+            <PostComments
+              profilePicture={post?.user.profilePicture}
+              username={post?.user.username}
+              comment={post?.description}
+              postedAt={post?.postedAt}
+              comments={post?.comments.commentsList ? post.comments.commentsList : []}
+            />
+            <PostReact />
+            <PostForm />
+          </PostPanel>
+        </div>
+      )}
       <FocusTrapRedirectFocus element={firstFocusableElement} />
     </div>
   );

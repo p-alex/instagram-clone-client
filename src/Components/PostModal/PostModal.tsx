@@ -15,9 +15,10 @@ import { setPost, loadingPost, loadingPostError, resetPostState } from '../../Re
 import PostLoader from '../Post/PostComponents/PostLoader/PostLoader';
 import PostPanel from '../Post/PostComponents/PostPanel/PostPanel';
 import PostModalCtrl from './PostModalComponents/PostModalCtrl';
+import PostOptionsModal from '../Post/PostComponents/PostOptionsModal/PostOptionsModal';
 
 const PostModal = ({ postId }: { postId: string }) => {
-  const { profileState, postState, dispatch } = useRedux();
+  const { authState, profileState, postState, dispatch } = useRedux();
   const { selectedPostId, lastFocusedPostIndex, user } = profileState;
   const { post, isLoading } = postState;
   const selectedPost = user?.posts.postsList.find((post) => post.id === selectedPostId);
@@ -59,7 +60,7 @@ const PostModal = ({ postId }: { postId: string }) => {
   useEffect(() => {
     firstFocusableElement.current.focus();
     return () => {
-      dispatch(resetPostState());
+      dispatch(closePostModal());
     };
   }, []);
 
@@ -71,6 +72,7 @@ const PostModal = ({ postId }: { postId: string }) => {
     const lastFocusedPost = document.querySelector(
       `#profile-post-${lastFocusedPostIndex}`
     ) as HTMLButtonElement;
+    dispatch(resetPostState());
     dispatch(closePostModal());
     lastFocusedPost.focus();
   };
@@ -125,10 +127,11 @@ const PostModal = ({ postId }: { postId: string }) => {
               comments={post?.comments.commentsList ? post.comments.commentsList : []}
             />
             <PostReact />
-            <PostForm />
+            {authState.accessToken && <PostForm />}
           </PostPanel>
         </div>
       )}
+      {postState.isPostOptionsActive && <PostOptionsModal />}
       <FocusTrapRedirectFocus element={firstFocusableElement} />
     </div>
   );

@@ -3,7 +3,7 @@ import { RootState } from '../Redux/Store';
 import { useSelector } from 'react-redux';
 import { BASE_URL } from '../Util/baseURL';
 
-const useAxios = ({
+const useFetch = ({
   query,
   variables,
 }: {
@@ -44,4 +44,4 @@ const useAxios = ({
   return [apiRequest, { isLoading, error }];
 };
 
-export default useAxios;
+export default useFetch;

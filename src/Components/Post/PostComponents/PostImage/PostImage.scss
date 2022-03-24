@@ -4,6 +4,9 @@
   background: #111;
   width: 100%;
   min-width: 500px;
+  @media (max-width: 980px) {
+    min-width: auto;
+  }
   img {
     position: relative;
     width: 100%;

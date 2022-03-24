@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BASE_URL } from '../Util/baseURL';
 import useRefreshToken from './useRefreshToken';
 
-const useAxiosWithRetry = ({
+const useFetchWithRetry = ({
   query,
   variables,
   accessToken,
@@ -87,4 +87,4 @@ const useAxiosWithRetry = ({
   return [getData, { isLoading, error }];
 };
 
-export default useAxiosWithRetry;
+export default useFetchWithRetry;

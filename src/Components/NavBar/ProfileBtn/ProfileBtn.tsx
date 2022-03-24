@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../../default-profile-pic-url';
 import { LOGOUT_USER_MUTATION } from '../../../GraphQL/Mutations/authMutations';
-import useFetch from '../../../Hooks/useFetch';
 import { logoutUser } from '../../../Redux/Auth';
 import { useNavigate } from 'react-router-dom';
 import './ProfileBtn.scss';
 import useRedux from '../../../Hooks/useRedux';
 import { resetProfileState } from '../../../Redux/Profile';
+import useFetchWithRetry from '../../../Hooks/useFetchWithRetry';
 
 const ProfileBtn = () => {
   const navigate = useNavigate();
   const { authState, dispatch } = useRedux();
   const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const [logoutUserRequest, { error }] = useFetch({
+  const [logoutUserRequest, { error }] = useFetchWithRetry({
     query: LOGOUT_USER_MUTATION,
     variables: {},
+    accessToken: authState.accessToken,
   });
   const handleLogout = async () => {
     try {
@@ -62,6 +63,7 @@ const ProfileBtn = () => {
               handleLogout();
               setIsDropdownActive(false);
             }}
+            className="profileBtn__deleteBtn"
           >
             Logout
           </button>

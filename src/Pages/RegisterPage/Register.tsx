@@ -227,7 +227,7 @@ const Register = () => {
             >
               <p>
                 <i className="fa-solid fa-circle-info"></i>
-                24 characters.
+                Minimum 8 characters long.
               </p>
               <p>
                 <i className="fa-solid fa-circle-info"></i>

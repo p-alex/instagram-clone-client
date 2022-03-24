@@ -22,6 +22,9 @@ button {
   cursor: pointer;
   background: none;
   border: none;
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 input,

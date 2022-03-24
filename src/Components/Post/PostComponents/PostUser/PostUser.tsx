@@ -1,4 +1,6 @@
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../../../default-profile-pic-url';
+import useRedux from '../../../../Hooks/useRedux';
+import { togglePostOptions } from '../../../../Redux/Post';
 import './PostUser.scss';
 
 const PostUser = ({
@@ -7,21 +9,27 @@ const PostUser = ({
 }: {
   username: string | undefined;
   profilePicture: string | undefined;
-}) => (
-  <div className="postUser">
-    <div className="postUser__container">
-      <img
-        src={profilePicture ? profilePicture : DEFAULT_PROFILE_PICTURE_URL}
-        alt=""
-        width="35"
-        height="35"
-      />
-      <p>{username}</p>
+}) => {
+  const { dispatch } = useRedux();
+  return (
+    <div className="postUser">
+      <div className="postUser__container">
+        <img
+          src={profilePicture ? profilePicture : DEFAULT_PROFILE_PICTURE_URL}
+          alt=""
+          width="35"
+          height="35"
+        />
+        <p>{username}</p>
+      </div>
+      <button
+        className="postUser__moreOptionsBtn"
+        onClick={() => dispatch(togglePostOptions())}
+      >
+        <i className="fa-solid fa-ellipsis"></i>
+      </button>
     </div>
-    <button className="postUser__moreOptionsBtn">
-      <i className="fa-solid fa-ellipsis"></i>
-    </button>
-  </div>
-);
+  );
+};
 
 export default PostUser;

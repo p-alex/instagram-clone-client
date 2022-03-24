@@ -2,7 +2,7 @@ import Layout from '../../Layout/Layout';
 import Post from '../../Components/Post/Post';
 import './PostPage.scss';
 import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useFetch from '../../Hooks/useFetch';
 import { useEffect } from 'react';
 import useRedux from '../../Hooks/useRedux';
@@ -11,6 +11,7 @@ import { IPost } from '../../interfaces';
 
 const PostPage = () => {
   const params = useParams();
+  const { postState } = useRedux();
   const [getPost, { error }] = useFetch({
     query: GET_POST_QUERY,
     variables: { postId: params.postId },
@@ -34,7 +35,7 @@ const PostPage = () => {
   };
 
   useEffect(() => {
-    handleGetPost();
+    if (!postState.post?.id) handleGetPost();
     return () => {
       dispatch(resetPostState());
     };

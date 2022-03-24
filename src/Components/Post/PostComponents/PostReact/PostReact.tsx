@@ -4,14 +4,14 @@ import LikeBtn from '../../../LikeBtn/LikeBtn';
 import './PostReact.scss';
 
 const PostReact = () => {
-  const { postState } = useRedux();
+  const { authState, postState } = useRedux();
   const count = postState.post?.likes.count;
   const postedAt = postState.post?.postedAt;
   const postId = postState.post?.id;
   return (
     <div className="postReact">
       <LikeBtn postId={postId ? postId : ''} />
-      <button aria-label="add a comment">
+      <button aria-label="add a comment" disabled={!authState.accessToken}>
         <i className="fa-regular fa-comment"></i>
       </button>
       <p>{`${count} ${count === 1 ? 'like' : 'likes'}`}</p>

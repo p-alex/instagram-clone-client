@@ -5,11 +5,12 @@ import PostUser from './PostComponents/PostUser/PostUser';
 import PostComments from './PostComponents/PostComments/PostComments';
 import PostReact from './PostComponents/PostReact/PostReact';
 import PostForm from './PostComponents/PostForm/PostForm';
+import PostOptionsModal from './PostComponents/PostOptionsModal/PostOptionsModal';
 import useRedux from '../../Hooks/useRedux';
 import './Post.scss';
 
 const Post = () => {
-  const { postState } = useRedux();
+  const { authState, postState } = useRedux();
   const { post, isLoading } = postState;
   return (
     <article className="post">
@@ -28,8 +29,9 @@ const Post = () => {
           comments={post?.comments.commentsList}
         />
         <PostReact />
-        <PostForm />
+        {authState.accessToken && <PostForm />}
       </PostPanel>
+      {postState.isPostOptionsActive && <PostOptionsModal />}
     </article>
   );
 };

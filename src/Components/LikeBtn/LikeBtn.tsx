@@ -37,7 +37,12 @@ const LikeBtn = ({ postId }: { postId: string }) => {
     }
   };
   return (
-    <button aria-label="like post" className="likeBtn" onClick={handleLikePost}>
+    <button
+      aria-label="like post"
+      className="likeBtn"
+      onClick={handleLikePost}
+      disabled={!authState.accessToken}
+    >
       <i
         className={`fa-${isLiked ? 'solid' : 'regular'}  fa-heart`}
         style={isLiked ? { color: 'red' } : undefined}

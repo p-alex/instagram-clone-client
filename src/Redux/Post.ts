@@ -3,12 +3,14 @@ import { IPost } from '../interfaces';
 
 export interface IPostState {
   post: IPost | null;
+  isPostOptionsActive: boolean;
   isLoading: boolean;
   errorMessage: string | null;
 }
 
 const initialState: IPostState = {
   post: null,
+  isPostOptionsActive: false,
   isLoading: false,
   errorMessage: null,
 };
@@ -54,6 +56,9 @@ const PostSlice = createSlice({
         },
       };
     },
+    togglePostOptions: (state) => {
+      return { ...state, isPostOptionsActive: !state.isPostOptionsActive };
+    },
     resetPostState: (state) => ({
       ...state,
       post: null,
@@ -69,6 +74,7 @@ export const {
   setPost,
   likePost,
   dislikePost,
+  togglePostOptions,
   resetPostState,
 } = PostSlice.actions;
 

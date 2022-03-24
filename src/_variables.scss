@@ -30,6 +30,7 @@ $PTagFontSizeSmall: 12px;
 
 // navbar height
 $navbar-height: 72px;
+$navbar-height-mobile: 60px;
 
 // CreatePostModal z-index
 $createPostModalZ: 12;
@@ -38,3 +39,8 @@ $createPostModalZ: 12;
 $postModalZ: 101;
 $postModalContainerZ: 100;
 $postModalBackdropZ: 99;
+
+// PostOptions z-index
+$postOptionsZ: 200;
+$postOptionsContainerZ: 202;
+$postOptionsBackdropZ: 201;

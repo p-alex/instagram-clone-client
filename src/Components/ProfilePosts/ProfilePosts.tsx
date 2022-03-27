@@ -60,7 +60,7 @@ const ProfilePosts = () => {
               key={post.id}
             >
               <img
-                src={post.images[0].croppedImage}
+                src={post.images[0].croppedImage.url}
                 alt=""
                 className="profilePosts__image"
                 width="293"

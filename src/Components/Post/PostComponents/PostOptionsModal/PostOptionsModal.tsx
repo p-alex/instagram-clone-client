@@ -1,13 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DELETE_POST_MUTATION } from '../../../../GraphQL/Mutations/postMutations';
+import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
 import useRedux from '../../../../Hooks/useRedux';
+import { IDefaultResponse } from '../../../../interfaces';
 import { togglePostOptions } from '../../../../Redux/Post';
+import { closePostModal, deletePost } from '../../../../Redux/Profile';
+import Spinner from '../../../../Ui/Spinner';
 import FocusTrapRedirectFocus from '../../../FocusTrap';
 import './PostOptionsModal.scss';
 
 const PostOptionsModal = () => {
   const navigate = useNavigate();
-  const { authState, postState, dispatch } = useRedux();
+  const { authState, profileState, postState, dispatch } = useRedux();
+
+  const [deletePostRequest, { isLoading }] = useFetchWithRetry({
+    query: DELETE_POST_MUTATION,
+    variables: { id: postState.post?.id, postIndex: profileState.selectedPostIndex },
+    accessToken: authState.accessToken,
+  });
+
   const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   const optionsFirstFocusable = useRef<any>();
@@ -28,6 +40,19 @@ const PostOptionsModal = () => {
     navigator.clipboard.writeText(window.location.href);
   };
 
+  const handleDeletePost = async () => {
+    try {
+      const response: IDefaultResponse = await deletePostRequest();
+      if (response.success) {
+        navigate(`/users/${authState.user?.username}`);
+        dispatch(closePostModal());
+        dispatch(deletePost(postState.post!.id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="postOptions">
       <FocusTrapRedirectFocus element={optionsLastFocusable} />
@@ -39,13 +64,15 @@ const PostOptionsModal = () => {
         <div className="postOptions__container">
           <FocusTrapRedirectFocus element={confirmDeleteLastFocusable} />
           <div className="postOptions__confirmMessage">
-            <h2>Delete Post?</h2>
-            <p>Are you sure you want to delete this post?</p>
+            {isLoading && <Spinner />}
+            <h2>{!isLoading ? 'Delete Post?' : 'Loading...'}</h2>
+            {!isLoading && <p>Are you sure you want to delete this post?</p>}
           </div>
-
           <button
             className="postOptions__option postOptions__red-option"
             ref={confirmDeleteFirstFocusable}
+            onClick={handleDeletePost}
+            disabled={isLoading}
           >
             Delete
           </button>

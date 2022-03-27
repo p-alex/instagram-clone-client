@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { CreateModalContext } from '../../../Context/CreateModalContext';
+import { DEFAULT_PROFILE_PICTURE_URL } from '../../../default-profile-pic-url';
 import { RootState } from '../../../Redux/Store';
 import FocusTrapRedirectFocus from '../../FocusTrap';
 
@@ -26,7 +27,7 @@ const CreatePostDetails = ({
               src={
                 authState.user?.profilePicture
                   ? authState.user?.profilePicture
-                  : '/images/default-profile-picture.png'
+                  : DEFAULT_PROFILE_PICTURE_URL
               }
               alt=""
               width={30}

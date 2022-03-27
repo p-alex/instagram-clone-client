@@ -113,7 +113,7 @@ const PostModal = ({ postId }: { postId: string }) => {
       {isLoading && <PostLoader />}
       {!isLoading && (
         <div className="postModal">
-          <PostImage imageUrl={post?.images[0].fullImage} />
+          <PostImage imageUrl={post?.images[0].fullImage.url} />
           <PostPanel>
             <PostUser
               username={post?.user.username}

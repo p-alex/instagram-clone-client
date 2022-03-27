@@ -3,6 +3,7 @@ import { IPost } from '../interfaces';
 
 export interface IPostState {
   post: IPost | null;
+  postIndex: number | null;
   isPostOptionsActive: boolean;
   isLoading: boolean;
   errorMessage: string | null;
@@ -10,6 +11,7 @@ export interface IPostState {
 
 const initialState: IPostState = {
   post: null,
+  postIndex: null,
   isPostOptionsActive: false,
   isLoading: false,
   errorMessage: null,
@@ -62,6 +64,7 @@ const PostSlice = createSlice({
     resetPostState: (state) => ({
       ...state,
       post: null,
+      postIndex: null,
       isLoading: false,
       errorMessage: null,
     }),

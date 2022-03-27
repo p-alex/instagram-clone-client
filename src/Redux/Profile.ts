@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { bindActionCreators, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IFollowers, IFollowing, IPosts } from '../interfaces';
 
 interface IProfileUserData {
@@ -16,6 +16,7 @@ interface IProfileState {
   user: IProfileUserData | null;
   isPostModalActive: boolean;
   selectedPostId: string;
+  selectedPostIndex: number | null;
   lastFocusedPostIndex: number | null;
   isLoading: boolean;
   errorMessage: string | null;
@@ -25,6 +26,7 @@ const initialState: IProfileState = {
   user: null,
   isPostModalActive: false,
   selectedPostId: '',
+  selectedPostIndex: null,
   lastFocusedPostIndex: null,
   isLoading: false,
   errorMessage: null,
@@ -68,7 +70,16 @@ const ProfileSlice = createSlice({
       };
     },
     selectPostId: (state, action: PayloadAction<string>) => {
-      return { ...state, selectedPostId: action.payload };
+      const selectedPostIndex = state.user!.posts.postsList.findIndex(
+        (post) => post.id === action.payload
+      );
+      return { ...state, selectedPostId: action.payload, selectedPostIndex };
+    },
+    deletePost: (state, action: PayloadAction<string>) => {
+      state.user!.posts.postsList = state.user!.posts.postsList.filter(
+        (post) => post.id !== action.payload
+      );
+      state.user!.posts.count -= 1;
     },
     closePostModal: (state) => {
       return { ...state, selectedPostId: '' };
@@ -95,6 +106,7 @@ export const {
   loadingProfileError,
   setProfileData,
   selectPostId,
+  deletePost,
   closePostModal,
   setLastFocusedPostIndex,
   resetProfileState,

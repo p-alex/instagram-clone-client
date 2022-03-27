@@ -15,7 +15,7 @@ const Post = () => {
   return (
     <article className="post">
       {isLoading && <PostLoader />}
-      <PostImage imageUrl={post?.images[0].fullImage} />
+      <PostImage imageUrl={post?.images[0].fullImage.url} />
       <PostPanel>
         <PostUser
           username={post?.user.username}

@@ -17,3 +17,13 @@ export const LIKE_OR_DISLIKE_POST_MUTATION = `
     }
   }
 `;
+
+export const DELETE_POST_MUTATION = `
+  mutation DeletePost($id: String!, $postIndex: Int!) {
+    deletePost(id: $id, postIndex: $postIndex) {
+      statusCode
+      success
+      message
+    }
+  }
+`;

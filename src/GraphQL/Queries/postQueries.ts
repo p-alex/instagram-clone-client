@@ -12,7 +12,9 @@ query GetPost($postId: String!) {
           profilePicture
         }
         images  {
-          fullImage
+          fullImage {
+            url
+          }
         }
         description
         likes {

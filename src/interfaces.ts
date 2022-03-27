@@ -42,8 +42,8 @@ export interface IPost {
   postedAt: string;
 }
 export interface IImage {
-  fullImage: string;
-  croppedImage: string;
+  fullImage: { url: string; public_id: string };
+  croppedImage: { url: string; public_id: string };
 }
 export interface IComments {
   count: number;
@@ -74,4 +74,9 @@ export interface IFollowers {
 export interface IFollowing {
   count: number;
   followingList: string[];
+}
+export interface IDefaultResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
 }

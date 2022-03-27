@@ -21,7 +21,9 @@ export const GET_USER_QUERY = `
                 postsList {
                   id
                   images {
-                    croppedImage
+                    croppedImage {
+                      url
+                    }
                   }
                   likes {
                     count

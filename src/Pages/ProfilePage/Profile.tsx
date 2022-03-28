@@ -46,7 +46,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (profileState.user?.username !== params.username) handleGetProfileData();
-  }, []);
+  }, [params.username]);
 
   return (
     <Layout>

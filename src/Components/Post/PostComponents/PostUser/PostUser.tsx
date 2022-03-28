@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../../../default-profile-pic-url';
 import useRedux from '../../../../Hooks/useRedux';
 import { togglePostOptions } from '../../../../Redux/Post';
@@ -20,7 +21,7 @@ const PostUser = ({
           width="35"
           height="35"
         />
-        <p>{username}</p>
+        <Link to={`/users/${username}`}>{username}</Link>
       </div>
       <button
         className="postUser__moreOptionsBtn"

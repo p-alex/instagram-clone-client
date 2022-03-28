@@ -90,7 +90,7 @@ const PostOptionsModal = () => {
         </div>
       ) : (
         <div className="postOptions__container">
-          {authState.user?.id ? (
+          {authState.user?.id && authState.user.id === postState.post?.user.id ? (
             <button
               className="postOptions__option postOptions__red-option"
               onClick={() => setIsDeleteMode(!isDeleteMode)}

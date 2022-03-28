@@ -6,6 +6,10 @@
   &__container {
     display: flex;
     align-items: center;
+    a {
+      color: black;
+      text-decoration: none;
+    }
   }
   &__moreOptionsBtn {
     padding: 5px;

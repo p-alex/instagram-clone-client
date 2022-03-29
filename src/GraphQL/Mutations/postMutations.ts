@@ -19,8 +19,8 @@ export const LIKE_OR_DISLIKE_POST_MUTATION = `
 `;
 
 export const DELETE_POST_MUTATION = `
-  mutation DeletePost($id: String!) {
-    deletePost(id: $id) {
+  mutation DeletePost($postId: String!) {
+    deletePost(postId: $postId) {
       statusCode
       success
       message

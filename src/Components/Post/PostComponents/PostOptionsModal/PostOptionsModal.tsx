@@ -16,7 +16,7 @@ const PostOptionsModal = () => {
 
   const [deletePostRequest, { isLoading }] = useFetchWithRetry({
     query: DELETE_POST_MUTATION,
-    variables: { id: postState.post?.id },
+    variables: { postId: postState.post?.id },
     accessToken: authState.accessToken,
   });
 

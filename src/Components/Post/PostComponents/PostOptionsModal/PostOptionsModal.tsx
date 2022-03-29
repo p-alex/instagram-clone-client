@@ -12,11 +12,11 @@ import './PostOptionsModal.scss';
 
 const PostOptionsModal = () => {
   const navigate = useNavigate();
-  const { authState, profileState, postState, dispatch } = useRedux();
+  const { authState, postState, dispatch } = useRedux();
 
   const [deletePostRequest, { isLoading }] = useFetchWithRetry({
     query: DELETE_POST_MUTATION,
-    variables: { id: postState.post?.id, postIndex: profileState.selectedPostIndex },
+    variables: { id: postState.post?.id },
     accessToken: authState.accessToken,
   });
 

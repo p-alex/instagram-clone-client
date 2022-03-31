@@ -13,6 +13,7 @@ mutation RegisterUser(
     password: $password
     confirmPassword: $confirmPassword
   ) {
+    statusCode
     success
     message
     user {
@@ -26,6 +27,7 @@ mutation RegisterUser(
 export const LOGIN_USER_MUTATION = `
     mutation LoginUser($username: String!, $password: String!) {
         loginUser(username: $username, password: $password) {
+            statusCode
             success
             message
             userId

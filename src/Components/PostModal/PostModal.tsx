@@ -122,9 +122,8 @@ const PostModal = ({ postId }: { postId: string }) => {
             <PostComments
               profilePicture={post?.user.profilePicture}
               username={post?.user.username}
-              comment={post?.description}
+              description={post?.description}
               postedAt={post?.postedAt}
-              comments={post?.comments.commentsList ? post.comments.commentsList : []}
             />
             <PostReact />
             {authState.accessToken && <PostForm />}

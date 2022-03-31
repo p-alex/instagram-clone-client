@@ -68,24 +68,29 @@ const PostOptionsModal = () => {
             <h2>{!isLoading ? 'Delete Post?' : 'Loading...'}</h2>
             {!isLoading && <p>Are you sure you want to delete this post?</p>}
           </div>
-          <button
-            className="postOptions__option postOptions__red-option"
-            ref={confirmDeleteFirstFocusable}
-            onClick={handleDeletePost}
-            disabled={isLoading}
-          >
-            Delete
-          </button>
-          <button
-            className="postOptions__option"
-            ref={confirmDeleteLastFocusable}
-            onClick={() => {
-              setIsDeleteMode(!isDeleteMode);
-              optionsFirstFocusable.current.focus();
-            }}
-          >
-            Cancel
-          </button>
+          {!isLoading && (
+            <>
+              <button
+                className="postOptions__option postOptions__red-option"
+                ref={confirmDeleteFirstFocusable}
+                onClick={handleDeletePost}
+                disabled={isLoading}
+              >
+                Delete
+              </button>
+              <button
+                className="postOptions__option"
+                ref={confirmDeleteLastFocusable}
+                onClick={() => {
+                  setIsDeleteMode(!isDeleteMode);
+                  optionsFirstFocusable.current.focus();
+                }}
+              >
+                Cancel
+              </button>
+            </>
+          )}
+
           <FocusTrapRedirectFocus element={confirmDeleteFirstFocusable} />
         </div>
       ) : (

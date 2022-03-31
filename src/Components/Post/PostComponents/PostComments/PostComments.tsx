@@ -1,41 +1,63 @@
+import { useEffect } from 'react';
+import { GET_COMMENTS_QUERY } from '../../../../GraphQL/Queries/commentQueries';
+import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
+import useRedux from '../../../../Hooks/useRedux';
 import { IComment } from '../../../../interfaces';
+import { loadComments } from '../../../../Redux/Post';
+import Spinner from '../../../../Ui/Spinner';
 import Comment from '../../../Comment/Comment';
 import './PostComments.scss';
 
 const PostComments = ({
   profilePicture,
   username,
-  comment,
+  description,
   postedAt,
-  comments,
 }: {
   profilePicture: string | undefined;
   username: string | undefined;
-  comment: string | undefined;
+  description: string | undefined;
   postedAt: string | undefined;
-  comments: IComment[] | undefined;
 }) => {
+  const { authState, postState, dispatch } = useRedux();
+  const [getCommentsRequest, { isLoading }] = useFetchWithRetry({
+    query: GET_COMMENTS_QUERY,
+    variables: { postId: postState.post?.id },
+    accessToken: authState.accessToken,
+  });
+  const handleGetComments = async () => {
+    try {
+      const response = await getCommentsRequest();
+      if (response.success) dispatch(loadComments(response.comments));
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    if (postState.post?.id) handleGetComments();
+  }, [postState.post?.id]);
   return (
     <div className="postComments">
-      {comment && (
+      {description && (
         <Comment
           profilePicture={profilePicture!}
           username={username!}
-          comment={comment!}
+          comment={description!}
           postedAt={postedAt!}
         />
       )}
-
-      {comments && comments.length
-        ? comments.map((comment) => (
-            <Comment
-              profilePicture={comment.user.profilePicture}
-              username={comment.user.username}
-              comment={comment.comment}
-              postedAt={comment.postedAt}
-            />
-          ))
-        : null}
+      {isLoading && <p>Loading...</p>}
+      {postState.post?.comments.userComments.length &&
+        !isLoading &&
+        postState.post?.comments.userComments.map((comment) => (
+          <Comment
+            key={comment.id}
+            profilePicture={comment?.user?.profilePicture}
+            username={comment?.user?.username}
+            comment={comment?.comment}
+            postedAt={comment?.postedAt}
+          />
+        ))}
     </div>
   );
 };

@@ -1,6 +1,10 @@
 .comment {
   display: flex;
   gap: 15px;
+  margin-bottom: 10px;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
   &__body {
     font-size: 14px;
   }

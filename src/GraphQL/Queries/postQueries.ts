@@ -1,5 +1,5 @@
 export const GET_POST_QUERY = `
-query GetPost($postId: String!) {
+query GetPost($postId: ID!) {
     getPost(postId: $postId) {
       statusCode
       success
@@ -23,21 +23,7 @@ query GetPost($postId: String!) {
         }
         comments {
           count
-          comments {
-            id
-            isReply
-            user {
-              id
-              username
-              profilePicture
-            }
-            comment
-            likes {
-              count
-              users
-            }
-            postedAt
-          }
+          userComments
         }
         postedAt
       }

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPost } from '../interfaces';
+import { IComment, IPost } from '../interfaces';
 
 export interface IPostState {
   post: IPost | null;
@@ -58,6 +58,29 @@ const PostSlice = createSlice({
         },
       };
     },
+    loadComments: (state, action: PayloadAction<IComment[]>) => {
+      state.post!.comments.userComments = action.payload;
+    },
+    addComment: (state, action: PayloadAction<IComment>) => {
+      state.post!.comments.count += 1;
+      state.post!.comments.userComments.unshift(action.payload);
+    },
+    deleteComment: (state, action: PayloadAction<string>) => {
+      state.post!.comments.count -= 1;
+      state.post!.comments.userComments = state.post!.comments.userComments.filter(
+        (comment) => comment.id !== action.payload
+      );
+    },
+    likeComment: (state, action: PayloadAction<string>) => {
+      state.post!.likes.count += 1;
+      state.post!.likes.users.unshift(action.payload);
+    },
+    dislikeComment: (state, action: PayloadAction<string>) => {
+      state.post!.likes.count -= 1;
+      state.post!.likes.users = state.post!.likes.users.filter(
+        (user: any) => user.id !== action.payload
+      );
+    },
     togglePostOptions: (state) => {
       return { ...state, isPostOptionsActive: !state.isPostOptionsActive };
     },
@@ -78,6 +101,10 @@ export const {
   likePost,
   dislikePost,
   togglePostOptions,
+  loadComments,
+  addComment,
+  deleteComment,
+  likeComment,
   resetPostState,
 } = PostSlice.actions;
 

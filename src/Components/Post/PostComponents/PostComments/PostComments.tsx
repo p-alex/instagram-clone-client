@@ -49,6 +49,7 @@ const PostComments = ({
       {isLoading && <p>Loading...</p>}
       {postState.post?.comments.userComments.length &&
         !isLoading &&
+        authState.accessToken &&
         postState.post?.comments.userComments.map((comment) => (
           <Comment
             key={comment.id}

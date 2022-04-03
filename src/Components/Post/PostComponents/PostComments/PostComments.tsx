@@ -47,22 +47,23 @@ const PostComments = () => {
         />
       )}
       {isLoading && <p>Loading...</p>}
-      {postState.post?.comments.count &&
-        !isLoading &&
-        authState.accessToken &&
-        commentsSectionState.comments.map((comment, index) => (
-          <Comment
-            key={comment.id}
-            commentId={comment.id}
-            commentIndex={index}
-            profilePicture={comment?.user?.profilePicture}
-            username={comment?.user?.username}
-            comment={comment?.comment}
-            likes={comment.likes}
-            postedAt={comment?.postedAt}
-            isDescription={false}
-          />
-        ))}
+      {commentsSectionState.comments.length
+        ? !isLoading &&
+          authState.accessToken &&
+          commentsSectionState.comments.map((comment, index) => (
+            <Comment
+              key={comment.id}
+              commentId={comment.id}
+              commentIndex={index}
+              profilePicture={comment?.user?.profilePicture}
+              username={comment?.user?.username}
+              comment={comment?.comment}
+              likes={comment.likes}
+              postedAt={comment?.postedAt}
+              isDescription={false}
+            />
+          ))
+        : null}
     </div>
   );
 };

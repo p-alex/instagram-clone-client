@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
+import useRedux from '../../Hooks/useRedux';
 import { ILikes } from '../../interfaces';
 import './Comment.scss';
 import CommentBottom from './CommentComponents/CommentBottom';
 import CommentLikeBtn from './CommentComponents/CommentLikeBtn';
+import CommentOptions from './CommentComponents/CommentOptions';
 
 const Comment = ({
   commentId,
@@ -25,10 +27,14 @@ const Comment = ({
   postedAt: string | undefined;
   isDescription: boolean;
 }) => {
+  const { commentsSectionState } = useRedux();
   const [isShowMore, setIsShowMore] = useState(false);
   const handleToggleShowMore = () => setIsShowMore(!isShowMore);
   return (
     <div className="comment">
+      {commentsSectionState.isCommentOptionsModalActive && (
+        <CommentOptions commentId={commentId!} />
+      )}
       <div className="comment__container">
         <img
           src={profilePicture ? profilePicture : DEFAULT_PROFILE_PICTURE_URL}

@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { ADD_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
 import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
 import useRedux from '../../../../Hooks/useRedux';
-import { addComment } from '../../../../Redux/Post';
+import { addComment } from '../../../../Redux/CommentsSection';
 import './PostForm.scss';
 
 const PostForm = () => {
@@ -34,7 +34,7 @@ const PostForm = () => {
         value={comment}
         onChange={(event) => setComment(event.target.value)}
       ></input>
-      <button type="submit" disabled={isLoading}>
+      <button type="submit" disabled={isLoading || !comment}>
         Post
       </button>
     </form>

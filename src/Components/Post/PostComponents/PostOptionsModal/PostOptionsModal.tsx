@@ -36,10 +36,6 @@ const PostOptionsModal = () => {
     if (isDeleteMode) confirmDeleteLastFocusable.current.focus();
   }, [isDeleteMode]);
 
-  const handleCopyToUrlToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href);
-  };
-
   const handleDeletePost = async () => {
     try {
       const response: IDefaultResponse = await deletePostRequest();
@@ -51,6 +47,29 @@ const PostOptionsModal = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleCloseModalAndRedirectFocus = () => {
+    const optionsToggleBtn = document.querySelector(
+      '.postUser__moreOptionsBtn'
+    ) as HTMLButtonElement;
+    dispatch(togglePostOptions());
+    optionsToggleBtn.focus();
+  };
+
+  const handleToggleDeleteMode = () => {
+    setIsDeleteMode(!isDeleteMode);
+    optionsFirstFocusable.current.focus();
+  };
+
+  const handleGoToPost = () => {
+    dispatch(togglePostOptions());
+    navigate(`/posts/${postState.post?.id}`);
+  };
+
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    dispatch(togglePostOptions());
   };
 
   return (
@@ -81,16 +100,12 @@ const PostOptionsModal = () => {
               <button
                 className="postOptions__option"
                 ref={confirmDeleteLastFocusable}
-                onClick={() => {
-                  setIsDeleteMode(!isDeleteMode);
-                  optionsFirstFocusable.current.focus();
-                }}
+                onClick={handleToggleDeleteMode}
               >
                 Cancel
               </button>
             </>
           )}
-
           <FocusTrapRedirectFocus element={confirmDeleteFirstFocusable} />
         </div>
       ) : (
@@ -112,35 +127,16 @@ const PostOptionsModal = () => {
             </button>
           )}
           {!authState.user?.id && <button className="postOptions__option">Follow</button>}
-          <button
-            className="postOptions__option"
-            role="link"
-            onClick={() => {
-              dispatch(togglePostOptions());
-              navigate(`/posts/${postState.post?.id}`);
-            }}
-          >
+          <button className="postOptions__option" role="link" onClick={handleGoToPost}>
             Go to post
           </button>
-          <button
-            className="postOptions__option"
-            onClick={() => {
-              handleCopyToUrlToClipboard();
-              dispatch(togglePostOptions());
-            }}
-          >
+          <button className="postOptions__option" onClick={handleCopyToClipboard}>
             Copy Link
           </button>
           <button
             className="postOptions__option"
             ref={optionsLastFocusable}
-            onClick={() => {
-              const optionsToggleBtn = document.querySelector(
-                '.postUser__moreOptionsBtn'
-              ) as HTMLButtonElement;
-              dispatch(togglePostOptions());
-              optionsToggleBtn.focus();
-            }}
+            onClick={handleCloseModalAndRedirectFocus}
           >
             Cancel
           </button>

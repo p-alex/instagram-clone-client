@@ -53,50 +53,45 @@ const ProfileSlice = createSlice({
         posts,
         profilePicture,
       } = action.payload;
-      return {
-        ...state,
-        isLoading: false,
-        user: {
-          ...state.user,
-          userId,
-          username,
-          fullname,
-          bio,
-          followers,
-          following,
-          posts,
-          profilePicture,
-        },
+      state.isLoading = false;
+      state.user = {
+        userId,
+        username,
+        fullname,
+        bio,
+        followers,
+        following,
+        posts,
+        profilePicture,
       };
     },
     selectPostId: (state, action: PayloadAction<string>) => {
       const selectedPostIndex = state.user!.posts.postsList.findIndex(
         (post) => post.id === action.payload
       );
-      return { ...state, selectedPostId: action.payload, selectedPostIndex };
+      state.selectedPostId = action.payload;
+      state.selectedPostIndex = selectedPostIndex;
     },
     deletePost: (state, action: PayloadAction<string>) => {
-      state.user!.posts.postsList = state.user!.posts.postsList.filter(
+      const updatedPostsList = state.user!.posts.postsList.filter(
         (post) => post.id !== action.payload
       );
       state.user!.posts.count -= 1;
+      state.user!.posts.postsList = updatedPostsList;
     },
     closePostModal: (state) => {
-      return { ...state, selectedPostId: '' };
+      state.selectedPostId = '';
     },
     setLastFocusedPostIndex: (state, action: PayloadAction<number | null>) => {
-      return { ...state, lastFocusedPostIndex: action.payload };
+      state.lastFocusedPostIndex = action.payload;
     },
     resetProfileState: (state) => {
-      return {
-        ...state,
-        user: null,
-        isPostModalActive: false,
-        selectedPostId: '',
-        lastFocusedPostIndex: null,
-        isLoading: false,
-        errorMessage: null,
-      };
+      state.user = null;
+      state.isPostModalActive = false;
+      state.selectedPostId = '';
+      state.lastFocusedPostIndex = null;
+      state.isLoading = false;
+      state.errorMessage = null;
     },
   },
 });

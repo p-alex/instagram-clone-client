@@ -21,76 +21,36 @@ const PostSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
-    loadingPost: (state) => ({ ...state, isLoading: true }),
-    loadingPostError: (state, action: PayloadAction<string>) => ({
-      ...state,
-      isLoading: false,
-      errorMessage: action.payload,
-    }),
-    setPost: (state, action: PayloadAction<IPost>) => ({
-      ...state,
-      isLoading: false,
-      post: action.payload,
-    }),
+    loadingPost: (state) => {
+      state.isLoading = true;
+    },
+    loadingPostError: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    setPost: (state, action: PayloadAction<IPost>) => {
+      state.isLoading = false;
+      state.post = action.payload;
+    },
     likePost: (state, action: PayloadAction<string>) => {
-      return {
-        ...state,
-        post: {
-          ...state.post!,
-          likes: {
-            ...state.post!.likes,
-            count: state.post!.likes.count + 1,
-            users: [action.payload, ...state.post!.likes.users!],
-          },
-        },
-      };
-    },
-    dislikePost: (state, action: PayloadAction<string>) => {
-      return {
-        ...state,
-        post: {
-          ...state.post!,
-          likes: {
-            ...state.post!.likes,
-            count: state.post!.likes.count - 1,
-            users: state.post!.likes.users.filter((id) => id !== action.payload),
-          },
-        },
-      };
-    },
-    loadComments: (state, action: PayloadAction<IComment[]>) => {
-      state.post!.comments.userComments = action.payload;
-    },
-    addComment: (state, action: PayloadAction<IComment>) => {
-      state.post!.comments.count += 1;
-      state.post!.comments.userComments.unshift(action.payload);
-    },
-    deleteComment: (state, action: PayloadAction<string>) => {
-      state.post!.comments.count -= 1;
-      state.post!.comments.userComments = state.post!.comments.userComments.filter(
-        (comment) => comment.id !== action.payload
-      );
-    },
-    likeComment: (state, action: PayloadAction<string>) => {
       state.post!.likes.count += 1;
       state.post!.likes.users.unshift(action.payload);
     },
-    dislikeComment: (state, action: PayloadAction<string>) => {
+    dislikePost: (state, action: PayloadAction<string>) => {
       state.post!.likes.count -= 1;
       state.post!.likes.users = state.post!.likes.users.filter(
-        (user: any) => user.id !== action.payload
+        (id) => id !== action.payload
       );
     },
     togglePostOptions: (state) => {
-      return { ...state, isPostOptionsActive: !state.isPostOptionsActive };
+      state.isPostOptionsActive = !state.isPostOptionsActive;
     },
-    resetPostState: (state) => ({
-      ...state,
-      post: null,
-      postIndex: null,
-      isLoading: false,
-      errorMessage: null,
-    }),
+    resetPostState: (state) => {
+      state.post = null;
+      state.postIndex = null;
+      state.isLoading = false;
+      state.errorMessage = null;
+    },
   },
 });
 
@@ -101,10 +61,6 @@ export const {
   likePost,
   dislikePost,
   togglePostOptions,
-  loadComments,
-  addComment,
-  deleteComment,
-  likeComment,
   resetPostState,
 } = PostSlice.actions;
 

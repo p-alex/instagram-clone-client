@@ -21,12 +21,7 @@ const Post = () => {
           username={post?.user.username}
           profilePicture={post?.user.profilePicture}
         />
-        <PostComments
-          profilePicture={post?.user.profilePicture}
-          username={post?.user.username}
-          description={post?.description}
-          postedAt={post?.postedAt}
-        />
+        <PostComments />
         <PostReact />
         {authState.accessToken && <PostForm />}
       </PostPanel>

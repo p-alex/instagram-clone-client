@@ -23,7 +23,6 @@ query GetPost($postId: ID!) {
         }
         comments {
           count
-          userComments
         }
         postedAt
       }

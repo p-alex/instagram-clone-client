@@ -1,7 +1,12 @@
 .comment {
   display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  &__container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -16,16 +21,55 @@
     float: left;
   }
   &__text {
-    width: 100%;
+    max-width: 240px;
     text-align: justify;
+  }
+  &__showMoreBtn {
+    font-size: 0.8rem;
+    margin-left: 5px;
+    font-weight: bold;
+    color: #555;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   &__profileImg {
     border-radius: 50%;
   }
-  &__text {
-    margin: 5px 0;
+  &__bottom {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 5px;
+    &:hover .comment__optionsToggle {
+      opacity: 1;
+    }
   }
   &__postedAt {
     display: block;
+  }
+  &__optionsToggle {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    padding: 0 2px;
+    &:focus {
+      opacity: 1;
+    }
+  }
+  small {
+    color: #555;
+  }
+  &__likeBtn {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    font-size: 0.8rem;
+    top: 3px;
+    margin-left: 15px;
   }
 }

@@ -37,7 +37,7 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
 
   const handleCloseModalAndRedirectFocus = () => {
     const optionsToggleBtn = document.querySelector(
-      '.postUser__moreOptionsBtn'
+      '.comment__optionsToggle'
     ) as HTMLButtonElement;
     dispatch(toggleOptions());
     optionsToggleBtn.focus();
@@ -48,7 +48,7 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
       <FocusTrapRedirectFocus element={optionsLastFocusable} />
       <div
         className="postOptions__backdrop"
-        onClick={() => dispatch(togglePostOptions())}
+        onClick={handleCloseModalAndRedirectFocus}
       ></div>
       <div className="postOptions__container">
         {authState.user?.id && authState.user.id === postState.post?.user.id ? (

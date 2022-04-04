@@ -4,8 +4,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-  padding-top: 35px;
-  border-top: solid silver 1px;
 
   @media (max-width: 980px) {
     gap: 5px;

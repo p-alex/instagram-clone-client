@@ -1,0 +1,18 @@
+.profileNav {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  &__btn {
+    position: relative;
+    top: -1px;
+    display: block;
+    padding: 20px;
+    border-top: solid transparent 1px;
+    opacity: 0.6;
+    &.profileBtn-active {
+      border-top: solid black 1px;
+      opacity: 1;
+    }
+  }
+}

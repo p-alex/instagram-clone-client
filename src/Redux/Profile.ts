@@ -1,4 +1,4 @@
-import { bindActionCreators, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IFollowers, IFollowing, IPosts } from '../interfaces';
 
 interface IProfileUserData {
@@ -14,6 +14,7 @@ interface IProfileUserData {
 
 interface IProfileState {
   user: IProfileUserData | null;
+  activeTab: 'posts' | 'saved';
   isPostModalActive: boolean;
   selectedPostId: string;
   selectedPostIndex: number | null;
@@ -24,6 +25,7 @@ interface IProfileState {
 
 const initialState: IProfileState = {
   user: null,
+  activeTab: 'posts',
   isPostModalActive: false,
   selectedPostId: '',
   selectedPostIndex: null,
@@ -85,6 +87,9 @@ const ProfileSlice = createSlice({
     setLastFocusedPostIndex: (state, action: PayloadAction<number | null>) => {
       state.lastFocusedPostIndex = action.payload;
     },
+    changeTab: (state, action: PayloadAction<'posts' | 'saved'>) => {
+      state.activeTab = action.payload;
+    },
     resetProfileState: (state) => {
       state.user = null;
       state.isPostModalActive = false;
@@ -104,6 +109,7 @@ export const {
   deletePost,
   closePostModal,
   setLastFocusedPostIndex,
+  changeTab,
   resetProfileState,
 } = ProfileSlice.actions;
 

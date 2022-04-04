@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails';
+import ProfileNav from '../../Components/ProfileNav/ProfileNav';
 import ProfilePosts from '../../Components/ProfilePosts/ProfilePosts';
 import { GET_USER_QUERY } from '../../GraphQL/Queries/userQueries';
 import useFetch from '../../Hooks/useFetch';
@@ -51,6 +52,7 @@ const Profile = () => {
   return (
     <Layout>
       <ProfileDetails />
+      <ProfileNav />
       <ProfilePosts />
     </Layout>
   );

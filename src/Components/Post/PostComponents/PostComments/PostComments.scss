@@ -1,3 +1,4 @@
+@import '../../../../variables.scss';
 .postComments {
   position: relative;
   border-top: solid silver 1px;
@@ -11,4 +12,8 @@
   }
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  a {
+    color: $primary-color;
+    text-decoration: none;
+  }
 }

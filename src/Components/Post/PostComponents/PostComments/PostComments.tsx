@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { GET_COMMENTS_QUERY } from '../../../../GraphQL/Queries/commentQueries';
 import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
 import useRedux from '../../../../Hooks/useRedux';
@@ -30,7 +31,7 @@ const PostComments = () => {
     }
   };
   useEffect(() => {
-    if (postState.post?.id) handleGetComments();
+    if (postState.post?.id && authState.accessToken) handleGetComments();
     return () => {
       dispatch(resetComments());
     };
@@ -64,6 +65,14 @@ const PostComments = () => {
             />
           ))
         : null}
+      {!authState.accessToken && (
+        <p>
+          <Link to="/login" style={{ color: '' }}>
+            Login
+          </Link>{' '}
+          to see comments.
+        </p>
+      )}
     </div>
   );
 };

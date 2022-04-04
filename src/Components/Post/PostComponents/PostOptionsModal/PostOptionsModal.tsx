@@ -119,15 +119,24 @@ const PostOptionsModal = () => {
               Delete
             </button>
           ) : (
-            <button
-              className="postOptions__option postOptions__red-option"
-              ref={optionsFirstFocusable}
-            >
-              Report
-            </button>
+            authState.accessToken && (
+              <button
+                className="postOptions__option postOptions__red-option"
+                ref={optionsFirstFocusable}
+              >
+                Report
+              </button>
+            )
           )}
-          {!authState.user?.id && <button className="postOptions__option">Follow</button>}
-          <button className="postOptions__option" role="link" onClick={handleGoToPost}>
+          {authState.accessToken && authState.user?.id !== postState.post?.user.id && (
+            <button className="postOptions__option">Follow</button>
+          )}
+          <button
+            className="postOptions__option"
+            role="link"
+            onClick={handleGoToPost}
+            ref={!authState.accessToken ? optionsFirstFocusable : null}
+          >
             Go to post
           </button>
           <button className="postOptions__option" onClick={handleCopyToClipboard}>

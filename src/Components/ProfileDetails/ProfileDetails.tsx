@@ -25,12 +25,13 @@ const ProfileDetails = () => {
           <section className="profileDetails__details">
             <div className="profileDetails__nameAndSettings">
               <h2 className="profileDetails__username">{profileData?.username}</h2>
-              {authState.user?.username !== profileData.username && (
-                <FollowButton
-                  userId={profileData.userId}
-                  isFollowed={profileState.isFollowed}
-                />
-              )}
+              {authState.accessToken &&
+                authState.user?.username !== profileData.username && (
+                  <FollowButton
+                    userId={profileData.userId}
+                    isFollowed={profileState.isFollowed}
+                  />
+                )}
             </div>
             <div className="profileDetails__stats">
               <p className="profileDetails__stat">

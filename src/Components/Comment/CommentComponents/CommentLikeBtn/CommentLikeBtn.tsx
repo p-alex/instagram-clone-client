@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { LIKE_OR_DISLIKE_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
-import { LIKE_OR_DISLIKE_REPLY_MUTATION } from '../../../../GraphQL/Mutations/replyMutations';
 import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
 import useRedux from '../../../../Hooks/useRedux';
 import { ILikes } from '../../../../interfaces';
@@ -23,7 +22,7 @@ const CommentLikeBtn = ({
   const [canRequest, setCanRequest] = useState(true);
   const { authState, dispatch } = useRedux();
   const [likeCommentRequest, { isLoading }] = useFetchWithRetry({
-    query: isReply ? LIKE_OR_DISLIKE_REPLY_MUTATION : LIKE_OR_DISLIKE_COMMENT_MUTATION,
+    query: LIKE_OR_DISLIKE_COMMENT_MUTATION,
     variables: isReply ? { replyId } : { commentId },
     accessToken: authState.accessToken,
   });

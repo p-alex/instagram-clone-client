@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { ADD_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
-import { ADD_REPLY_MUTATION } from '../../../../GraphQL/Mutations/replyMutations';
 import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
 import useRedux from '../../../../Hooks/useRedux';
 import { addComment } from '../../../../Redux/CommentsSection';

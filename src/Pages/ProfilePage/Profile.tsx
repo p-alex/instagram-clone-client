@@ -9,9 +9,9 @@ import useRedux from '../../Hooks/useRedux';
 import { IUserProfileInfo } from '../../interfaces';
 import Layout from '../../Layout/Layout';
 import {
+  closePostModal,
   loadingProfile,
   loadingProfileError,
-  resetProfileState,
   setProfileData,
 } from '../../Redux/Profile';
 import './Profile.scss';
@@ -21,6 +21,7 @@ interface IUserProfileResponse {
   success: boolean;
   message: string;
   user: IUserProfileInfo;
+  isFollowed: boolean;
 }
 
 const Profile = () => {
@@ -31,6 +32,7 @@ const Profile = () => {
     query: GET_USER_QUERY,
     variables: {
       username: params.username,
+      authenticatedUserId: authState.user !== null ? authState.user.id : null,
     },
   });
 
@@ -38,7 +40,10 @@ const Profile = () => {
     try {
       dispatch(loadingProfile());
       const response: IUserProfileResponse = await getProfile();
-      if (response?.success) return dispatch(setProfileData({ ...response.user }));
+      if (response?.success)
+        return dispatch(
+          setProfileData({ userData: response.user, isFollowed: response.isFollowed })
+        );
       dispatch(loadingProfileError(error));
     } catch (error: any) {
       dispatch(loadingProfileError(error.message));
@@ -48,6 +53,10 @@ const Profile = () => {
   useEffect(() => {
     if (profileState.user?.username !== params.username) handleGetProfileData();
   }, [params.username]);
+
+  useEffect(() => {
+    dispatch(closePostModal());
+  }, [profileState.user?.username]);
 
   return (
     <Layout>

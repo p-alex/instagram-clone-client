@@ -6,8 +6,16 @@ const useRedux = () => {
   const profileState = useSelector((state: RootState) => state.profile);
   const postState = useSelector((state: RootState) => state.post);
   const commentsSectionState = useSelector((state: RootState) => state.commentsSection);
+  const suggestionsState = useSelector((state: RootState) => state.suggestions);
   const dispatch = useDispatch();
-  return { authState, profileState, postState, commentsSectionState, dispatch };
+  return {
+    authState,
+    profileState,
+    postState,
+    commentsSectionState,
+    suggestionsState,
+    dispatch,
+  };
 };
 
 export default useRedux;

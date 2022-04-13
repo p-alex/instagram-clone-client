@@ -3,11 +3,19 @@
   border-top: solid silver 1px;
   padding: 15px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  &__replyTo {
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+  }
+  &__inputAndSubmit {
+    display: flex;
+  }
   input {
     border: none;
     background: transparent;
     outline: none;
+    width: 100%;
   }
   button {
     color: $primary-color;

@@ -8,7 +8,6 @@ import { togglePostOptions } from '../../../../Redux/Post';
 import { closePostModal, deletePost } from '../../../../Redux/Profile';
 import Spinner from '../../../../Ui/Spinner';
 import FocusTrapRedirectFocus from '../../../FocusTrap';
-import './PostOptionsModal.scss';
 
 const PostOptionsModal = () => {
   const navigate = useNavigate();
@@ -73,16 +72,16 @@ const PostOptionsModal = () => {
   };
 
   return (
-    <div className="postOptions">
+    <div className="optionsModal">
       <FocusTrapRedirectFocus element={optionsLastFocusable} />
       <div
-        className="postOptions__backdrop"
+        className="optionsModal__backdrop"
         onClick={() => dispatch(togglePostOptions())}
       ></div>
       {isDeleteMode ? (
-        <div className="postOptions__container">
+        <div className="optionsModal__container">
           <FocusTrapRedirectFocus element={confirmDeleteLastFocusable} />
-          <div className="postOptions__confirmMessage">
+          <div className="optionsModal__confirmMessage">
             {isLoading && <Spinner />}
             <h2>{!isLoading ? 'Delete Post?' : 'Loading...'}</h2>
             {!isLoading && <p>Are you sure you want to delete this post?</p>}
@@ -90,7 +89,7 @@ const PostOptionsModal = () => {
           {!isLoading && (
             <>
               <button
-                className="postOptions__option postOptions__red-option"
+                className="optionsModal__option optionsModal__red-option"
                 ref={confirmDeleteFirstFocusable}
                 onClick={handleDeletePost}
                 disabled={isLoading}
@@ -98,7 +97,7 @@ const PostOptionsModal = () => {
                 Delete
               </button>
               <button
-                className="postOptions__option"
+                className="optionsModal__option"
                 ref={confirmDeleteLastFocusable}
                 onClick={handleToggleDeleteMode}
               >
@@ -109,10 +108,10 @@ const PostOptionsModal = () => {
           <FocusTrapRedirectFocus element={confirmDeleteFirstFocusable} />
         </div>
       ) : (
-        <div className="postOptions__container">
+        <div className="optionsModal__container">
           {authState.user?.id && authState.user.id === postState.post?.user.id ? (
             <button
-              className="postOptions__option postOptions__red-option"
+              className="optionsModal__option optionsModal__red-option"
               onClick={() => setIsDeleteMode(!isDeleteMode)}
               ref={optionsFirstFocusable}
             >
@@ -121,7 +120,7 @@ const PostOptionsModal = () => {
           ) : (
             authState.accessToken && (
               <button
-                className="postOptions__option postOptions__red-option"
+                className="optionsModal__option optionsModal__red-option"
                 ref={optionsFirstFocusable}
               >
                 Report
@@ -129,21 +128,21 @@ const PostOptionsModal = () => {
             )
           )}
           {authState.accessToken && authState.user?.id !== postState.post?.user.id && (
-            <button className="postOptions__option">Follow</button>
+            <button className="optionsModal__option">Follow</button>
           )}
           <button
-            className="postOptions__option"
+            className="optionsModal__option"
             role="link"
             onClick={handleGoToPost}
             ref={!authState.accessToken ? optionsFirstFocusable : null}
           >
             Go to post
           </button>
-          <button className="postOptions__option" onClick={handleCopyToClipboard}>
+          <button className="optionsModal__option" onClick={handleCopyToClipboard}>
             Copy Link
           </button>
           <button
-            className="postOptions__option"
+            className="optionsModal__option"
             ref={optionsLastFocusable}
             onClick={handleCloseModalAndRedirectFocus}
           >

@@ -1,0 +1,26 @@
+.commentUserAndText {
+  position: relative;
+  width: 100%;
+  &__usernameLink {
+    margin-right: 5px;
+    color: black;
+    font-weight: 700;
+    text-decoration: none;
+    float: left;
+  }
+  &__text {
+    position: relative;
+    width: 100%;
+    word-wrap: break-word;
+    display: block;
+  }
+  &__showMoreBtn {
+    font-size: 0.8rem;
+    margin-left: 5px;
+    font-weight: bold;
+    color: #555;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

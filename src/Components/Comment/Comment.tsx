@@ -1,76 +1,58 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
 import useRedux from '../../Hooks/useRedux';
-import { ILikes } from '../../interfaces';
+import { IComment } from '../../interfaces';
 import './Comment.scss';
-import CommentBottom from './CommentComponents/CommentBottom';
-import CommentLikeBtn from './CommentComponents/CommentLikeBtn';
-import CommentOptions from './CommentComponents/CommentOptions';
+import CommentBottom from './CommentComponents/CommentBottom/CommentBottom';
+import CommentLikeBtn from './CommentComponents/CommentLikeBtn/CommentLikeBtn';
+import CommentOptions from './CommentComponents/CommentOptions/CommentOptions';
+import CommentUserAndText from './CommentComponents/CommentUserAndText/CommentUserAndText';
 
 const Comment = ({
-  commentId,
-  commentIndex,
-  profilePicture,
-  username,
   comment,
-  likes,
-  postedAt,
+  commentIndex,
   isDescription,
 }: {
-  commentId?: string | undefined;
-  commentIndex?: number;
-  profilePicture: string | undefined;
-  username: string | undefined;
-  comment: string | undefined;
-  likes?: ILikes;
-  postedAt: string | undefined;
+  comment: IComment;
+  commentIndex: number;
   isDescription: boolean;
 }) => {
   const { commentsSectionState } = useRedux();
-  const [isShowMore, setIsShowMore] = useState(false);
-  const handleToggleShowMore = () => setIsShowMore(!isShowMore);
   return (
     <div className="comment">
-      {commentsSectionState.isCommentOptionsModalActive && (
-        <CommentOptions commentId={commentId!} />
-      )}
+      {commentsSectionState.isCommentOptionsActive &&
+        commentsSectionState.selectedCommentId === comment.id && (
+          <CommentOptions commentId={comment.id} />
+        )}
       <div className="comment__container">
         <img
-          src={profilePicture ? profilePicture : DEFAULT_PROFILE_PICTURE_URL}
+          src={
+            comment.user.profilePicture
+              ? comment.user.profilePicture
+              : DEFAULT_PROFILE_PICTURE_URL
+          }
           alt=""
           width="35"
           height="35"
           className="comment__profileImg"
         />
         <div className="comment__body">
-          <div className="comment__usernameAndText">
-            <p className="comment__text">
-              <Link to={`/users/${username} `} className="comment__usernameLink">
-                {username}
-              </Link>{' '}
-              {comment && comment.length > 250 && isShowMore
-                ? comment.slice(0, 250)
-                : comment}
-              {comment && comment.length > 250 && (
-                <button className="comment__showMoreBtn" onClick={handleToggleShowMore}>
-                  {isShowMore ? 'show more...' : 'show less'}
-                </button>
-              )}
-            </p>
-          </div>
-          <CommentBottom
-            postedAt={postedAt}
-            likes={likes}
-            isDescription={isDescription}
-          />
+          <CommentUserAndText username={comment.user.username} text={comment.comment} />
+          {!isDescription && (
+            <CommentBottom
+              commentId={comment.id}
+              postedAt={comment.createdAt}
+              likes={comment.likes}
+            />
+          )}
         </div>
       </div>
       {!isDescription && (
         <CommentLikeBtn
-          commentId={commentId!}
-          commentIndex={commentIndex!}
-          likes={likes}
+          isReply={false}
+          commentId={comment.id}
+          replyId={''}
+          commentIndex={commentIndex}
+          likes={comment.likes}
         />
       )}
     </div>

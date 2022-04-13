@@ -5,13 +5,18 @@ import PostUser from './PostComponents/PostUser/PostUser';
 import PostComments from './PostComponents/PostComments/PostComments';
 import PostReact from './PostComponents/PostReact/PostReact';
 import PostForm from './PostComponents/PostForm/PostForm';
-import PostOptionsModal from './PostComponents/PostOptionsModal/PostOptionsModal';
+import PostOptions from './PostComponents/PostOptions/PostOptions';
 import useRedux from '../../Hooks/useRedux';
 import './Post.scss';
+import { useEffect } from 'react';
+import { changePostFormToNewComment } from '../../Redux/Post';
 
 const Post = () => {
-  const { authState, postState } = useRedux();
+  const { authState, postState, dispatch } = useRedux();
   const { post, isLoading } = postState;
+  useEffect(() => {
+    dispatch(changePostFormToNewComment());
+  }, []);
   return (
     <article className="post">
       {isLoading && <PostLoader />}
@@ -25,7 +30,7 @@ const Post = () => {
         <PostReact />
         {authState.accessToken && <PostForm />}
       </PostPanel>
-      {postState.isPostOptionsActive && <PostOptionsModal />}
+      {postState.isPostOptionsActive && <PostOptions />}
     </article>
   );
 };

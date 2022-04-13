@@ -38,7 +38,7 @@ const LikeBtn = ({ postId }: { postId: string }) => {
   };
   return (
     <button
-      aria-label="like post"
+      title="like post"
       className="likeBtn"
       onClick={handleLikePost}
       disabled={!authState.accessToken}

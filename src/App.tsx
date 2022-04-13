@@ -6,6 +6,7 @@ import LoginPage from './Pages/LoginPage/Login';
 import RegisterPage from './Pages/RegisterPage/Register';
 import ProfilePage from './Pages/ProfilePage/Profile';
 import PostPage from './Pages/PostPage/PostPage';
+import './OptionsModal.scss';
 
 function App() {
   return (

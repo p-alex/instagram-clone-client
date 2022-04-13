@@ -2,7 +2,7 @@ import Layout from '../../Layout/Layout';
 import Post from '../../Components/Post/Post';
 import './PostPage.scss';
 import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useFetch from '../../Hooks/useFetch';
 import { useEffect } from 'react';
 import useRedux from '../../Hooks/useRedux';

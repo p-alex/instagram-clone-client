@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { DELETE_COMMENT_MUTATION } from '../../../GraphQL/Mutations/commentMutations';
-import useFetchWithRetry from '../../../Hooks/useFetchWithRetry';
-import useRedux from '../../../Hooks/useRedux';
-import { IDefaultResponse } from '../../../interfaces';
-import { deleteComment, toggleOptions } from '../../../Redux/CommentsSection';
-import { togglePostOptions } from '../../../Redux/Post';
-import FocusTrapRedirectFocus from '../../FocusTrap';
+import { useEffect, useRef } from 'react';
+import { DELETE_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
+import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
+import useRedux from '../../../../Hooks/useRedux';
+import { IDefaultResponse } from '../../../../interfaces';
+import { deleteComment, toggleCommentOptions } from '../../../../Redux/CommentsSection';
+import FocusTrapRedirectFocus from '../../../FocusTrap';
 
 const CommentOptions = ({ commentId }: { commentId: string }) => {
   const { authState, postState, dispatch } = useRedux();
@@ -27,7 +26,7 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
     try {
       const response: IDefaultResponse = await deleteCommentRequest();
       if (response.success) {
-        dispatch(toggleOptions());
+        dispatch(toggleCommentOptions(commentId));
         dispatch(deleteComment({ commentId }));
       }
     } catch (error) {
@@ -37,23 +36,23 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
 
   const handleCloseModalAndRedirectFocus = () => {
     const optionsToggleBtn = document.querySelector(
-      '.comment__optionsToggle'
+      '.commentBottom__optionsToggle'
     ) as HTMLButtonElement;
-    dispatch(toggleOptions());
+    dispatch(toggleCommentOptions(commentId));
     optionsToggleBtn.focus();
   };
 
   return (
-    <div className="postOptions">
+    <div className="optionsModal">
       <FocusTrapRedirectFocus element={optionsLastFocusable} />
       <div
-        className="postOptions__backdrop"
+        className="optionsModal__backdrop"
         onClick={handleCloseModalAndRedirectFocus}
       ></div>
-      <div className="postOptions__container">
+      <div className="optionsModal__container">
         {authState.user?.id && authState.user.id === postState.post?.user.id ? (
           <button
-            className="postOptions__option postOptions__red-option"
+            className="optionsModal__option optionsModal__red-option"
             onClick={handleDeleteComment}
             ref={optionsFirstFocusable}
             disabled={isLoading}
@@ -62,14 +61,14 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
           </button>
         ) : (
           <button
-            className="postOptions__option postOptions__red-option"
+            className="optionsModal__option optionsModal__red-option"
             ref={optionsFirstFocusable}
           >
             Report
           </button>
         )}
         <button
-          className="postOptions__option"
+          className="optionsModal__option"
           ref={optionsLastFocusable}
           onClick={handleCloseModalAndRedirectFocus}
         >

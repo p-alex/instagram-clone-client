@@ -3,15 +3,17 @@ import { IComment } from '../interfaces';
 
 interface ICommentsSectionSliceState {
   comments: IComment[];
-  isCommentOptionsModalActive: boolean;
-  isLoading: boolean;
+  isCommentOptionsActive: boolean;
+  selectedCommentId: string;
+  isLoadingComments: boolean;
   errorMessage: string | null;
 }
 
 const initialState: ICommentsSectionSliceState = {
   comments: [],
-  isCommentOptionsModalActive: false,
-  isLoading: false,
+  isCommentOptionsActive: false,
+  selectedCommentId: '',
+  isLoadingComments: false,
   errorMessage: null,
 };
 
@@ -20,15 +22,15 @@ const CommentsSectionSlice = createSlice({
   initialState,
   reducers: {
     loadingComments: (state) => {
-      state.isLoading = true;
+      state.isLoadingComments = true;
     },
     errorLoadingComments: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
+      state.isLoadingComments = false;
       state.errorMessage = action.payload;
     },
     setComments: (state, action: PayloadAction<IComment[]>) => {
       state.comments = action.payload;
-      state.isLoading = false;
+      state.isLoadingComments = false;
     },
     addComment: (state, action: PayloadAction<IComment>) => {
       state.comments.unshift(action.payload);
@@ -57,8 +59,14 @@ const CommentsSectionSlice = createSlice({
         (id) => id !== action.payload.userId
       );
     },
-    toggleOptions: (state) => {
-      state.isCommentOptionsModalActive = !state.isCommentOptionsModalActive;
+    toggleCommentOptions: (state, action: PayloadAction<string>) => {
+      if (state.isCommentOptionsActive) {
+        state.selectedCommentId = '';
+        state.isCommentOptionsActive = false;
+      } else {
+        state.selectedCommentId = action.payload;
+        state.isCommentOptionsActive = true;
+      }
     },
     resetComments: (state) => {
       state.comments = [];
@@ -74,7 +82,7 @@ export const {
   deleteComment,
   likeComment,
   dislikeComment,
-  toggleOptions,
+  toggleCommentOptions,
   resetComments,
 } = CommentsSectionSlice.actions;
 

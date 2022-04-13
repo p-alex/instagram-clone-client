@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Logo from '../Logo/Logo';
 import SearchBar from '../SearchBar/SearchBar';
 import ProfileBtn from './ProfileBtn/ProfileBtn';
@@ -8,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/Store';
 const NavBar = () => {
   const authState = useSelector((state: RootState) => state.auth);
-
   return (
     <nav className="navBar">
       <div className="navBar__container">
@@ -36,4 +36,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default memo(NavBar);

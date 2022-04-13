@@ -1,9 +1,10 @@
 export const GET_USER_QUERY = `
-    query getProfileData($username: String!) {
-        getUser(username: $username) {
+    query getProfileData($username: String!, $authenticatedUserId: String) {
+        getUser(username: $username, authenticatedUserId: $authenticatedUserId) {
             statusCode
             success
             message
+            isFollowed
             user {
               userId
               profilePicture
@@ -32,7 +33,8 @@ export const GET_USER_QUERY = `
                   comments {
                     count
                   }
-                  postedAt
+                  createdAt
+                  updatedAt
                 }
               }
             }

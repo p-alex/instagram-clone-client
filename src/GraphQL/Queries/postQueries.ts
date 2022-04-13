@@ -24,7 +24,8 @@ query GetPost($postId: ID!) {
         comments {
           count
         }
-        postedAt
+        createdAt
+        updatedAt
       }
     }
   }

@@ -1,10 +1,11 @@
 import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
 import './ProfileDetails.scss';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../Redux/Store';
+import useRedux from '../../Hooks/useRedux';
+import FollowButton from '../FollowButton/FollowButton';
 
 const ProfileDetails = () => {
-  const profileData = useSelector((state: RootState) => state.profile.user);
+  const { authState, profileState } = useRedux();
+  const profileData = profileState.user;
   return (
     <>
       {profileData ? (
@@ -24,6 +25,12 @@ const ProfileDetails = () => {
           <section className="profileDetails__details">
             <div className="profileDetails__nameAndSettings">
               <h2 className="profileDetails__username">{profileData?.username}</h2>
+              {authState.user?.username !== profileData.username && (
+                <FollowButton
+                  userId={profileData.userId}
+                  isFollowed={profileState.isFollowed}
+                />
+              )}
             </div>
             <div className="profileDetails__stats">
               <p className="profileDetails__stat">

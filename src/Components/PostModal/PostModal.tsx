@@ -11,11 +11,17 @@ import PostUser from '../Post/PostComponents/PostUser/PostUser';
 import PostComments from '../Post/PostComponents/PostComments/PostComments';
 import PostReact from '../Post/PostComponents/PostReact/PostReact';
 import PostForm from '../Post/PostComponents/PostForm/PostForm';
-import { setPost, loadingPost, loadingPostError, resetPostState } from '../../Redux/Post';
+import {
+  setPost,
+  loadingPost,
+  loadingPostError,
+  resetPostState,
+  changePostFormToNewComment,
+} from '../../Redux/Post';
 import PostLoader from '../Post/PostComponents/PostLoader/PostLoader';
 import PostPanel from '../Post/PostComponents/PostPanel/PostPanel';
 import PostModalCtrl from './PostModalComponents/PostModalCtrl';
-import PostOptionsModal from '../Post/PostComponents/PostOptionsModal/PostOptionsModal';
+import PostOptionsModal from '../Post/PostComponents/PostOptions/PostOptions';
 
 const PostModal = ({ postId }: { postId: string }) => {
   const { authState, profileState, postState, dispatch } = useRedux();
@@ -65,6 +71,7 @@ const PostModal = ({ postId }: { postId: string }) => {
   }, []);
 
   useEffect(() => {
+    dispatch(changePostFormToNewComment());
     handleGetPost();
   }, [postId]);
 

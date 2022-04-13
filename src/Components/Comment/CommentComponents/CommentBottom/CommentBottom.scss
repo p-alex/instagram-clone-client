@@ -1,0 +1,24 @@
+.commentBottom {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 5px;
+  &__postedAt {
+    display: block;
+  }
+  &__optionsToggle {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    padding: 5px;
+  }
+  &__replyBtn {
+    font-size: 0.8rem;
+  }
+  small {
+    color: #555;
+  }
+}

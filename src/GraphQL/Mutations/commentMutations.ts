@@ -20,8 +20,10 @@ export const ADD_COMMENT_MUTATION = `
               count
               userReplies
             }
-            postedAt
+            createdAt
+            updatedAt
           }
+         
         }
     }
 `;

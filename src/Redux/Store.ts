@@ -3,12 +3,14 @@ import AuthReducer from './Auth';
 import ProfileReducer from './Profile';
 import PostReducer from './Post';
 import CommentsSectionReducer from './CommentsSection';
+import SuggestionsReducer from './Suggestions';
 export const store = configureStore({
   reducer: {
     auth: AuthReducer,
     profile: ProfileReducer,
     post: PostReducer,
     commentsSection: CommentsSectionReducer,
+    suggestions: SuggestionsReducer,
   },
 });
 

@@ -1,0 +1,40 @@
+@import '../../variables.scss';
+.suggestionsBig {
+  position: relative;
+  width: 80%;
+  background-color: $light-color;
+  border: solid silver 1px;
+  margin: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  @media (max-width: 980px) {
+    width: 100%;
+  }
+  &__suggestion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__user {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 10px;
+    }
+    a {
+      color: $dark-color;
+      text-decoration: none;
+    }
+  }
+  &__profileImg {
+    border-radius: 50%;
+  }
+  &__follow {
+    padding: 7px 15px;
+    color: $light-color;
+    background-color: $primary-color;
+    border-radius: 5px;
+  }
+}

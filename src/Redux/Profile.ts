@@ -14,6 +14,7 @@ interface IProfileUserData {
 
 interface IProfileState {
   user: IProfileUserData | null;
+  isFollowed: boolean;
   activeTab: 'posts' | 'saved';
   isPostModalActive: boolean;
   selectedPostId: string;
@@ -25,6 +26,7 @@ interface IProfileState {
 
 const initialState: IProfileState = {
   user: null,
+  isFollowed: false,
   activeTab: 'posts',
   isPostModalActive: false,
   selectedPostId: '',
@@ -44,28 +46,26 @@ const ProfileSlice = createSlice({
     loadingProfileError: (state, action: PayloadAction<string>) => {
       return { ...state, isLoading: false, errorMessage: action.payload };
     },
-    setProfileData: (state, action: PayloadAction<IProfileUserData>) => {
-      const {
-        userId,
-        username,
-        fullname,
-        bio,
-        followers,
-        following,
-        posts,
-        profilePicture,
-      } = action.payload;
+    setProfileData: (
+      state,
+      action: PayloadAction<{ userData: IProfileUserData; isFollowed: boolean }>
+    ) => {
       state.isLoading = false;
+      const user = action.payload.userData;
       state.user = {
-        userId,
-        username,
-        fullname,
-        bio,
-        followers,
-        following,
-        posts,
-        profilePicture,
+        userId: user.userId,
+        username: user.username,
+        fullname: user.fullname,
+        bio: user.bio,
+        followers: user.followers,
+        following: user.following,
+        posts: user.posts,
+        profilePicture: user.profilePicture,
       };
+      state.isFollowed = action.payload.isFollowed;
+    },
+    toggleIsFollowed: (state) => {
+      state.isFollowed = !state.isFollowed;
     },
     selectPostId: (state, action: PayloadAction<string>) => {
       const selectedPostIndex = state.user!.posts.postsList.findIndex(

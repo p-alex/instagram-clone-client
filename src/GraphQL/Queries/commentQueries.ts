@@ -20,7 +20,8 @@ query GetComments($postId: String!) {
           count
           userReplies
         }
-        postedAt
+        createdAt
+        updatedAt
       }
     }
   }

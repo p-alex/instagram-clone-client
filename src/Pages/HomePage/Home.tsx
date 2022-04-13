@@ -1,6 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import SuggestionsBig from '../../Components/SuggestionsBig/SuggestionsBig';
 import Layout from '../../Layout/Layout';
 import { RootState } from '../../Redux/Store';
 
@@ -14,7 +15,11 @@ const Home = () => {
     }
   }, [authState.user, navigate]);
 
-  return <Layout>stuff</Layout>;
+  return (
+    <Layout>
+      <SuggestionsBig />
+    </Layout>
+  );
 };
 
 export default Home;

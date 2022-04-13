@@ -9,7 +9,9 @@ import {
   resetComments,
   setComments,
 } from '../../../../Redux/CommentsSection';
+import { changePostFormToNewComment } from '../../../../Redux/Post';
 import Comment from '../../../Comment/Comment';
+import PostDescription from '../PostDescription/PostDescription';
 import './PostComments.scss';
 
 const PostComments = () => {
@@ -36,15 +38,17 @@ const PostComments = () => {
       dispatch(resetComments());
     };
   }, [postState.post?.id]);
+  useEffect(() => {
+    dispatch(changePostFormToNewComment());
+  }, [commentsSectionState.comments]);
   return (
     <div className="postComments">
       {post?.description && (
-        <Comment
+        <PostDescription
           profilePicture={post?.user.profilePicture}
           username={post?.user.username}
-          comment={post?.description}
-          postedAt={post?.postedAt}
-          isDescription={true}
+          description={post?.description}
+          postedAt={post?.createdAt}
         />
       )}
       {isLoading && <p>Loading...</p>}
@@ -54,13 +58,8 @@ const PostComments = () => {
           commentsSectionState.comments.map((comment, index) => (
             <Comment
               key={comment.id}
-              commentId={comment.id}
+              comment={comment}
               commentIndex={index}
-              profilePicture={comment?.user?.profilePicture}
-              username={comment?.user?.username}
-              comment={comment?.comment}
-              likes={comment.likes}
-              postedAt={comment?.postedAt}
               isDescription={false}
             />
           ))

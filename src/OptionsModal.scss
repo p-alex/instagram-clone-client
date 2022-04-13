@@ -1,18 +1,18 @@
-@import '../../../../variables.scss';
-.postOptions {
+@import './variables.scss';
+.optionsModal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: $postOptionsZ;
+  z-index: $optionsModalZ;
   &__backdrop {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: $postOptionsBackdropZ;
+    z-index: $optionsModalBackdropZ;
     background-color: rgba(0, 0, 0, 0.6);
   }
   &__container {
@@ -23,7 +23,7 @@
     max-width: 400px;
     border-radius: 10px;
     overflow: hidden;
-    z-index: $postOptionsContainerZ;
+    z-index: $optionsModalContainerZ;
     background-color: white;
     text-align: center;
     @media (max-width: 980px) {
@@ -38,7 +38,7 @@
     padding: 15px;
     width: 100%;
     border-top: solid silver 1px;
-    &.postOptions__red-option {
+    &.optionsModal__red-option {
       color: red;
       font-weight: 700;
     }

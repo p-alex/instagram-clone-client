@@ -40,6 +40,7 @@ const FollowButton = ({
         btnText === 'Unfollow' ? 'followButton followButton--followed' : 'followButton'
       }
       onClick={handleFollowOrUnfollowUser}
+      disabled={isLoading}
     >
       {btnText}
     </button>

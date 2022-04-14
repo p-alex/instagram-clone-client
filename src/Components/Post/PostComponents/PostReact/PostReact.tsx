@@ -9,7 +9,6 @@ const PostReact = () => {
   const count = postState.post?.likes.count;
   const createdAt = postState.post?.createdAt;
   const postId = postState.post?.id;
-  console.log(createdAt);
   return (
     <div className="postReact">
       <LikeBtn postId={postId ? postId : ''} />

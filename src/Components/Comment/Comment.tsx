@@ -1,11 +1,10 @@
-import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
-import useRedux from '../../Hooks/useRedux';
-import { IComment } from '../../interfaces';
-import './Comment.scss';
-import CommentBottom from './CommentComponents/CommentBottom/CommentBottom';
-import CommentLikeBtn from './CommentComponents/CommentLikeBtn/CommentLikeBtn';
-import CommentOptions from './CommentComponents/CommentOptions/CommentOptions';
-import CommentUserAndText from './CommentComponents/CommentUserAndText/CommentUserAndText';
+import useRedux from "../../Hooks/useRedux";
+import { IComment } from "../../interfaces";
+import "./Comment.scss";
+import CommentBottom from "./CommentComponents/CommentBottom/CommentBottom";
+import CommentLikeBtn from "./CommentComponents/CommentLikeBtn/CommentLikeBtn";
+import CommentOptions from "./CommentComponents/CommentOptions/CommentOptions";
+import CommentUserAndText from "./CommentComponents/CommentUserAndText/CommentUserAndText";
 
 const Comment = ({
   comment,
@@ -25,18 +24,17 @@ const Comment = ({
         )}
       <div className="comment__container">
         <img
-          src={
-            comment.user.profilePicture
-              ? comment.user.profilePicture
-              : DEFAULT_PROFILE_PICTURE_URL
-          }
+          src={comment.user.profilePicture}
           alt=""
           width="35"
           height="35"
           className="comment__profileImg"
         />
         <div className="comment__body">
-          <CommentUserAndText username={comment.user.username} text={comment.comment} />
+          <CommentUserAndText
+            username={comment.user.username}
+            text={comment.comment}
+          />
           {!isDescription && (
             <CommentBottom
               commentId={comment.id}
@@ -50,7 +48,7 @@ const Comment = ({
         <CommentLikeBtn
           isReply={false}
           commentId={comment.id}
-          replyId={''}
+          replyId={""}
           commentIndex={commentIndex}
           likes={comment.likes}
         />

@@ -1,0 +1,36 @@
+.createModalTopBar {
+  --top-bar-height: calc(50px + var(--top-bar-border-size));
+  --top-bar-border-size: 2px;
+  width: 100%;
+  height: var(--top-bar-height);
+  border-bottom: solid silver var(--top-bar-border-size);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.createModalTopBar__btn {
+  display: block;
+  width: 50px;
+  height: 100%;
+  color: var(--secondary-color);
+  font-size: 1.6rem;
+}
+
+.createModalTopBar__btn.close-btn {
+  position: relative;
+  left: 100%;
+  transform: translateX(-100%);
+}
+
+.createModalTopBar__title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: max-content;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}

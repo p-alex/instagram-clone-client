@@ -1,0 +1,146 @@
+.cropper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  cursor: move;
+  overscroll-behavior: contain;
+}
+
+.cropper__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cropper__cropArea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cropper__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+  width: 100%;
+}
+
+.cropper__image.maxHeight {
+  height: 100%;
+  width: auto;
+}
+
+.cropper__footer {
+  position: absolute;
+  display: block;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+}
+
+.cropper__footerBtn {
+  width: 37px;
+  height: 37px;
+  font-size: 1rem;
+  border-radius: 50%;
+  background-color: white;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+.cropper__footerBtn:hover {
+  opacity: 0.8;
+}
+
+.cropper__footerBtn.active-tab {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cropper__aspect {
+  position: relative;
+}
+
+.cropper__aspectPopup {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  top: 0;
+  transform: translateY(calc(-100% - 10px));
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
+
+.cropper__aspectBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0 15px;
+  color: rgb(146, 146, 146);
+  background: none;
+  border-bottom: solid 2px rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 200ms ease-in-out;
+}
+
+.cropper__aspectBtn:last-child {
+  border-bottom: none;
+}
+
+.cropper__aspectBtn.current-aspect {
+  color: white;
+}
+.cropper__aspectBtn.current-aspect .geometric {
+  border-color: white;
+}
+
+.geometric {
+  border: solid 2px grey;
+  transition: border-color 200ms ease-in-out;
+}
+
+.square {
+  width: 15px;
+  height: 15px;
+}
+
+.vertical-rectangle {
+  width: 15px;
+  height: 23px;
+}
+
+.horizontal-rectangle {
+  width: 23px;
+  height: 15px;
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+  .cropper {
+    width: 100%;
+    aspect-ratio: 1;
+    margin-bottom: 70px;
+  }
+  .croppedImage {
+    width: 100%;
+    height: auto;
+    max-width: auto;
+    max-height: auto;
+  }
+}

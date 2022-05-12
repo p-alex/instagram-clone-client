@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import { DEFAULT_PROFILE_PICTURE_URL } from '../../../default-profile-pic-url';
-import { LOGOUT_USER_MUTATION } from '../../../GraphQL/Mutations/authMutations';
-import { logoutUser } from '../../../Redux/Auth';
-import { useNavigate } from 'react-router-dom';
-import './ProfileBtn.scss';
-import useRedux from '../../../Hooks/useRedux';
-import { resetProfileState } from '../../../Redux/Profile';
-import useFetchWithRetry from '../../../Hooks/useFetchWithRetry';
+import { useState } from "react";
+import { LOGOUT_USER_MUTATION } from "../../../GraphQL/Mutations/authMutations";
+import { logoutUser } from "../../../Redux/Auth";
+import { useNavigate } from "react-router-dom";
+import "./ProfileBtn.scss";
+import useRedux from "../../../Hooks/useRedux";
+import { resetProfileState } from "../../../Redux/Profile";
+import useFetchWithRetry from "../../../Hooks/useFetchWithRetry";
 
 const ProfileBtn = () => {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ const ProfileBtn = () => {
       if (response.success) {
         dispatch(logoutUser());
         dispatch(resetProfileState());
-        navigate('/login');
+        navigate("/login");
       }
     } catch (err) {
       console.log(error);
@@ -36,11 +35,7 @@ const ProfileBtn = () => {
         onClick={() => setIsDropdownActive(!isDropdownActive)}
       >
         <img
-          src={
-            authState.user?.profilePicture
-              ? authState.user?.profilePicture
-              : DEFAULT_PROFILE_PICTURE_URL
-          }
+          src={authState.user?.profilePicture}
           className="profileBtn__image"
           alt=""
           width="40"

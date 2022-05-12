@@ -1,33 +1,35 @@
-import { useEffect, useState, useRef } from 'react';
-import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
-import useFetch from '../../Hooks/useFetch';
-import { IPost } from '../../interfaces';
-import './PostModal.scss';
-import FocusTrapRedirectFocus from '../FocusTrap';
-import { closePostModal, selectPostId } from '../../Redux/Profile';
-import useRedux from '../../Hooks/useRedux';
-import PostImage from '../Post/PostComponents/PostImage/PostImage';
-import PostUser from '../Post/PostComponents/PostUser/PostUser';
-import PostComments from '../Post/PostComponents/PostComments/PostComments';
-import PostReact from '../Post/PostComponents/PostReact/PostReact';
-import PostForm from '../Post/PostComponents/PostForm/PostForm';
+import { useEffect, useState, useRef } from "react";
+import { GET_POST_QUERY } from "../../GraphQL/Queries/postQueries";
+import useFetch from "../../Hooks/useFetch";
+import { IPost } from "../../interfaces";
+import "./PostModal.scss";
+import FocusTrapRedirectFocus from "../FocusTrap";
+import { closePostModal, selectPostId } from "../../Redux/Profile";
+import useRedux from "../../Hooks/useRedux";
+import PostImage from "../Post/PostComponents/PostImage/PostImage";
+import PostUser from "../Post/PostComponents/PostUser/PostUser";
+import PostComments from "../Post/PostComponents/PostComments/PostComments";
+import PostReact from "../Post/PostComponents/PostReact/PostReact";
+import PostForm from "../Post/PostComponents/PostForm/PostForm";
 import {
   setPost,
   loadingPost,
   loadingPostError,
   resetPostState,
   changePostFormToNewComment,
-} from '../../Redux/Post';
-import PostLoader from '../Post/PostComponents/PostLoader/PostLoader';
-import PostPanel from '../Post/PostComponents/PostPanel/PostPanel';
-import PostModalCtrl from './PostModalComponents/PostModalCtrl';
-import PostOptionsModal from '../Post/PostComponents/PostOptions/PostOptions';
+} from "../../Redux/Post";
+import PostLoader from "../Post/PostComponents/PostLoader/PostLoader";
+import PostPanel from "../Post/PostComponents/PostPanel/PostPanel";
+import PostModalCtrl from "./PostModalComponents/PostModalCtrl";
+import PostOptionsModal from "../Post/PostComponents/PostOptions/PostOptions";
 
 const PostModal = ({ postId }: { postId: string }) => {
   const { authState, profileState, postState, dispatch } = useRedux();
   const { selectedPostId, lastFocusedPostIndex, user } = profileState;
   const { post, isLoading } = postState;
-  const selectedPost = user?.posts.postsList.find((post) => post.id === selectedPostId);
+  const selectedPost = user?.posts.postsList.find(
+    (post) => post.id === selectedPostId
+  );
   const userPosts = user?.posts.postsList;
 
   const [getPost] = useFetch({
@@ -37,10 +39,14 @@ const PostModal = ({ postId }: { postId: string }) => {
     },
   });
 
-  const [currentPostIndex, setCurrentPostIndex] = useState<number | undefined>(0);
+  const [currentPostIndex, setCurrentPostIndex] = useState<number | undefined>(
+    0
+  );
 
   useEffect(() => {
-    setCurrentPostIndex(userPosts!.findIndex((post) => post.id === selectedPost?.id));
+    setCurrentPostIndex(
+      userPosts!.findIndex((post) => post.id === selectedPost?.id)
+    );
   }, [selectedPostId]);
 
   const handleGetPost = async () => {
@@ -56,7 +62,7 @@ const PostModal = ({ postId }: { postId: string }) => {
       dispatch(loadingPostError(response.message));
     } catch (error: any) {
       console.log(error.message);
-      dispatch(loadingPostError('Something went wrong'));
+      dispatch(loadingPostError("Something went wrong"));
     }
   };
 
@@ -84,12 +90,12 @@ const PostModal = ({ postId }: { postId: string }) => {
     lastFocusedPost.focus();
   };
 
-  const handleNavigatePosts = (direction: 'prev' | 'next') => {
+  const handleNavigatePosts = (direction: "prev" | "next") => {
     if (userPosts?.length && !isLoading) {
-      if (typeof currentPostIndex === 'number') {
-        if (direction === 'prev' && currentPostIndex > 0)
+      if (typeof currentPostIndex === "number") {
+        if (direction === "prev" && currentPostIndex > 0)
           return dispatch(selectPostId(userPosts[currentPostIndex - 1].id));
-        if (direction === 'next' && currentPostIndex < userPosts.length - 1)
+        if (direction === "next" && currentPostIndex < userPosts.length - 1)
           return dispatch(selectPostId(userPosts[currentPostIndex + 1].id));
       }
     }
@@ -109,18 +115,28 @@ const PostModal = ({ postId }: { postId: string }) => {
       </button>
 
       {currentPostIndex && currentPostIndex > 0 ? (
-        <PostModalCtrl direction="prev" handleNavigatePosts={handleNavigatePosts} />
+        <PostModalCtrl
+          direction="prev"
+          handleNavigatePosts={handleNavigatePosts}
+        />
       ) : null}
 
-      {typeof currentPostIndex === 'number' &&
+      {typeof currentPostIndex === "number" &&
       userPosts &&
       currentPostIndex < userPosts?.length - 1 ? (
-        <PostModalCtrl direction="next" handleNavigatePosts={handleNavigatePosts} />
+        <PostModalCtrl
+          direction="next"
+          handleNavigatePosts={handleNavigatePosts}
+        />
       ) : null}
       {isLoading && <PostLoader />}
+
       {!isLoading && (
         <div className="postModal">
-          <PostImage imageUrl={post?.images[0].fullImage.url} />
+          <PostImage
+            imageUrl={post?.images[0].fullImage.url}
+            aspectRatio={post?.images[0].fullImage.aspectRatio}
+          />
           <PostPanel>
             <PostUser
               username={post?.user.username}
@@ -132,6 +148,7 @@ const PostModal = ({ postId }: { postId: string }) => {
           </PostPanel>
         </div>
       )}
+
       {postState.isPostOptionsActive && <PostOptionsModal />}
       <FocusTrapRedirectFocus element={firstFocusableElement} />
     </div>

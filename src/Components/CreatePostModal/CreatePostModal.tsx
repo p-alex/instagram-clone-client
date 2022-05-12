@@ -1,144 +1,137 @@
-import { useEffect, useState, useContext } from 'react';
-import { useSelector } from 'react-redux';
-import { CreateModalContextProvider } from '../../Context/CreateModalContext';
-import { NavBarContext } from '../../Context/NavBarContext';
-import { CREATE_POST_MUTATION } from '../../GraphQL/Mutations/postMutations';
-import useFetchWithRetry from '../../Hooks/useFetchWithRetry';
-import { RootState } from '../../Redux/Store';
-import { imageOptimizer } from '../../Util/imageOptimizer';
-import './CreatePostModal.scss';
-import CreatePostChooseFile from './CreatePostModalComponents/CreatePostChooseFile';
-import CreatePostDetails from './CreatePostModalComponents/CreatePostDetails';
-import CreatePostLoading from './CreatePostModalComponents/CreatePostLoading';
-import CreatePostResult from './CreatePostModalComponents/CreatePostResult';
-import CreatePostTopBar from './CreatePostModalComponents/CreatePostTopBar';
+import { useContext, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { NavBarContext } from "../../Context/NavBarContext";
+import { CREATE_POST_MUTATION } from "../../GraphQL/Mutations/postMutations";
+import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
+import { RootState } from "../../Redux/Store";
+import ChooseFileStage from "./ChooseFileStage/ChooseFileStage";
+import CreateModalTopBar from "./CreateModalTopBar/CreateModalTopBar";
+import CropStage from "./CropStage/CropStage";
+import DetailsStage from "./DetailsStage/DetailsStage";
+import FocusTrapRedirectFocus from "./FocusTrap";
+import LoadingStage from "./LoadingStage/LoadingStage";
+import ResultStage from "./ResultStage/ResultStage";
+
+import "./CreatePostModal.scss";
+
+export const STAGES = ["Choose File", "Crop", "Details", "Loading", "Result"];
 
 const CreatePostModal = () => {
   const authState = useSelector((state: RootState) => state.auth);
-  const { isCreatePostModalActive, handleToggleCreatePostModal } =
-    useContext(NavBarContext);
-  const [title, setTitle] = useState('Create new post');
-  const [step, setStep] = useState(1);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [caption, setCaption] = useState('');
-  const [optimizedImageBase64, setOptimizedImageBase64] = useState<
-    string | ArrayBuffer | null | undefined
-  >('');
+  const { handleToggleCreatePostModal } = useContext(NavBarContext);
+
+  const [currentStage, setCurrentStage] = useState({
+    index: 0,
+    name: "Choose File",
+  });
+  const [optimizedImageUrl, setOptimizedImageUrl] = useState("");
+  const [croppedImageUrl, setCroppedImageUrl] = useState("");
+  const [savedImagePos, setSavedImagePos] = useState({ x: 0, y: 0 });
+  const [savedAspectRatio, setSavedAspectRatio] = useState(1 / 1);
+  const [caption, setCaption] = useState("");
 
   const [createPost, { isLoading, error }] = useFetchWithRetry({
     query: CREATE_POST_MUTATION,
     variables: {
       caption,
-      image: optimizedImageBase64,
+      image: croppedImageUrl,
+      aspectRatio: savedAspectRatio,
     },
     accessToken: authState.accessToken,
   });
 
-  const handleAddPreviewImage = (base64: string) => {
-    const img = document.createElement('img');
-    img.src = base64;
-    const imgPreview = document.querySelector('.createModal__imagePreview');
-    imgPreview?.appendChild(img);
+  const handleRequest = async () => {
+    handleNavigateStages("next");
+    const response = await createPost();
+    if (response.message) handleNavigateStages("next");
   };
 
-  const processImage = async (selectedFile: any) => {
-    const image: any = await imageOptimizer(selectedFile, 1280, 1280);
-    handleAddPreviewImage(image);
-    setOptimizedImageBase64(image);
-  };
+  const firstFocusableElementRef = useRef<any>();
+  const lastFocusableElementRef = useRef<any>();
 
   useEffect(() => {
-    if (selectedFile) {
-      setStep(step + 1);
-      processImage(selectedFile);
+    if (currentStage.index === 0) {
+      setOptimizedImageUrl("");
+      setCroppedImageUrl("");
+      setSavedImagePos({ x: 0, y: 0 });
+      setSavedAspectRatio(1 / 1);
     }
-  }, [selectedFile]);
+  }, [currentStage.index]);
 
   useEffect(() => {
-    if (step === 1 || step === 3) {
-      setTitle('Create new post');
-    }
-    if (step === 2) {
-      setTitle('Preview');
-    }
-    if (step === 4 && isLoading) {
-      setTitle('Loading...');
-    }
-    if (step === 4 && !isLoading && !error) {
-      setTitle('Success');
-    }
-    if (step === 4 && !isLoading && error) {
-      setTitle('Error');
-    }
-  }, [step, isLoading, error]);
+    if (optimizedImageUrl) handleNavigateStages("next");
+  }, [optimizedImageUrl]);
 
-  const handleSteps = (direction: 'prev' | 'next') => {
-    if (direction === 'prev' && step - 1 >= 1) {
-      setStep(step - 1);
-      return;
-    }
-    if (direction === 'next' && step + 1 <= 4) {
-      setStep(step + 1);
-    }
+  const handleCloseModal = () => {
+    if (!isLoading) handleToggleCreatePostModal();
   };
 
-  const handleDiscard = () => {
-    setSelectedFile(null);
-    setOptimizedImageBase64('');
-    setCaption('');
-    setStep(1);
-  };
-
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault();
-    try {
-      if (authState.user?.id && optimizedImageBase64 && selectedFile) {
-        handleSteps('next');
-        await createPost();
-      }
-    } catch (error: any) {
-      console.log(error.message);
-    }
+  const handleNavigateStages = (direction: "previous" | "next") => {
+    setCurrentStage((prevStage) => ({
+      ...prevStage,
+      index:
+        direction === "previous" ? prevStage.index - 1 : prevStage.index + 1,
+      name:
+        direction === "previous"
+          ? STAGES[prevStage.index - 1]
+          : STAGES[prevStage.index + 1],
+    }));
   };
 
   return (
-    <CreateModalContextProvider>
-      {isCreatePostModalActive && (
-        <>
-          <div
-            className="createModal__backdrop"
-            onClick={() => {
-              handleToggleCreatePostModal();
-              handleDiscard();
-            }}
-          ></div>
-          <div className="createModal">
-            <CreatePostTopBar
-              step={step}
-              isLoading={isLoading}
-              title={title}
-              handleDiscard={handleDiscard}
-              handleToggleCreatePostModal={handleToggleCreatePostModal}
-              handleSteps={handleSteps}
-              handleSubmit={handleSubmit}
+    <div className="createPostModal">
+      <FocusTrapRedirectFocus element={lastFocusableElementRef} />
+      <div
+        className="createPostModal__backdrop"
+        onClick={handleCloseModal}
+      ></div>
+      <div className="createPostModal__container">
+        <CreateModalTopBar
+          currentStage={currentStage}
+          handleNavigateStages={handleNavigateStages}
+          handleCloseModal={handleCloseModal}
+          handleRequest={handleRequest}
+          firstFocusableElementRef={firstFocusableElementRef}
+        />
+        <div className="createPostModal__body">
+          {currentStage.name === "Choose File" && (
+            <ChooseFileStage
+              setOptimizedImageUrl={setOptimizedImageUrl}
+              lastFocusableElementRef={lastFocusableElementRef}
             />
-
-            {step === 1 && <CreatePostChooseFile setSelectedFile={setSelectedFile} />}
-
-            {step > 1 && step < 4 && (
-              <CreatePostDetails step={step} caption={caption} setCaption={setCaption} />
-            )}
-
-            {step === 4 && (
-              <>
-                {isLoading && <CreatePostLoading />}
-                {!isLoading && <CreatePostResult error={error} />}
-              </>
-            )}
-          </div>
-        </>
-      )}
-    </CreateModalContextProvider>
+          )}
+          {currentStage.name === "Crop" && (
+            <CropStage
+              imgUrl={optimizedImageUrl}
+              savedImagePos={savedImagePos}
+              savedAspectRatio={savedAspectRatio}
+              setCroppedImageUrl={setCroppedImageUrl}
+              setSavedImagePos={setSavedImagePos}
+              setSavedAspectRatio={setSavedAspectRatio}
+              lastFocusableElementRef={lastFocusableElementRef}
+            />
+          )}
+          {currentStage.name === "Details" && (
+            <DetailsStage
+              croppedImageUrl={croppedImageUrl}
+              description={caption}
+              setDescription={setCaption}
+              lastFocusableElement={lastFocusableElementRef}
+            />
+          )}
+          {currentStage.name === "Loading" && (
+            <LoadingStage lastFocusableElementRef={lastFocusableElementRef} />
+          )}
+          {currentStage.name === "Result" && (
+            <ResultStage
+              error={error}
+              lastFocusableElementRef={lastFocusableElementRef}
+            />
+          )}
+        </div>
+      </div>
+      <FocusTrapRedirectFocus element={firstFocusableElementRef} />
+    </div>
   );
 };
 

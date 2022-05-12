@@ -1,231 +1,49 @@
-@import '../../variables.scss';
-.createModal {
+.createPostModal {
   position: fixed;
+  top: 0;
   left: 0;
-  right: 0;
-  top: 50%;
-  z-index: 15;
-  margin: auto;
-  max-width: 1100px;
-  transform-origin: center;
-  transform: translateY(-50%);
-  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.createPostModal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.createPostModal__container {
+  position: relative;
+  z-index: 102;
+  width: 80vh;
+  height: calc(80vh + var(--top-bar-height));
+  border: solid silver 1px;
   background: white;
-  @media (max-width: 1140px) {
-    margin: 0 20px 0 20px;
-  }
-  @media (max-width: 980px) {
-    top: 0;
-    left: 0;
-    transform: none;
-    margin: 0;
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-  }
-  &__backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: black;
-    animation: backdropFadeIn 300ms forwards;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-  }
-  &__topBar {
-    position: relative;
-    width: 100%;
-    display: flex;
-    padding: 10px;
-    border-bottom: solid $border-color 1px;
-  }
-  &__leftSideBtns {
-    position: absolute;
-    left: 10px;
-  }
-  &__title {
-    position: relative;
-    text-align: center;
-    width: max-content;
-    margin: 4px auto 0 auto;
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  &__rightSideBtns {
-    position: absolute;
-    right: 10px;
-  }
-  &__chooseFile {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 350px;
-    input[type='File'] {
-      display: none;
-    }
-    svg {
-      color: $medium-color;
-      margin-bottom: 40px;
-    }
-    button {
-      padding: 5px 10px;
-      border-radius: 5px;
-      background: $primary-color;
-      color: $light-color;
-      border: none;
-      cursor: pointer;
-    }
-  }
-  &__imageErrorMessage {
-    a {
-      color: $primary-color;
-      text-decoration: none;
-    }
-  }
-  &__postDetails {
-    position: relative;
-    width: 100%;
-    display: flex;
-    background: black;
-  }
-  &__imagePreview {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background: black;
-    min-height: 400px;
-    max-height: 700px;
-    animation: fadeIn 300ms;
-    img {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    @media (max-width: 980px) {
-      min-height: auto;
-      max-height: auto;
-    }
-  }
-  &__btn {
-    border: none;
-    background: none;
-    color: $primary-color;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  &__details {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    padding: 20px;
-    width: 0;
-    transform-origin: right;
-    animation: scaleX 300ms forwards;
-    background: white;
-  }
-  &__user {
-    display: flex;
-    align-items: center;
-    img {
-      margin-right: 10px;
-      border-radius: 50%;
-    }
-  }
-  &__caption {
-    width: 100%;
-    margin-top: 20px;
-    textarea {
-      display: block;
-      width: 100%;
-      min-height: 100px;
-      border: none;
-      background: none;
-      font-size: 1rem;
-      resize: vertical;
-      font-family: inherit;
-      outline: none;
-    }
-  }
-  &__loading {
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  &__loadingMessage {
-    font-size: 2rem;
-    margin-top: 20px;
-  }
-  &__result {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 350px;
-    i {
-      font-size: 100px;
-      color: rgb(24, 179, 24);
-    }
-    p {
-      font-size: 2rem;
-      margin-top: 40px;
-      color: $medium-color;
-    }
-    button {
-      padding: 5px 10px;
-      border-radius: 5px;
-      background: $primary-color;
-      color: $light-color;
-      cursor: pointer;
-      border: none;
-      margin-top: 20px;
-    }
-  }
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-@keyframes scaleX {
-  from {
-    transform: scaleX(0);
-    width: 0px;
-  }
-  to {
-    transform: scaleX(1);
-    width: 250px;
-  }
+.createPostModal__body {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
-@keyframes scale {
-  from {
-    transform: scale(0) translateY(-50%);
+@media screen and (max-width: 500px) {
+  .createPostModal__container {
+    width: 95vw;
+    height: calc(95vw + var(--top-bar-height));
   }
-  to {
-    transform: scale(1) translateY(-50%);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes backdropFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.7;
+  .createPostModal__body {
+    width: 100%;
+    height: 95vw;
   }
 }

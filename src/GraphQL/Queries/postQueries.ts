@@ -14,6 +14,7 @@ query GetPost($postId: ID!) {
         images  {
           fullImage {
             url
+            aspectRatio
           }
         }
         description

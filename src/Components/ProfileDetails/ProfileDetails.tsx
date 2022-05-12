@@ -1,7 +1,6 @@
-import { DEFAULT_PROFILE_PICTURE_URL } from '../../default-profile-pic-url';
-import './ProfileDetails.scss';
-import useRedux from '../../Hooks/useRedux';
-import FollowButton from '../FollowButton/FollowButton';
+import "./ProfileDetails.scss";
+import useRedux from "../../Hooks/useRedux";
+import FollowButton from "../FollowButton/FollowButton";
 
 const ProfileDetails = () => {
   const { authState, profileState } = useRedux();
@@ -12,11 +11,7 @@ const ProfileDetails = () => {
         <header className="profileDetails">
           <div className="profileDetails__picture">
             <img
-              src={
-                profileData?.profilePicture
-                  ? profileData?.profilePicture
-                  : DEFAULT_PROFILE_PICTURE_URL
-              }
+              src={profileData?.profilePicture}
               alt={`${profileData?.username}'s profile pic`}
               width="150"
               height="150"
@@ -24,7 +19,9 @@ const ProfileDetails = () => {
           </div>
           <section className="profileDetails__details">
             <div className="profileDetails__nameAndSettings">
-              <h2 className="profileDetails__username">{profileData?.username}</h2>
+              <h2 className="profileDetails__username">
+                {profileData?.username}
+              </h2>
               {authState.accessToken &&
                 authState.user?.username !== profileData.username && (
                   <FollowButton
@@ -35,12 +32,12 @@ const ProfileDetails = () => {
             </div>
             <div className="profileDetails__stats">
               <p className="profileDetails__stat">
-                <span>{profileData?.posts.count}</span>{' '}
-                {profileData?.posts.count === 1 ? 'post' : 'posts'}
+                <span>{profileData?.posts.count}</span>{" "}
+                {profileData?.posts.count === 1 ? "post" : "posts"}
               </p>
               <p className="profileDetails__stat">
-                <span>{profileData?.followers.count}</span>{' '}
-                {profileData?.followers.count === 1 ? 'follower' : 'followers'}
+                <span>{profileData?.followers.count}</span>{" "}
+                {profileData?.followers.count === 1 ? "follower" : "followers"}
               </p>
               <p className="profileDetails__stat">
                 <span>{profileData?.following.count}</span> following

@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DEFAULT_PROFILE_PICTURE_URL } from '../../../../default-profile-pic-url';
-import { dateConverter } from '../../../../Util/dateConverter';
-import CommentBottom from '../../../Comment/CommentComponents/CommentBottom/CommentBottom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { dateConverter } from "../../../../Util/dateConverter";
+import CommentBottom from "../../../Comment/CommentComponents/CommentBottom/CommentBottom";
 
 const PostDescription = ({
   username,
@@ -21,7 +20,7 @@ const PostDescription = ({
     <div className="comment">
       <div className="comment__container">
         <img
-          src={profilePicture ? profilePicture : DEFAULT_PROFILE_PICTURE_URL}
+          src={profilePicture}
           alt=""
           width="35"
           height="35"
@@ -30,15 +29,21 @@ const PostDescription = ({
         <div className="comment__body">
           <div className="comment__usernameAndText">
             <p className="comment__text">
-              <Link to={`/users/${username} `} className="comment__usernameLink">
+              <Link
+                to={`/users/${username} `}
+                className="comment__usernameLink"
+              >
                 {username}
-              </Link>{' '}
+              </Link>{" "}
               {description && description.length > 250 && isShowMore
                 ? description.slice(0, 250)
                 : description}
               {description && description.length > 250 && (
-                <button className="comment__showMoreBtn" onClick={handleToggleShowMore}>
-                  {isShowMore ? 'show more...' : 'show less'}
+                <button
+                  className="comment__showMoreBtn"
+                  onClick={handleToggleShowMore}
+                >
+                  {isShowMore ? "show more..." : "show less"}
                 </button>
               )}
             </p>

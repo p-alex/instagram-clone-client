@@ -1,0 +1,47 @@
+.detailsStage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.detailsStage__preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.detailsStage__panel {
+  position: absolute;
+  width: 40%;
+  height: 100%;
+  padding: 20px;
+  top: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.detailsStage__user {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.detailsStage__user img {
+  border-radius: 50%;
+}
+
+.detailsStage__textarea {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  height: 200px;
+  outline: none;
+}
+
+@media screen and (max-width: 980px) {
+  .detailsStage__panel {
+    width: 60%;
+  }
+}

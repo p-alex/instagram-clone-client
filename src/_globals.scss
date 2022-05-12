@@ -1,14 +1,32 @@
-@import './variables';
+@import "./variables";
+
+:root {
+  //site
+  --site-background: #fafafa;
+  // navbar height
+  --navbar-height: 72px;
+  --navbar-height-mobile: 60px;
+  // colors
+  --primary-color: #2a9d8f;
+  --secondary-color: #264653;
+  --tertiary-color: #182d35;
+  --light-color: #fff;
+  --medium-color: silver;
+  // border colors
+  --border-color: var(--medium-color);
+  --border-color-active: var(--primary-color);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-weight: normal;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
   background-color: $site-background;
 }
 
@@ -32,4 +50,9 @@ input,
 button,
 textarea {
   font-size: 1rem;
+}
+
+textarea {
+  border: none;
+  background: none;
 }

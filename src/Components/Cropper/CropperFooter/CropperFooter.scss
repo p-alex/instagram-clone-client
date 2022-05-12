@@ -1,0 +1,89 @@
+.cropperFooter {
+  position: absolute;
+  display: block;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+}
+
+.cropperFooter__btn {
+  width: 37px;
+  height: 37px;
+  font-size: 1rem;
+  border-radius: 50%;
+  background-color: white;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+.cropperFooter__btn:hover {
+  opacity: 0.8;
+}
+
+.cropperFooter__btn.active-tab {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cropperFooter__aspect {
+  position: relative;
+}
+
+.cropperFooter__aspectPopup {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  top: 0;
+  transform: translateY(calc(-100% - 10px));
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
+
+.cropperFooter__aspectBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0 15px;
+  color: rgb(146, 146, 146);
+  background: none;
+  border-bottom: solid 2px rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 200ms ease-in-out;
+}
+
+.cropperFooter__aspectBtn:last-child {
+  border-bottom: none;
+}
+
+.cropperFooter__aspectBtn.current-aspect {
+  color: white;
+}
+.cropperFooter__aspectBtn.current-aspect .geometric {
+  border-color: white;
+}
+
+.geometric {
+  border: solid 2px grey;
+  transition: border-color 200ms ease-in-out;
+}
+
+.square {
+  width: 15px;
+  height: 15px;
+}
+
+.vertical-rectangle {
+  width: 15px;
+  height: 23px;
+}
+
+.horizontal-rectangle {
+  width: 23px;
+  height: 15px;
+}

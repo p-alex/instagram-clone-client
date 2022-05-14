@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import InputGroup from '../../Components/InputGroup/InputGroup';
-import { Link, useNavigate } from 'react-router-dom';
-import './Login.scss';
-import useFetch from '../../Hooks/useFetch';
-import Logo from '../../Components/Logo/Logo';
-import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
-import { loginUser } from '../../Redux/Auth';
-import useRedux from '../../Hooks/useRedux';
+import React, { useEffect, useState } from "react";
+import InputGroup from "../../Components/InputGroup/InputGroup";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.scss";
+import useFetch from "../../Hooks/useFetch";
+import Logo from "../../Components/Logo/Logo";
+import { LOGIN_USER_MUTATION } from "../../GraphQL/Mutations/authMutations";
+import { loginUser } from "../../Redux/Auth";
+import useRedux from "../../Hooks/useRedux";
 
 const Login = () => {
   const navigate = useNavigate();
   const { authState, dispatch } = useRedux();
 
-  const [errMessage, setErrMessage] = useState('');
+  const [errMessage, setErrMessage] = useState("");
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [isValidUsername, setIsValidUsername] = useState(false);
   const [isUsernameFocused, setIsUsernameFocused] = useState(false);
 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
@@ -28,7 +28,7 @@ const Login = () => {
   });
 
   useEffect(() => {
-    authState.user?.id && navigate('/');
+    authState.user?.id && navigate("/");
   }, [authState.user]);
 
   useEffect(() => {
@@ -44,19 +44,19 @@ const Login = () => {
     if (isValidUsername && isValidPassword) {
       try {
         const response = await loginUserRequest();
-        console.log(response);
         if (response?.success) {
           dispatch(
             loginUser({
               user: {
-                id: response.userId,
-                username: response.username,
-                profilePicture: response.profileImg,
+                id: response.user.id,
+                username: response.user.username,
+                profilePicture: response.user.profileImg,
+                hasFollowings: response.user.hasFollowings,
               },
-              accessToken: response.accessToken,
+              accessToken: response.user.accessToken,
             })
           );
-          navigate('/');
+          navigate("/");
         }
       } catch (error: any) {
         console.log(error.message);
@@ -89,7 +89,9 @@ const Login = () => {
           />
           <button
             className="login__submit"
-            disabled={!isValidUsername || !isValidPassword || isLoading ? true : false}
+            disabled={
+              !isValidUsername || !isValidPassword || isLoading ? true : false
+            }
           >
             Log In
           </button>

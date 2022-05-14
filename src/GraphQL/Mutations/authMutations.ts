@@ -30,10 +30,13 @@ export const LOGIN_USER_MUTATION = `
             statusCode
             success
             message
-            userId
-            username
-            profileImg
-            accessToken
+            user {
+              id
+              username
+              profileImg
+              hasFollowings
+              accessToken
+            }
         }
     }
 `;
@@ -53,10 +56,13 @@ mutation {
     refreshToken {
         success
         message
-        userId
-        username
-        profileImg
-        accessToken
+        user {
+          id
+          username
+          profileImg
+          hasFollowings
+          accessToken
+        }
     }
 }
 `;

@@ -5,6 +5,7 @@ export const GET_USER_QUERY = `
             success
             message
             isFollowed
+            hasFollowings
             user {
               userId
               profilePicture

@@ -17,6 +17,7 @@ import {
   loadingPostError,
   resetPostState,
   changePostFormToNewComment,
+  closePostOptions,
 } from "../../Redux/Post";
 import PostLoader from "../Post/PostComponents/PostLoader/PostLoader";
 import PostPanel from "../Post/PostComponents/PostPanel/PostPanel";
@@ -73,6 +74,7 @@ const PostModal = ({ postId }: { postId: string }) => {
     firstFocusableElement.current.focus();
     return () => {
       dispatch(closePostModal());
+      dispatch(closePostOptions());
     };
   }, []);
 

@@ -64,6 +64,9 @@ const PostSlice = createSlice({
     togglePostOptions: (state) => {
       state.isPostOptionsActive = !state.isPostOptionsActive;
     },
+    closePostOptions: (state) => {
+      state.isPostOptionsActive = false;
+    },
     resetPostState: (state) => {
       state.post = null;
       state.postIndex = null;
@@ -83,6 +86,7 @@ export const {
   changePostFormToNewComment,
   changePostFormToNewReply,
   togglePostOptions,
+  closePostOptions,
   resetPostState,
 } = PostSlice.actions;
 

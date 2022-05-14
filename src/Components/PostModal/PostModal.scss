@@ -4,7 +4,7 @@
   display: flex;
   z-index: $postModalZ;
   max-width: 1500px;
-  height: 90%;
+
   margin: auto;
   animation: fadeIn 200ms;
   @media (max-width: 1900px) {
@@ -56,8 +56,6 @@
   }
   &__ctrl {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 35px;
     height: 35px;
     color: #333;

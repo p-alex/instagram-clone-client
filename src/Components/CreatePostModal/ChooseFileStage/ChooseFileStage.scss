@@ -19,6 +19,12 @@
   border-radius: 5px;
   color: white;
   font-weight: 700;
+  font-size: 1.2rem;
+  transition: opacity 200ms ease-in-out;
+}
+
+.chooseFileStage__chooseBtn:hover {
+  opacity: 0.8;
 }
 
 .chooseFileStage i {

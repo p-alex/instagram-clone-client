@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPost } from '../interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IPost } from "../interfaces";
 
 export interface IPostState {
   post: IPost | null;
@@ -7,7 +7,7 @@ export interface IPostState {
   isPostOptionsActive: boolean;
   isLoading: boolean;
   postFormState: {
-    postNew: 'comment' | 'reply';
+    postNew: "comment" | "reply";
     replyTo: string | null;
     commentId: string | null;
   };
@@ -19,12 +19,12 @@ const initialState: IPostState = {
   postIndex: null,
   isPostOptionsActive: false,
   isLoading: false,
-  postFormState: { postNew: 'reply', replyTo: null, commentId: null },
+  postFormState: { postNew: "reply", replyTo: null, commentId: null },
   errorMessage: null,
 };
 
 const PostSlice = createSlice({
-  name: 'post',
+  name: "post",
   initialState,
   reducers: {
     loadingPost: (state) => {
@@ -49,7 +49,7 @@ const PostSlice = createSlice({
       );
     },
     changePostFormToNewComment: (state) => {
-      state.postFormState.postNew = 'comment';
+      state.postFormState.postNew = "comment";
       state.postFormState.replyTo = null;
       state.postFormState.commentId = null;
     },
@@ -57,7 +57,7 @@ const PostSlice = createSlice({
       state,
       action: PayloadAction<{ replyTo: string; commentId: string }>
     ) => {
-      state.postFormState.postNew = 'reply';
+      state.postFormState.postNew = "reply";
       state.postFormState.replyTo = `@${action.payload.replyTo}`;
       state.postFormState.commentId = action.payload.commentId;
     },
@@ -69,6 +69,7 @@ const PostSlice = createSlice({
       state.postIndex = null;
       state.isLoading = false;
       state.errorMessage = null;
+      state.isPostOptionsActive = false;
     },
   },
 });

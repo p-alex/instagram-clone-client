@@ -121,17 +121,7 @@ const PostModal = ({ postId }: { postId: string }) => {
         />
       ) : null}
 
-      {typeof currentPostIndex === "number" &&
-      userPosts &&
-      currentPostIndex < userPosts?.length - 1 ? (
-        <PostModalCtrl
-          direction="next"
-          handleNavigatePosts={handleNavigatePosts}
-        />
-      ) : null}
-      {isLoading && <PostLoader />}
-
-      {!isLoading && (
+      {!isLoading ? (
         <div className="postModal">
           <PostImage
             imageUrl={post?.images[0].fullImage.url}
@@ -147,7 +137,18 @@ const PostModal = ({ postId }: { postId: string }) => {
             {authState.accessToken && <PostForm />}
           </PostPanel>
         </div>
+      ) : (
+        <PostLoader />
       )}
+
+      {typeof currentPostIndex === "number" &&
+      userPosts &&
+      currentPostIndex < userPosts?.length - 1 ? (
+        <PostModalCtrl
+          direction="next"
+          handleNavigatePosts={handleNavigatePosts}
+        />
+      ) : null}
 
       {postState.isPostOptionsActive && <PostOptionsModal />}
       <FocusTrapRedirectFocus element={firstFocusableElement} />

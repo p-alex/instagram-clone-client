@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./CropperFooter.scss";
 
 const CropperFooter = ({
@@ -16,6 +16,10 @@ const CropperFooter = ({
     if (activeTab === tab) return setActiveTab("");
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    setActiveTab("");
+  }, [aspectRatio]);
 
   return (
     <div className="cropperFooter">

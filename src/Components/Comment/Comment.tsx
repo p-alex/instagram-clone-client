@@ -20,7 +20,10 @@ const Comment = ({
     <div className="comment">
       {commentsSectionState.isCommentOptionsActive &&
         commentsSectionState.selectedCommentId === comment.id && (
-          <CommentOptions commentId={comment.id} />
+          <CommentOptions
+            commentId={comment.id}
+            commentUserId={comment.user.id}
+          />
         )}
       <div className="comment__container">
         <img

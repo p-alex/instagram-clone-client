@@ -1,17 +1,25 @@
-import { useEffect, useRef } from 'react';
-import { DELETE_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
-import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
-import useRedux from '../../../../Hooks/useRedux';
-import { IDefaultResponse } from '../../../../interfaces';
-import { deleteComment, toggleCommentOptions } from '../../../../Redux/CommentsSection';
-import FocusTrapRedirectFocus from '../../../FocusTrap';
+import { useEffect, useRef } from "react";
+import { DELETE_COMMENT_MUTATION } from "../../../../GraphQL/Mutations/commentMutations";
+import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
+import useRedux from "../../../../Hooks/useRedux";
+import { IDefaultResponse } from "../../../../interfaces";
+import {
+  deleteComment,
+  toggleCommentOptions,
+} from "../../../../Redux/CommentsSection";
+import FocusTrapRedirectFocus from "../../../FocusTrap";
 
-const CommentOptions = ({ commentId }: { commentId: string }) => {
+interface Props {
+  commentId: string;
+  commentUserId: string;
+}
+
+const CommentOptions = (props: Props) => {
   const { authState, postState, dispatch } = useRedux();
 
   const [deleteCommentRequest, { isLoading }] = useFetchWithRetry({
     query: DELETE_COMMENT_MUTATION,
-    variables: { commentId, postId: postState.post?.id },
+    variables: { commentId: props.commentId, postId: postState.post?.id },
     accessToken: authState.accessToken,
   });
 
@@ -26,8 +34,8 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
     try {
       const response: IDefaultResponse = await deleteCommentRequest();
       if (response.success) {
-        dispatch(toggleCommentOptions(commentId));
-        dispatch(deleteComment({ commentId }));
+        dispatch(toggleCommentOptions(props.commentId));
+        dispatch(deleteComment({ commentId: props.commentId }));
       }
     } catch (error) {
       console.log(error);
@@ -36,9 +44,9 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
 
   const handleCloseModalAndRedirectFocus = () => {
     const optionsToggleBtn = document.querySelector(
-      '.commentBottom__optionsToggle'
+      ".commentBottom__optionsToggle"
     ) as HTMLButtonElement;
-    dispatch(toggleCommentOptions(commentId));
+    dispatch(toggleCommentOptions(props.commentId));
     optionsToggleBtn.focus();
   };
 
@@ -50,7 +58,7 @@ const CommentOptions = ({ commentId }: { commentId: string }) => {
         onClick={handleCloseModalAndRedirectFocus}
       ></div>
       <div className="optionsModal__container">
-        {authState.user?.id && authState.user.id === postState.post?.user.id ? (
+        {authState.user?.id && authState.user.id === props.commentUserId ? (
           <button
             className="optionsModal__option optionsModal__red-option"
             onClick={handleDeleteComment}

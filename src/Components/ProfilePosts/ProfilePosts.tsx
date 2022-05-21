@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import PostModal from '../PostModal/PostModal';
-import './ProfilePosts.scss';
-import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../Redux/Store';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectPostId, setLastFocusedPostIndex } from '../../Redux/Profile';
+import { useEffect, useState } from "react";
+import PostModal from "../PostModal/PostModal";
+import "./ProfilePosts.scss";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../Redux/Store";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPostId, setLastFocusedPostIndex } from "../../Redux/Profile";
 
 const ProfilePosts = () => {
   const navigate = useNavigate();
@@ -35,12 +35,12 @@ const ProfilePosts = () => {
     let isMounted = true;
 
     if (isMounted) {
-      window.addEventListener('resize', handleSetIsMobileWidth);
+      window.addEventListener("resize", handleSetIsMobileWidth);
     }
 
     return () => {
       isMounted = false;
-      window.removeEventListener('resize', handleSetIsMobileWidth);
+      window.removeEventListener("resize", handleSetIsMobileWidth);
     };
   }, []);
 
@@ -51,10 +51,12 @@ const ProfilePosts = () => {
           profileState.user.posts.postsList.map((post, index) => (
             <button
               className="profilePosts__post"
-              role={isMobileWidth ? 'link' : 'button'}
+              role={isMobileWidth ? "link" : "button"}
               id={`profile-post-${index}`}
               aria-label={
-                isMobileWidth ? `navigate to post ${index + 1} page` : 'open post modal'
+                isMobileWidth
+                  ? `navigate to post ${index + 1} page`
+                  : "open post modal"
               }
               onClick={() => handleViewPost(post.id, index)}
               key={post.id}
@@ -65,7 +67,6 @@ const ProfilePosts = () => {
                 className="profilePosts__image"
                 width="293"
                 height="293"
-                loading="lazy"
               />
               <div className="profilePosts__postOverlay">
                 {post.likes.count ? (
@@ -82,7 +83,9 @@ const ProfilePosts = () => {
             </button>
           ))}
       </section>
-      {profileState.selectedPostId && <PostModal postId={profileState.selectedPostId} />}
+      {profileState.selectedPostId && (
+        <PostModal postId={profileState.selectedPostId} />
+      )}
     </>
   );
 };

@@ -6,6 +6,8 @@ import "./ProfileBtn.scss";
 import useRedux from "../../../Hooks/useRedux";
 import { resetProfileState } from "../../../Redux/Profile";
 import useFetchWithRetry from "../../../Hooks/useFetchWithRetry";
+import { resetFeedState } from "../../../Redux/Feed";
+import { resetSuggestions } from "../../../Redux/Suggestions";
 
 const ProfileBtn = () => {
   const navigate = useNavigate();
@@ -33,6 +35,7 @@ const ProfileBtn = () => {
       <button
         className="profileBtn__btn"
         onClick={() => setIsDropdownActive(!isDropdownActive)}
+        aria-label="Toggle profile menu"
       >
         <img
           src={authState.user?.profilePicture}
@@ -51,16 +54,18 @@ const ProfileBtn = () => {
             }}
             role="link"
           >
-            Profile
+            <i className="fa-solid fa-user"></i> Profile
           </button>
           <button
             onClick={() => {
               handleLogout();
               setIsDropdownActive(false);
+              dispatch(resetFeedState());
+              dispatch(resetSuggestions());
             }}
             className="profileBtn__deleteBtn"
           >
-            Logout
+            <i className="fa-solid fa-arrow-right-from-bracket"></i> Logout
           </button>
         </div>
       )}

@@ -1,0 +1,14 @@
+@import "../../variables.scss";
+.suggestions {
+  position: relative;
+  width: 100%;
+  background-color: $light-color;
+  border: solid silver 1px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  @media (max-width: 980px) {
+    width: 100%;
+  }
+}

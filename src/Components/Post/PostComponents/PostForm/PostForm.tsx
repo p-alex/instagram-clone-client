@@ -1,61 +1,53 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import { ADD_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
-import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
-import useRedux from '../../../../Hooks/useRedux';
-import { addComment } from '../../../../Redux/CommentsSection';
-import './PostForm.scss';
+import { FormEvent, useRef, useState } from "react";
+import { ADD_COMMENT_MUTATION } from "../../../../GraphQL/Mutations/commentMutations";
+import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
+import useRedux from "../../../../Hooks/useRedux";
+import { addComment } from "../../../../Redux/CommentsSection";
+import "./PostForm.scss";
 
 const PostForm = () => {
   const { authState, postState, dispatch } = useRedux();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
+  const [canPost, setCanPost] = useState(true);
 
-  const [addCommentOrReplyRequest, { isLoading }] = useFetchWithRetry({
+  const [addCommentRequest, { isLoading }] = useFetchWithRetry({
     query: ADD_COMMENT_MUTATION,
     variables: { comment: text, postId: postState.post?.id },
     accessToken: authState.accessToken,
   });
 
-  const handleAddCommentOrReply = async (e: FormEvent<HTMLFormElement>) => {
+  const handleAddComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setCanPost(false);
     try {
-      const response = await addCommentOrReplyRequest();
+      const response = await addCommentRequest();
       if (response.success) {
         dispatch(addComment(response?.comment));
-        setText('');
+        setText("");
+        setTimeout(() => {
+          setCanPost(true);
+        }, 5000);
       }
     } catch (error: any) {
       console.log(error.message);
+      setCanPost(true);
     }
   };
 
   const formInput = useRef<any>();
 
-  useEffect(() => {
-    if (postState.postFormState.postNew === 'comment') setText('');
-    if (postState.postFormState.postNew === 'reply') setText('');
-  }, [postState.postFormState]);
-
   return (
-    <form className="postForm" onSubmit={(e) => handleAddCommentOrReply(e)}>
-      {postState.postFormState.postNew === 'reply' && (
-        <div className="postForm__replyTo">
-          <p>{`Reply to ${postState.postFormState.replyTo}`}</p>
-        </div>
-      )}
+    <form className="postForm" onSubmit={(e) => handleAddComment(e)}>
       <div className="postForm__inputAndSubmit">
         <input
           type="text"
           className="postForm__input"
-          placeholder={
-            postState.postFormState.postNew === 'comment'
-              ? 'Add a comment...'
-              : `Add a reply...`
-          }
+          placeholder={"Add a comment..."}
           value={text}
           onChange={(event) => setText(event.target.value)}
           ref={formInput}
         ></input>
-        <button type="submit" disabled={isLoading || !text}>
+        <button type="submit" disabled={isLoading || !text || !canPost}>
           Post
         </button>
       </div>

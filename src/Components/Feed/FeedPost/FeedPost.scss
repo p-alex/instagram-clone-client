@@ -1,0 +1,9 @@
+.feedPost {
+  margin-bottom: 40px;
+  min-width: 100%;
+  background-color: white;
+  border: solid silver 1px;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}

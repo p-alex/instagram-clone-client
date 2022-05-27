@@ -7,13 +7,14 @@
     display: flex;
     align-items: center;
     a {
-      color: black;
+      color: var(--secondary-color);
       text-decoration: none;
     }
   }
   &__moreOptionsBtn {
     padding: 5px;
     font-size: 1.1rem;
+    color: var(--secondary-color);
   }
   img {
     margin-right: 15px;

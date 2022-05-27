@@ -32,7 +32,7 @@ const Login = () => {
   }, [authState.user]);
 
   useEffect(() => {
-    setIsValidUsername(username.length >= 6);
+    setIsValidUsername(username.length >= 4);
   }, [username]);
 
   useEffect(() => {
@@ -50,6 +50,7 @@ const Login = () => {
               user: {
                 id: response.user.id,
                 username: response.user.username,
+                fullname: response.user.fullname,
                 profilePicture: response.user.profileImg,
                 hasFollowings: response.user.hasFollowings,
               },

@@ -1,4 +1,4 @@
-@import '../../../../variables.scss';
+@import "../../../../variables.scss";
 .postComments {
   position: relative;
   border-top: solid silver 1px;
@@ -10,10 +10,17 @@
   &::-webkit-scrollbar {
     display: none;
   }
+  &__container {
+    position: relative;
+    height: 100%;
+  }
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  a {
-    color: $primary-color;
-    text-decoration: none;
+  &__loginMessage {
+    color: var(--secondary-color);
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
   }
 }

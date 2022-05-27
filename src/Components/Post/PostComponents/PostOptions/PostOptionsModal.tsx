@@ -1,15 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { DELETE_POST_MUTATION } from '../../../../GraphQL/Mutations/postMutations';
-import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
-import useRedux from '../../../../Hooks/useRedux';
-import { IDefaultResponse } from '../../../../interfaces';
-import { togglePostOptions } from '../../../../Redux/Post';
-import { closePostModal, deletePost } from '../../../../Redux/Profile';
-import Spinner from '../../../../Ui/Spinner';
-import FocusTrapRedirectFocus from '../../../FocusTrap';
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DELETE_POST_MUTATION } from "../../../../GraphQL/Mutations/postMutations";
+import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
+import useRedux from "../../../../Hooks/useRedux";
+import { IDefaultResponse } from "../../../../interfaces";
+import { closePostModal, deletePost } from "../../../../Redux/Profile";
+import Spinner from "../../../../Ui/Spinner";
+import FocusTrapRedirectFocus from "../../../FocusTrap";
 
-const PostOptionsModal = () => {
+interface Props {
+  handleToggleOptionsModal: () => void;
+  currentPostId: string;
+}
+
+const PostOptionsModal = (props: Props) => {
   const navigate = useNavigate();
   const { authState, postState, dispatch } = useRedux();
 
@@ -50,9 +54,9 @@ const PostOptionsModal = () => {
 
   const handleCloseModalAndRedirectFocus = () => {
     const optionsToggleBtn = document.querySelector(
-      '.postUser__moreOptionsBtn'
+      ".postUser__moreOptionsBtn"
     ) as HTMLButtonElement;
-    dispatch(togglePostOptions());
+    props.handleToggleOptionsModal();
     optionsToggleBtn.focus();
   };
 
@@ -62,13 +66,12 @@ const PostOptionsModal = () => {
   };
 
   const handleGoToPost = () => {
-    dispatch(togglePostOptions());
-    navigate(`/posts/${postState.post?.id}`);
+    navigate(`/posts/${props.currentPostId}`);
   };
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(window.location.href);
-    dispatch(togglePostOptions());
+    props.handleToggleOptionsModal();
   };
 
   return (
@@ -76,14 +79,14 @@ const PostOptionsModal = () => {
       <FocusTrapRedirectFocus element={optionsLastFocusable} />
       <div
         className="optionsModal__backdrop"
-        onClick={() => dispatch(togglePostOptions())}
+        onClick={handleCloseModalAndRedirectFocus}
       ></div>
       {isDeleteMode ? (
         <div className="optionsModal__container">
           <FocusTrapRedirectFocus element={confirmDeleteLastFocusable} />
           <div className="optionsModal__confirmMessage">
             {isLoading && <Spinner />}
-            <h2>{!isLoading ? 'Delete Post?' : 'Loading...'}</h2>
+            <h2>{!isLoading ? "Delete Post?" : "Loading..."}</h2>
             {!isLoading && <p>Are you sure you want to delete this post?</p>}
           </div>
           {!isLoading && (
@@ -109,7 +112,8 @@ const PostOptionsModal = () => {
         </div>
       ) : (
         <div className="optionsModal__container">
-          {authState.user?.id && authState.user.id === postState.post?.user.id ? (
+          {authState.user?.id &&
+          authState.user.id === postState.post?.user.id ? (
             <button
               className="optionsModal__option optionsModal__red-option"
               onClick={() => setIsDeleteMode(!isDeleteMode)}
@@ -127,9 +131,10 @@ const PostOptionsModal = () => {
               </button>
             )
           )}
-          {authState.accessToken && authState.user?.id !== postState.post?.user.id && (
-            <button className="optionsModal__option">Follow</button>
-          )}
+          {authState.accessToken &&
+            authState.user?.id !== postState.post?.user.id && (
+              <button className="optionsModal__option">Follow</button>
+            )}
           <button
             className="optionsModal__option"
             role="link"
@@ -138,7 +143,10 @@ const PostOptionsModal = () => {
           >
             Go to post
           </button>
-          <button className="optionsModal__option" onClick={handleCopyToClipboard}>
+          <button
+            className="optionsModal__option"
+            onClick={handleCopyToClipboard}
+          >
             Copy Link
           </button>
           <button

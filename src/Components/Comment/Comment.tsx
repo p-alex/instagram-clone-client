@@ -29,8 +29,8 @@ const Comment = ({
         <img
           src={comment.user.profilePicture}
           alt=""
-          width="35"
-          height="35"
+          width="30"
+          height="30"
           className="comment__profileImg"
         />
         <div className="comment__body">

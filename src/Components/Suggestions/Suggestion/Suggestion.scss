@@ -1,0 +1,23 @@
+.suggestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__user {
+    display: flex;
+    align-items: center;
+    a {
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+  }
+  &__profileImage {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  &__follow {
+    padding: 7px 15px;
+    color: white;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+  }
+}

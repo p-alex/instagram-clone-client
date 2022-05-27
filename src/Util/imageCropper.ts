@@ -34,7 +34,7 @@ export const imageCropper = async ({
       image.naturalHeight
     );
 
-    resolve(canvas.toDataURL("image/jpeg", 0.75));
+    resolve(canvas.toDataURL("image/jpeg", 0.8));
   });
   return result;
 };

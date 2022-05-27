@@ -4,10 +4,10 @@
   //site
   --site-background: #fafafa;
   // navbar height
-  --navbar-height: 72px;
+  --navbar-height: 59px;
   --navbar-height-mobile: 60px;
   // colors
-  --primary-color: #2a9d8f;
+  --primary-color: rgb(14, 127, 165);
   --secondary-color: #264653;
   --tertiary-color: #182d35;
   --light-color: #fff;
@@ -22,12 +22,15 @@
   padding: 0;
   box-sizing: border-box;
   font-weight: normal;
-  font-family: "Roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
   margin: 0;
   background-color: $site-background;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,

@@ -1,32 +1,36 @@
-import { useState } from 'react';
-import { FOLLOW_OR_UNFOLLOW_USER } from '../../GraphQL/Mutations/userMutations';
-import useFetchWithRetry from '../../Hooks/useFetchWithRetry';
-import useRedux from '../../Hooks/useRedux';
-import './FollowButton.scss';
+import { useEffect, useState } from "react";
+import { FOLLOW_OR_UNFOLLOW_USER } from "../../GraphQL/Mutations/userMutations";
+import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
+import useRedux from "../../Hooks/useRedux";
+import "./FollowButton.scss";
 
-const FollowButton = ({
-  userId,
-  isFollowed,
-}: {
+interface Props {
   userId: string;
+  username: string;
   isFollowed: boolean;
-}) => {
+  handleUpdateState: () => void;
+}
+
+const FollowButton = (props: Props) => {
   const { authState } = useRedux();
 
-  const [btnText, setBtnText] = useState(isFollowed ? 'Unfollow' : 'Follow');
+  const [btnText, setBtnText] = useState(
+    props.isFollowed ? "Unfollow" : "Follow"
+  );
 
   const [followOrUnfollowUserRequest, { isLoading }] = useFetchWithRetry({
     query: FOLLOW_OR_UNFOLLOW_USER,
-    variables: { userId, type: btnText },
+    variables: { userId: props.userId, type: btnText },
     accessToken: authState.accessToken,
   });
 
   const handleFollowOrUnfollowUser = async () => {
     if (!isLoading) {
       try {
+        props.handleUpdateState();
         const response = await followOrUnfollowUserRequest();
         if (response.success) {
-          setBtnText(btnText === 'Follow' ? 'Unfollow' : 'Follow');
+          setBtnText(btnText === "Follow" ? "Unfollow" : "Follow");
         }
       } catch (error) {
         console.log(error);
@@ -34,15 +38,26 @@ const FollowButton = ({
     }
   };
 
+  useEffect(() => {
+    setBtnText(props.isFollowed ? "Unfollow" : "Follow");
+  }, [props.isFollowed]);
+
   return (
     <button
       className={
-        btnText === 'Unfollow' ? 'followButton followButton--followed' : 'followButton'
+        props.isFollowed
+          ? "followButton followButton--followed"
+          : "followButton"
       }
       onClick={handleFollowOrUnfollowUser}
       disabled={isLoading}
+      aria-label={
+        props.isFollowed
+          ? `Unfollow ${props.username}`
+          : `Follow ${props.username}`
+      }
     >
-      {btnText}
+      {props.isFollowed ? "Unfollow" : "Follow"}
     </button>
   );
 };

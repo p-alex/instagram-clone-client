@@ -1,0 +1,23 @@
+.usernameAndName {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+  border: solid silver 1px;
+  margin-bottom: 30px;
+  img {
+    border-radius: 50%;
+    border: solid silver 1px;
+  }
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  p {
+    color: grey;
+    text-transform: capitalize;
+    margin-top: 4px;
+  }
+}

@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
-import useRedux from "../../../../Hooks/useRedux";
-import { togglePostOptions } from "../../../../Redux/Post";
 import "./PostUser.scss";
 
 const PostUser = ({
   username,
   profilePicture,
+  handleToggleOptionsModal,
 }: {
   username: string | undefined;
   profilePicture: string | undefined;
+  handleToggleOptionsModal: () => void;
 }) => {
-  const { dispatch } = useRedux();
   return (
     <div className="postUser">
       <div className="postUser__container">
@@ -19,7 +18,8 @@ const PostUser = ({
       </div>
       <button
         className="postUser__moreOptionsBtn"
-        onClick={() => dispatch(togglePostOptions())}
+        onClick={handleToggleOptionsModal}
+        aria-label="Open post options modal"
       >
         <i className="fa-solid fa-ellipsis"></i>
       </button>

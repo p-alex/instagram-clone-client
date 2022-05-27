@@ -26,7 +26,7 @@ export const imageOptimizer = async (
         canvas.height = img.height;
 
         ctx?.drawImage(img, 0, 0, img.width, img.height);
-        const result: string = canvas.toDataURL("image/jpeg", 0.7);
+        const result: string = canvas.toDataURL("image/jpeg", 0.8);
         resolve(result);
       };
     } else {

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IFollowers, IFollowing, IPosts } from '../interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IFollowers, IFollowing, IPosts } from "../interfaces";
 
 interface IProfileUserData {
   userId: string;
@@ -15,7 +15,7 @@ interface IProfileUserData {
 interface IProfileState {
   user: IProfileUserData | null;
   isFollowed: boolean;
-  activeTab: 'posts' | 'saved';
+  activeTab: "posts" | "saved";
   isPostModalActive: boolean;
   selectedPostId: string;
   selectedPostIndex: number | null;
@@ -27,9 +27,9 @@ interface IProfileState {
 const initialState: IProfileState = {
   user: null,
   isFollowed: false,
-  activeTab: 'posts',
+  activeTab: "posts",
   isPostModalActive: false,
-  selectedPostId: '',
+  selectedPostId: "",
   selectedPostIndex: null,
   lastFocusedPostIndex: null,
   isLoading: false,
@@ -37,7 +37,7 @@ const initialState: IProfileState = {
 };
 
 const ProfileSlice = createSlice({
-  name: 'profile',
+  name: "profile",
   initialState,
   reducers: {
     loadingProfile: (state) => {
@@ -64,8 +64,11 @@ const ProfileSlice = createSlice({
       };
       state.isFollowed = action.payload.isFollowed;
     },
-    toggleIsFollowed: (state) => {
-      state.isFollowed = !state.isFollowed;
+    followProfile: (state) => {
+      state.isFollowed = true;
+    },
+    unfollowProfile: (state) => {
+      state.isFollowed = false;
     },
     selectPostId: (state, action: PayloadAction<string>) => {
       const selectedPostIndex = state.user!.posts.postsList.findIndex(
@@ -82,18 +85,18 @@ const ProfileSlice = createSlice({
       state.user!.posts.postsList = updatedPostsList;
     },
     closePostModal: (state) => {
-      state.selectedPostId = '';
+      state.selectedPostId = "";
     },
     setLastFocusedPostIndex: (state, action: PayloadAction<number | null>) => {
       state.lastFocusedPostIndex = action.payload;
     },
-    changeTab: (state, action: PayloadAction<'posts' | 'saved'>) => {
+    changeTab: (state, action: PayloadAction<"posts" | "saved">) => {
       state.activeTab = action.payload;
     },
     resetProfileState: (state) => {
       state.user = null;
       state.isPostModalActive = false;
-      state.selectedPostId = '';
+      state.selectedPostId = "";
       state.lastFocusedPostIndex = null;
       state.isLoading = false;
       state.errorMessage = null;
@@ -102,6 +105,8 @@ const ProfileSlice = createSlice({
 });
 
 export const {
+  followProfile,
+  unfollowProfile,
   loadingProfile,
   loadingProfileError,
   setProfileData,

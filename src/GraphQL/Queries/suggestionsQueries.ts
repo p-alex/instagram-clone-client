@@ -8,6 +8,7 @@ query GetSuggestions {
         id
         username
         profilePicture
+        isFollowed
       }
     }
   }

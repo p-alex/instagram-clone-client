@@ -1,10 +1,10 @@
 .commentUserAndText {
   position: relative;
   width: 100%;
-  &__usernameLink {
+  a {
     margin-right: 5px;
-    color: black;
     font-weight: 700;
+    color: var(--primary-color);
     text-decoration: none;
     float: left;
   }

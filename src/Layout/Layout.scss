@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@import "../variables.scss";
 .mainContainer {
   position: relative;
   max-width: 940px;
@@ -6,4 +6,7 @@
   @media (max-width: 980px) {
     margin: $navbar-height-mobile auto 0 auto;
   }
+  min-height: calc(100vh - var(--navbar-height) - 20px);
+  display: flex;
+  flex-direction: column;
 }

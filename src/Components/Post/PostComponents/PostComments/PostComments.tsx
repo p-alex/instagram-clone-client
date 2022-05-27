@@ -1,18 +1,17 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { GET_COMMENTS_QUERY } from '../../../../GraphQL/Queries/commentQueries';
-import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
-import useRedux from '../../../../Hooks/useRedux';
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { GET_COMMENTS_QUERY } from "../../../../GraphQL/Queries/commentQueries";
+import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
+import useRedux from "../../../../Hooks/useRedux";
 import {
   errorLoadingComments,
   loadingComments,
   resetComments,
   setComments,
-} from '../../../../Redux/CommentsSection';
-import { changePostFormToNewComment } from '../../../../Redux/Post';
-import Comment from '../../../Comment/Comment';
-import PostDescription from '../PostDescription/PostDescription';
-import './PostComments.scss';
+} from "../../../../Redux/CommentsSection";
+import Comment from "../../../Comment/Comment";
+import PostDescription from "../PostDescription/PostDescription";
+import "./PostComments.scss";
 
 const PostComments = () => {
   const { authState, postState, commentsSectionState, dispatch } = useRedux();
@@ -38,40 +37,37 @@ const PostComments = () => {
       dispatch(resetComments());
     };
   }, [postState.post?.id]);
-  useEffect(() => {
-    dispatch(changePostFormToNewComment());
-  }, [commentsSectionState.comments]);
+
   return (
     <div className="postComments">
-      {post?.description && (
-        <PostDescription
-          profilePicture={post?.user.profilePicture}
-          username={post?.user.username}
-          description={post?.description}
-          postedAt={post?.createdAt}
-        />
-      )}
-      {isLoading && <p>Loading...</p>}
-      {commentsSectionState.comments.length
-        ? !isLoading &&
-          authState.accessToken &&
-          commentsSectionState.comments.map((comment, index) => (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              commentIndex={index}
-              isDescription={false}
-            />
-          ))
-        : null}
-      {!authState.accessToken && (
-        <p>
-          <Link to="/login" style={{ color: '' }}>
-            Login
-          </Link>{' '}
-          to see comments.
-        </p>
-      )}
+      <div className="postComments__container">
+        {post?.description && (
+          <PostDescription
+            profilePicture={post?.user.profilePicture}
+            username={post?.user.username}
+            description={post?.description}
+            postedAt={post?.createdAt}
+          />
+        )}
+        {isLoading && <p>Loading...</p>}
+        {commentsSectionState.comments.length
+          ? !isLoading &&
+            authState.accessToken &&
+            commentsSectionState.comments.map((comment, index) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                commentIndex={index}
+                isDescription={false}
+              />
+            ))
+          : null}
+        {!authState.accessToken && (
+          <p className="postComments__loginMessage">
+            <Link to="/login">Login</Link> to see comments.
+          </p>
+        )}
+      </div>
     </div>
   );
 };

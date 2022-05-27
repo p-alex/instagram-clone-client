@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@import "../../../variables.scss";
 .navBarCreatePostBtn {
   width: 40px;
   height: 40px;
@@ -14,7 +14,7 @@
     border 300ms ease-in-out;
   font-size: 1.2rem;
   &:hover {
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     color: $light-color;
     border: solid transparent 1px;
   }

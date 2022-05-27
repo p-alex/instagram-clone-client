@@ -1,13 +1,13 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 .followButton {
   padding: 7px 15px;
   color: $light-color;
-  background-color: $primary-color;
+  background-color: var(--primary-color);
   border-radius: 5px;
   margin-left: 20px;
   &.followButton--followed {
-    color: $dark-color;
-    background-color: $light-color;
-    border: solid silver 1px;
+    color: var(--primary-color);
+    background-color: white;
+    border: solid var(--primary-color) 1px;
   }
 }

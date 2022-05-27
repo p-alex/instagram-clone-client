@@ -4,6 +4,7 @@ export interface AuthState {
   user: {
     id: string;
     username: string;
+    fullname: string;
     profilePicture: string;
     hasFollowings: boolean;
   } | null;
@@ -20,6 +21,7 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action: PayloadAction<AuthState>) => {
+      console.log(action.payload.user);
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
     },

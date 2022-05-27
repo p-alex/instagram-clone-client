@@ -1,5 +1,5 @@
-@import '../../globals';
-@import '../../variables';
+@import "../../globals";
+@import "../../variables";
 .loginMain {
   position: absolute;
   left: 0;
@@ -19,7 +19,7 @@
     margin-top: 30px;
   }
   &__logo {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 2.5rem;
     margin-bottom: var(--marginBottom);
   }
@@ -32,7 +32,7 @@
     display: block;
     width: 100%;
     padding: 7px;
-    background: $primary-color;
+    background: var(--primary-color);
     border: none;
     border-radius: 5px;
     color: $light-color;
@@ -55,7 +55,7 @@
     text-align: center;
     margin-top: 20px;
     a {
-      color: $primary-color;
+      color: var(--primary-color);
       text-decoration: none;
     }
   }

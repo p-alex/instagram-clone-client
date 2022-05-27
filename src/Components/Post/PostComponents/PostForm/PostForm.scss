@@ -1,4 +1,4 @@
-@import '../../../../variables.scss';
+@import "../../../../variables.scss";
 .postForm {
   border-top: solid silver 1px;
   padding: 15px;
@@ -18,6 +18,9 @@
     width: 100%;
   }
   button {
-    color: $primary-color;
+    color: var(--primary-color);
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 }

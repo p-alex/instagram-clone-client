@@ -1,8 +1,7 @@
-@import '../../../../variables.scss';
+@import "../../../../variables.scss";
 .postPanel {
   position: relative;
-  max-width: 370px;
-  min-width: 370px;
+  width: 370px;
   background: $light-color;
   display: flex;
   flex-direction: column;
@@ -10,8 +9,6 @@
   border-bottom-right-radius: 10px;
   @media (max-width: 980px) {
     width: 100%;
-    max-width: none;
-    min-width: none;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
   }

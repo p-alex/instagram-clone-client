@@ -3,4 +3,9 @@
   height: 30px;
   font-size: 1.5rem;
   margin-right: 10px;
+  color: var(--primary-color);
+  transition: transform 50ms ease-in-out;
+  &:active {
+    transform: scale(0.8);
+  }
 }

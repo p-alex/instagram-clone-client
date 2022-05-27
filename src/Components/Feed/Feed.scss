@@ -1,0 +1,15 @@
+.feed {
+  position: relative;
+  width: 100%;
+  &__loadMoreBtn {
+    position: relative;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    margin: 30px auto 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+  }
+}

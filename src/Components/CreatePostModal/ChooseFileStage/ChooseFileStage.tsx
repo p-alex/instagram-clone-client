@@ -30,7 +30,12 @@ function ChooseFileStage(props: Props) {
 
   return (
     <div className="chooseFileStage">
-      <input type="file" id="file" onChange={handleOptimizeImage} />
+      <input
+        type="file"
+        id="file"
+        onChange={handleOptimizeImage}
+        accept="image/png, image/jpeg"
+      />
       <button
         className="chooseFileStage__chooseBtn"
         onClick={handleChooseFile}

@@ -37,6 +37,7 @@ export interface IPost {
   comments: IComments;
   createdAt: string;
   updatedAt: string;
+  isLiked: boolean;
 }
 export interface IImage {
   fullImage: { url: string; public_id: string; aspectRatio: number };
@@ -90,6 +91,7 @@ export interface ISuggestion {
   id: string;
   username: string;
   profilePicture: string;
+  isFollowed: boolean;
 }
 export interface IDefaultResponse {
   statusCode: number;

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { LIKE_OR_DISLIKE_COMMENT_MUTATION } from '../../../../GraphQL/Mutations/commentMutations';
-import useFetchWithRetry from '../../../../Hooks/useFetchWithRetry';
-import useRedux from '../../../../Hooks/useRedux';
-import { ILikes } from '../../../../interfaces';
-import { dislikeComment, likeComment } from '../../../../Redux/CommentsSection';
-import './CommentLikeBtn.scss';
+import { useEffect, useState } from "react";
+import { LIKE_OR_DISLIKE_COMMENT_MUTATION } from "../../../../GraphQL/Mutations/commentMutations";
+import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
+import useRedux from "../../../../Hooks/useRedux";
+import { ILikes } from "../../../../interfaces";
+import { dislikeComment, likeComment } from "../../../../Redux/CommentsSection";
+import "./CommentLikeBtn.scss";
 const CommentLikeBtn = ({
   isReply,
   commentId,
@@ -31,11 +31,17 @@ const CommentLikeBtn = ({
       try {
         setCanRequest(false);
         if (!isLiked) {
-          dispatch(likeComment({ commentId, commentIndex, userId: authState.user!.id }));
+          dispatch(
+            likeComment({ commentId, commentIndex, userId: authState.user!.id })
+          );
           setTimeout(() => setCanRequest(true), 1500);
         } else {
           dispatch(
-            dislikeComment({ commentId, commentIndex, userId: authState.user!.id })
+            dislikeComment({
+              commentId,
+              commentIndex,
+              userId: authState.user!.id,
+            })
           );
           setTimeout(() => setCanRequest(true), 1500);
         }
@@ -57,9 +63,8 @@ const CommentLikeBtn = ({
       className="commentLikeBtn"
       onClick={handleLikeComment}
       disabled={!canRequest || isLoading}
-      style={isLiked ? { color: 'red' } : { color: 'black' }}
     >
-      <i className={`fa-${isLiked ? 'solid' : 'regular'}  fa-heart`}></i>
+      <i className={`fa-${isLiked ? "solid" : "regular"}  fa-heart`}></i>
     </button>
   );
 };

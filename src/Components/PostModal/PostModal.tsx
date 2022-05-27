@@ -16,13 +16,12 @@ import {
   loadingPost,
   loadingPostError,
   resetPostState,
-  changePostFormToNewComment,
   closePostOptions,
 } from "../../Redux/Post";
 import PostLoader from "../Post/PostComponents/PostLoader/PostLoader";
 import PostPanel from "../Post/PostComponents/PostPanel/PostPanel";
 import PostModalCtrl from "./PostModalComponents/PostModalCtrl";
-import PostOptionsModal from "../Post/PostComponents/PostOptions/PostOptions";
+import PostOptionsModal from "../Post/PostComponents/PostOptions/PostOptionsModal";
 
 const PostModal = ({ postId }: { postId: string }) => {
   const { authState, profileState, postState, dispatch } = useRedux();
@@ -37,12 +36,17 @@ const PostModal = ({ postId }: { postId: string }) => {
     query: GET_POST_QUERY,
     variables: {
       postId,
+      userId: authState.user?.id,
     },
   });
 
   const [currentPostIndex, setCurrentPostIndex] = useState<number | undefined>(
     0
   );
+  const [isPostOptionsActive, setIsPostOptionsActive] = useState(false);
+
+  const handleToggleOptionsModal = () =>
+    setIsPostOptionsActive((prevState) => !prevState);
 
   useEffect(() => {
     setCurrentPostIndex(
@@ -79,7 +83,6 @@ const PostModal = ({ postId }: { postId: string }) => {
   }, []);
 
   useEffect(() => {
-    dispatch(changePostFormToNewComment());
     handleGetPost();
   }, [postId]);
 
@@ -104,7 +107,7 @@ const PostModal = ({ postId }: { postId: string }) => {
   };
 
   return (
-    <div className="postModal__container">
+    <div className="postModal__container" role={"dialog"}>
       <FocusTrapRedirectFocus element={lastFocusableElement} />
       <div className="postModal__backdrop" onClick={handleCloseModal}></div>
 
@@ -133,9 +136,14 @@ const PostModal = ({ postId }: { postId: string }) => {
             <PostUser
               username={post?.user.username}
               profilePicture={post?.user.profilePicture}
+              handleToggleOptionsModal={handleToggleOptionsModal}
             />
             <PostComments />
-            <PostReact />
+            <PostReact
+              post={postState.post}
+              isPostLiked={post?.isLiked}
+              isFeedPost={false}
+            />
             {authState.accessToken && <PostForm />}
           </PostPanel>
         </div>
@@ -152,7 +160,12 @@ const PostModal = ({ postId }: { postId: string }) => {
         />
       ) : null}
 
-      {postState.isPostOptionsActive && <PostOptionsModal />}
+      {isPostOptionsActive && (
+        <PostOptionsModal
+          handleToggleOptionsModal={handleToggleOptionsModal}
+          currentPostId={post!.id}
+        />
+      )}
       <FocusTrapRedirectFocus element={firstFocusableElement} />
     </div>
   );

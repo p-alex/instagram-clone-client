@@ -33,6 +33,7 @@ export const LOGIN_USER_MUTATION = `
             user {
               id
               username
+              fullname
               profileImg
               hasFollowings
               accessToken
@@ -59,6 +60,7 @@ mutation {
         user {
           id
           username
+          fullname
           profileImg
           hasFollowings
           accessToken

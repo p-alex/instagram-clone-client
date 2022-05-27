@@ -4,6 +4,7 @@ import "./PostImage.scss";
 interface Props {
   imageUrl: string | undefined;
   aspectRatio: number | undefined;
+  isFeedPost?: boolean;
 }
 
 const PostImage = (props: Props) => {
@@ -12,21 +13,29 @@ const PostImage = (props: Props) => {
       ".postImage"
     ) as HTMLDivElement;
 
-    const windowHeightPercentage = 94 / 100;
-
     if (window.innerWidth < 980) {
       imageContainer.removeAttribute("style");
       return;
     }
 
-    if (props.aspectRatio === 4 / 5) {
-      const maxHeight = window.innerHeight * windowHeightPercentage;
-      const maxWidth = maxHeight * props.aspectRatio;
-      imageContainer.style.cssText = `max-width: ${maxWidth}px; max-height: ${maxHeight}px; aspect-ratio: ${props.aspectRatio}`;
-    } else {
-      const maxHeight = window.innerHeight * windowHeightPercentage;
-      const maxWidth = maxHeight;
-      imageContainer.style.cssText = `max-width: ${maxWidth}px; max-height: ${maxHeight}px; aspect-ratio: 1 / 1`;
+    const windowHeightPercentage = 94 / 100;
+
+    if (!props.isFeedPost) {
+      if (props.aspectRatio === 4 / 5) {
+        const maxHeight = window.innerHeight * windowHeightPercentage;
+        const maxWidth = maxHeight * props.aspectRatio;
+        imageContainer.style.cssText = `max-width: ${maxWidth}px; min-width: ${300}px; min-height: ${
+          300 * props.aspectRatio
+        }px; max-height: ${maxHeight}px; aspect-ratio: ${
+          props.aspectRatio
+        }; flex-basis: ${maxWidth}px`;
+      } else {
+        const maxHeight = window.innerHeight * windowHeightPercentage;
+        const maxWidth = maxHeight;
+        imageContainer.style.cssText = `max-width: ${maxWidth}px; min-width: ${300}px; max-height: ${maxHeight}px; min-height: ${
+          300 * props.aspectRatio!
+        }px; aspect-ratio: 1 / 1; flex-basis: ${maxWidth}px`;
+      }
     }
   }
 
@@ -40,7 +49,12 @@ const PostImage = (props: Props) => {
 
   return (
     <div className="postImage">
-      <img src={props.imageUrl} alt="" className="postImage__image" />
+      <img
+        src={props.imageUrl}
+        alt=""
+        className="postImage__image"
+        style={{ width: "100%", aspectRatio: `${props.aspectRatio}` }}
+      />
     </div>
   );
 };

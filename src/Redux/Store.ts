@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import AuthReducer from './Auth';
-import ProfileReducer from './Profile';
-import PostReducer from './Post';
-import CommentsSectionReducer from './CommentsSection';
-import SuggestionsReducer from './Suggestions';
+import { configureStore } from "@reduxjs/toolkit";
+import AuthReducer from "./Auth";
+import ProfileReducer from "./Profile";
+import PostReducer from "./Post";
+import CommentsSectionReducer from "./CommentsSection";
+import SuggestionsReducer from "./Suggestions";
+import FeedReducer from "./Feed";
 export const store = configureStore({
   reducer: {
     auth: AuthReducer,
@@ -11,6 +12,7 @@ export const store = configureStore({
     post: PostReducer,
     commentsSection: CommentsSectionReducer,
     suggestions: SuggestionsReducer,
+    feed: FeedReducer,
   },
 });
 

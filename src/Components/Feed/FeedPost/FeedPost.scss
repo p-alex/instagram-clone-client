@@ -6,4 +6,9 @@
   &:last-of-type {
     margin-bottom: 0;
   }
+  @media (max-width: 620px) {
+    border: none;
+    border-top: solid silver 1px;
+    border-bottom: solid silver 1px;
+  }
 }

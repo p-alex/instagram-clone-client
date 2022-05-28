@@ -1,27 +1,53 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DELETE_POST_MUTATION } from "../../../../GraphQL/Mutations/postMutations";
+import { FOLLOW_OR_UNFOLLOW_USER } from "../../../../GraphQL/Mutations/userMutations";
 import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
 import useRedux from "../../../../Hooks/useRedux";
 import { IDefaultResponse } from "../../../../interfaces";
-import { closePostModal, deletePost } from "../../../../Redux/Profile";
+import {
+  closePostModal,
+  deletePost,
+  followProfile,
+  unfollowProfile,
+} from "../../../../Redux/Profile";
+import {
+  followSuggestion,
+  unfollowSuggestion,
+} from "../../../../Redux/Suggestions";
 import Spinner from "../../../../Ui/Spinner";
 import FocusTrapRedirectFocus from "../../../FocusTrap";
+import "./PostOptionsModal.scss";
 
 interface Props {
   handleToggleOptionsModal: () => void;
   currentPostId: string;
+  isPostOwnerFollowed: boolean;
+  postOwnerId: string;
 }
 
 const PostOptionsModal = (props: Props) => {
   const navigate = useNavigate();
-  const { authState, postState, dispatch } = useRedux();
+  const { authState, postState, profileState, suggestionsState, dispatch } =
+    useRedux();
 
-  const [deletePostRequest, { isLoading }] = useFetchWithRetry({
-    query: DELETE_POST_MUTATION,
-    variables: { postId: postState.post?.id },
-    accessToken: authState.accessToken,
-  });
+  const [followBtnText, setFollowBtnText] = useState<"Follow" | "Unfollow">(
+    props.isPostOwnerFollowed ? "Unfollow" : "Follow"
+  );
+
+  const [deletePostRequest, { isLoading: isDeletePostRequestLoading }] =
+    useFetchWithRetry({
+      query: DELETE_POST_MUTATION,
+      variables: { postId: postState.post?.id },
+      accessToken: authState.accessToken,
+    });
+
+  const [followOrUnfollowUserRequest, { isLoading: isFollowRequestLoading }] =
+    useFetchWithRetry({
+      query: FOLLOW_OR_UNFOLLOW_USER,
+      variables: { userId: props.postOwnerId, type: followBtnText },
+      accessToken: authState.accessToken,
+    });
 
   const [isDeleteMode, setIsDeleteMode] = useState(false);
 
@@ -52,6 +78,36 @@ const PostOptionsModal = (props: Props) => {
     }
   };
 
+  const handleChangeStateAfterFollowOrUnfollow = () => {
+    // Change profileState and suggestionsState to reflect changes
+    const doesUserExistInSuggestionsState = suggestionsState.suggestions?.find(
+      (suggestion) => suggestion.id === profileState.user?.userId
+    );
+    if (profileState.isFollowed) {
+      dispatch(unfollowProfile());
+      if (doesUserExistInSuggestionsState?.id)
+        dispatch(
+          unfollowSuggestion({ suggestionId: profileState.user?.userId })
+        );
+    } else {
+      dispatch(followProfile());
+      if (doesUserExistInSuggestionsState?.id)
+        dispatch(followSuggestion({ suggestionId: profileState.user?.userId }));
+    }
+  };
+
+  const handleFollowOrUnfollow = async () => {
+    try {
+      const response = await followOrUnfollowUserRequest();
+      if (response.success) {
+        setFollowBtnText(followBtnText === "Follow" ? "Unfollow" : "Follow");
+        handleChangeStateAfterFollowOrUnfollow();
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   const handleCloseModalAndRedirectFocus = () => {
     const optionsToggleBtn = document.querySelector(
       ".postUser__moreOptionsBtn"
@@ -75,27 +131,32 @@ const PostOptionsModal = (props: Props) => {
   };
 
   return (
-    <div className="optionsModal">
+    <div className="optionsModal" role={"dialog"}>
       <FocusTrapRedirectFocus element={optionsLastFocusable} />
       <div
         className="optionsModal__backdrop"
         onClick={handleCloseModalAndRedirectFocus}
       ></div>
-      {isDeleteMode ? (
+      {/* ------------------- DELETE MODE ------------------- */}
+      {isDeleteMode && (
         <div className="optionsModal__container">
           <FocusTrapRedirectFocus element={confirmDeleteLastFocusable} />
           <div className="optionsModal__confirmMessage">
-            {isLoading && <Spinner />}
-            <h2>{!isLoading ? "Delete Post?" : "Loading..."}</h2>
-            {!isLoading && <p>Are you sure you want to delete this post?</p>}
+            {isDeletePostRequestLoading && <Spinner />}
+            <h2>
+              {!isDeletePostRequestLoading ? "Delete Post?" : "Loading..."}
+            </h2>
+            {!isDeletePostRequestLoading && (
+              <p>Are you sure you want to delete this post?</p>
+            )}
           </div>
-          {!isLoading && (
+          {!isDeletePostRequestLoading && (
             <>
               <button
                 className="optionsModal__option optionsModal__red-option"
                 ref={confirmDeleteFirstFocusable}
                 onClick={handleDeletePost}
-                disabled={isLoading}
+                disabled={isDeletePostRequestLoading}
               >
                 Delete
               </button>
@@ -110,8 +171,12 @@ const PostOptionsModal = (props: Props) => {
           )}
           <FocusTrapRedirectFocus element={confirmDeleteFirstFocusable} />
         </div>
-      ) : (
+      )}
+
+      {/* ------------------- REGULAR MODE ------------------- */}
+      {!isDeleteMode && (
         <div className="optionsModal__container">
+          {/* ------------------- DELETE OR REPORT BTN ------------------- */}
           {authState.user?.id &&
           authState.user.id === postState.post?.user.id ? (
             <button
@@ -131,10 +196,24 @@ const PostOptionsModal = (props: Props) => {
               </button>
             )
           )}
+
+          {/* ------------------- FOLLOW OR UNFOLLOW BTN ------------------- */}
           {authState.accessToken &&
             authState.user?.id !== postState.post?.user.id && (
-              <button className="optionsModal__option">Follow</button>
+              <button
+                className={
+                  followBtnText === "Follow"
+                    ? "optionsModal__option"
+                    : "optionsModal__option optionsModal__red-option"
+                }
+                onClick={handleFollowOrUnfollow}
+                disabled={isFollowRequestLoading}
+              >
+                {followBtnText}
+              </button>
             )}
+
+          {/* ------------------- GO TO POST BTN ------------------- */}
           <button
             className="optionsModal__option"
             role="link"
@@ -143,12 +222,16 @@ const PostOptionsModal = (props: Props) => {
           >
             Go to post
           </button>
+
+          {/* ------------------- COPY LINK BTN ------------------- */}
           <button
             className="optionsModal__option"
             onClick={handleCopyToClipboard}
           >
             Copy Link
           </button>
+
+          {/* ------------------- CANCEL BTN ------------------- */}
           <button
             className="optionsModal__option"
             ref={optionsLastFocusable}
@@ -158,6 +241,7 @@ const PostOptionsModal = (props: Props) => {
           </button>
         </div>
       )}
+
       <FocusTrapRedirectFocus element={optionsFirstFocusable} />
     </div>
   );

@@ -15,6 +15,18 @@
   // border colors
   --border-color: var(--medium-color);
   --border-color-active: var(--primary-color);
+  // CreatePostModal z-index
+  --createPostModalZ: 12;
+
+  // PostModal z-index
+  --postModalZ: 101;
+  --postModalContainerZ: 100;
+  --postModalBackdropZ: 99;
+
+  // PostOptions z-index
+  --optionsModalZ: 200;
+  --optionsModalContainerZ: 202;
+  --optionsModalBackdropZ: 201;
 }
 
 * {

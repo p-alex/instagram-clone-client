@@ -44,6 +44,8 @@ const Post = () => {
         <PostOptionsModal
           handleToggleOptionsModal={handleToggleOptionsModal}
           currentPostId={postState.post!.id}
+          isPostOwnerFollowed={postState.post!.isPostOwnerFollowed}
+          postOwnerId={postState.post!.user.id}
         />
       )}
     </article>

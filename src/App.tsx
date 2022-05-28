@@ -1,12 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
-import RequireAuth from './Components/RequireAuth';
-import PersistLogin from './Components/PersistLogin';
-import Home from './Pages/HomePage/Home';
-import LoginPage from './Pages/LoginPage/Login';
-import RegisterPage from './Pages/RegisterPage/Register';
-import ProfilePage from './Pages/ProfilePage/Profile';
-import PostPage from './Pages/PostPage/PostPage';
-import './OptionsModal.scss';
+import { Routes, Route } from "react-router-dom";
+import RequireAuth from "./Components/RequireAuth";
+import PersistLogin from "./Components/PersistLogin";
+import Home from "./Pages/HomePage/Home";
+import LoginPage from "./Pages/LoginPage/Login";
+import RegisterPage from "./Pages/RegisterPage/Register";
+import ProfilePage from "./Pages/ProfilePage/Profile";
+import PostPage from "./Pages/PostPage/PostPage";
 
 function App() {
   return (
@@ -23,7 +22,7 @@ function App() {
       <Route
         path="*"
         element={
-          <main style={{ padding: '1rem' }}>
+          <main style={{ padding: "1rem" }}>
             <p>There's nothing here!</p>
           </main>
         }

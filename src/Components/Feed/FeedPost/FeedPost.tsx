@@ -39,6 +39,8 @@ const FeedPost = (props: Props) => {
         <PostOptionsModal
           handleToggleOptionsModal={handleToggleOptionsModal}
           currentPostId={props.post.id}
+          isPostOwnerFollowed={true}
+          postOwnerId={props.post.user.id}
         />
       )}
     </article>

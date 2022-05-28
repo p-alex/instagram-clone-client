@@ -164,6 +164,8 @@ const PostModal = ({ postId }: { postId: string }) => {
         <PostOptionsModal
           handleToggleOptionsModal={handleToggleOptionsModal}
           currentPostId={post!.id}
+          isPostOwnerFollowed={post!.isPostOwnerFollowed}
+          postOwnerId={post!.user.id}
         />
       )}
       <FocusTrapRedirectFocus element={firstFocusableElement} />

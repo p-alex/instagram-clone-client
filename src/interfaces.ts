@@ -38,6 +38,7 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   isLiked: boolean;
+  isPostOwnerFollowed: boolean;
 }
 export interface IImage {
   fullImage: { url: string; public_id: string; aspectRatio: number };

@@ -25,13 +25,6 @@ const LikeBtn = (props: Props) => {
     setIsLiked(postState.post?.isLiked);
   }, [props.isFeedPost, props.isPostLiked, postState.post?.isLiked]);
 
-  console.log(
-    props.isPostLiked,
-    postState.post?.isLiked,
-    props.isFeedPost,
-    isLiked
-  );
-
   const userId = authState?.user?.id;
 
   const [likePostRequest, { isLoading }] = useFetchWithRetry({

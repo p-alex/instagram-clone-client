@@ -31,7 +31,6 @@ const PostReact = (props: Props) => {
     }
   };
 
-  console.log(props);
   return (
     <div className="postReact">
       <div className="postReact__likeAndComment">

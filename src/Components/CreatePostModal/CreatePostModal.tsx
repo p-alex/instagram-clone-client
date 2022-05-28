@@ -50,6 +50,13 @@ const CreatePostModal = () => {
   const lastFocusableElementRef = useRef<any>();
 
   useEffect(() => {
+    document.body.style.cssText = `overflow-y:hidden`;
+    return () => {
+      document.body.removeAttribute("style");
+    };
+  }, []);
+
+  useEffect(() => {
     if (currentStage.index === 0) {
       setOptimizedImageUrl("");
       setCroppedImageUrl("");

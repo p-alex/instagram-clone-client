@@ -36,10 +36,6 @@ const FollowButton = (props: Props) => {
   });
 
   const handleStateChange = () => {
-    const suggestionStateUser = suggestionsState.suggestions?.find(
-      (suggestion) => suggestion.id === profileState.user?.userId
-    );
-
     const feedStateUser = feedState.posts.find(
       (post) => post.user.id === props.userId
     );
@@ -60,13 +56,19 @@ const FollowButton = (props: Props) => {
       }
     }
 
-    if (suggestionStateUser?.id) {
-      if (suggestionStateUser.isFollowed === true) {
-        dispatch(
-          unfollowSuggestion({ suggestionId: profileState.user?.userId })
-        );
+    if (suggestionsState.suggestions) {
+      let isSuggestionFollowed = () => {
+        const suggestion =
+          suggestionsState.suggestions &&
+          suggestionsState.suggestions.find(
+            (suggestion) => suggestion.id === props.userId
+          );
+        return suggestion?.isFollowed;
+      };
+      if (isSuggestionFollowed()) {
+        dispatch(unfollowSuggestion({ suggestionId: props.userId }));
       } else {
-        dispatch(followSuggestion({ suggestionId: profileState.user?.userId }));
+        dispatch(followSuggestion({ suggestionId: props.userId }));
       }
     }
 

@@ -5,6 +5,7 @@
   background-color: var(--primary-color);
   border-radius: 5px;
   margin-left: 20px;
+  border: solid transparent 1px;
   &.followButton--followed {
     color: var(--primary-color);
     background-color: white;

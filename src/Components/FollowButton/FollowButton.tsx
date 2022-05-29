@@ -2,17 +2,28 @@ import { useEffect, useState } from "react";
 import { FOLLOW_OR_UNFOLLOW_USER } from "../../GraphQL/Mutations/userMutations";
 import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
 import useRedux from "../../Hooks/useRedux";
+import { followFeedPostOwner, unfollowFeedPostOwner } from "../../Redux/Feed";
+import { followPostOwner, unfollowPostOwner } from "../../Redux/Post";
+import { followProfile, unfollowProfile } from "../../Redux/Profile";
+import { followSuggestion, unfollowSuggestion } from "../../Redux/Suggestions";
 import "./FollowButton.scss";
 
 interface Props {
+  postId?: string;
   userId: string;
   username: string;
   isFollowed: boolean;
-  handleUpdateState: () => void;
 }
 
 const FollowButton = (props: Props) => {
-  const { authState } = useRedux();
+  const {
+    authState,
+    suggestionsState,
+    profileState,
+    feedState,
+    postState,
+    dispatch,
+  } = useRedux();
 
   const [btnText, setBtnText] = useState(
     props.isFollowed ? "Unfollow" : "Follow"
@@ -24,10 +35,54 @@ const FollowButton = (props: Props) => {
     accessToken: authState.accessToken,
   });
 
+  const handleStateChange = () => {
+    const suggestionStateUser = suggestionsState.suggestions?.find(
+      (suggestion) => suggestion.id === profileState.user?.userId
+    );
+
+    const feedStateUser = feedState.posts.find(
+      (post) => post.user.id === props.userId
+    );
+
+    if (profileState.user) {
+      if (profileState.isFollowed) {
+        dispatch(unfollowProfile());
+      } else {
+        dispatch(followProfile());
+      }
+    }
+
+    if (postState.post) {
+      if (postState.post.isPostOwnerFollowed === true) {
+        dispatch(unfollowPostOwner());
+      } else {
+        dispatch(followPostOwner());
+      }
+    }
+
+    if (suggestionStateUser?.id) {
+      if (suggestionStateUser.isFollowed === true) {
+        dispatch(
+          unfollowSuggestion({ suggestionId: profileState.user?.userId })
+        );
+      } else {
+        dispatch(followSuggestion({ suggestionId: profileState.user?.userId }));
+      }
+    }
+
+    if (feedStateUser?.id) {
+      if (feedStateUser.isPostOwnerFollowed === true) {
+        dispatch(unfollowFeedPostOwner({ userId: props.userId }));
+      } else {
+        dispatch(followFeedPostOwner({ userId: props.userId }));
+      }
+    }
+  };
+
   const handleFollowOrUnfollowUser = async () => {
     if (!isLoading) {
       try {
-        props.handleUpdateState();
+        handleStateChange();
         const response = await followOrUnfollowUserRequest();
         if (response.success) {
           setBtnText(btnText === "Follow" ? "Unfollow" : "Follow");
@@ -43,22 +98,26 @@ const FollowButton = (props: Props) => {
   }, [props.isFollowed]);
 
   return (
-    <button
-      className={
-        props.isFollowed
-          ? "followButton followButton--followed"
-          : "followButton"
-      }
-      onClick={handleFollowOrUnfollowUser}
-      disabled={isLoading}
-      aria-label={
-        props.isFollowed
-          ? `Unfollow ${props.username}`
-          : `Follow ${props.username}`
-      }
-    >
-      {props.isFollowed ? "Unfollow" : "Follow"}
-    </button>
+    <>
+      {authState.accessToken && authState.user?.id !== props.userId && (
+        <button
+          className={
+            props.isFollowed
+              ? "followButton followButton--followed"
+              : "followButton"
+          }
+          onClick={handleFollowOrUnfollowUser}
+          disabled={isLoading}
+          aria-label={
+            props.isFollowed
+              ? `Unfollow ${props.username}`
+              : `Follow ${props.username}`
+          }
+        >
+          {btnText}
+        </button>
+      )}
+    </>
   );
 };
 

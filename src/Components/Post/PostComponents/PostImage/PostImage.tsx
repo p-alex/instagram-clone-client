@@ -24,7 +24,7 @@ const PostImage = (props: Props) => {
       if (props.aspectRatio === 4 / 5) {
         const maxHeight = window.innerHeight * windowHeightPercentage;
         const maxWidth = maxHeight * props.aspectRatio;
-        imageContainer.style.cssText = `max-width: ${maxWidth}px; min-width: ${300}px; min-height: ${
+        imageContainer.style.cssText = `max-width: ${maxWidth}px; min-width: ${400}px; min-height: ${
           300 * props.aspectRatio
         }px; max-height: ${maxHeight}px; aspect-ratio: ${
           props.aspectRatio
@@ -32,7 +32,7 @@ const PostImage = (props: Props) => {
       } else {
         const maxHeight = window.innerHeight * windowHeightPercentage;
         const maxWidth = maxHeight;
-        imageContainer.style.cssText = `max-width: ${maxWidth}px; min-width: ${300}px; max-height: ${maxHeight}px; min-height: ${
+        imageContainer.style.cssText = `max-width: ${maxWidth}px; min-width: ${400}px; max-height: ${maxHeight}px; min-height: ${
           300 * props.aspectRatio!
         }px; aspect-ratio: 1 / 1; flex-basis: ${maxWidth}px`;
       }

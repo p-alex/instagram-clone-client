@@ -60,6 +60,7 @@ query GetFeedPosts($currentPage: Int!, $maxPostsPerPage: Int!) {
       }
       createdAt
       isLiked
+      isPostOwnerFollowed
     }
   }
 }

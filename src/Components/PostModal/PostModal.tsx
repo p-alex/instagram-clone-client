@@ -126,17 +126,20 @@ const PostModal = ({ postId }: { postId: string }) => {
         />
       ) : null}
 
-      {!isLoading ? (
+      {!isLoading && post ? (
         <div className="postModal">
           <PostImage
-            imageUrl={post?.images[0].fullImage.url}
-            aspectRatio={post?.images[0].fullImage.aspectRatio}
+            imageUrl={post.images[0].fullImage.url}
+            aspectRatio={post.images[0].fullImage.aspectRatio}
           />
           <PostPanel>
             <PostUser
-              username={post?.user.username}
-              profilePicture={post?.user.profilePicture}
+              postId={post.id}
+              userId={post.user.id}
+              username={post.user.username}
+              profilePicture={post.user.profilePicture}
               handleToggleOptionsModal={handleToggleOptionsModal}
+              isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
             <PostComments />
             <PostReact

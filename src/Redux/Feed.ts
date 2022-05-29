@@ -30,6 +30,24 @@ const FeedSlice = createSlice({
       state.posts[action.payload.postIndex].isLiked = false;
       state.posts[action.payload.postIndex].likes.count -= 1;
     },
+    followFeedPostOwner: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.user.id === action.payload.userId) {
+          post.isPostOwnerFollowed = true;
+          return post;
+        }
+        return post;
+      });
+    },
+    unfollowFeedPostOwner: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.user.id === action.payload.userId) {
+          post.isPostOwnerFollowed = false;
+          return post;
+        }
+        return post;
+      });
+    },
     resetFeedState: (state) => {
       state.posts = [];
       state.requestedOnce = false;
@@ -42,6 +60,8 @@ export const {
   addMoreFeedPosts,
   likeFeedPost,
   dislikeFeedPost,
+  followFeedPostOwner,
+  unfollowFeedPostOwner,
   resetFeedState,
 } = FeedSlice.actions;
 

@@ -9,6 +9,7 @@ import PostOptionsModal from "./PostComponents/PostOptions/PostOptionsModal";
 import useRedux from "../../Hooks/useRedux";
 import "./Post.scss";
 import { useState } from "react";
+import Spinner from "../../Ui/Spinner";
 
 const Post = () => {
   const { authState, postState } = useRedux();
@@ -20,35 +21,47 @@ const Post = () => {
     setIsPostOptionsActive((prevState) => !prevState);
 
   return (
-    <article className="post">
-      {isLoading && <PostLoader />}
-      <PostImage
-        imageUrl={post?.images[0].fullImage.url}
-        aspectRatio={post?.images[0].fullImage.aspectRatio}
-      />
-      <PostPanel>
-        <PostUser
-          username={post?.user.username}
-          profilePicture={post?.user.profilePicture}
-          handleToggleOptionsModal={handleToggleOptionsModal}
-        />
-        <PostComments />
-        <PostReact
-          post={postState.post}
-          isPostLiked={post?.isLiked}
-          isFeedPost={false}
-        />
-        {authState.accessToken && <PostForm />}
-      </PostPanel>
-      {isPostOptionsActive && (
-        <PostOptionsModal
-          handleToggleOptionsModal={handleToggleOptionsModal}
-          currentPostId={postState.post!.id}
-          isPostOwnerFollowed={postState.post!.isPostOwnerFollowed}
-          postOwnerId={postState.post!.user.id}
-        />
+    <>
+      {post ? (
+        <article className="post">
+          {isLoading && <PostLoader />}
+          <PostImage
+            imageUrl={post.images[0].fullImage.url}
+            aspectRatio={post.images[0].fullImage.aspectRatio}
+          />
+          <PostPanel>
+            <PostUser
+              postId={post.id}
+              userId={post.user.id}
+              username={post.user.username}
+              profilePicture={post.user.profilePicture}
+              handleToggleOptionsModal={handleToggleOptionsModal}
+              isPostOwnerFollowed={post.isPostOwnerFollowed}
+            />
+            <PostComments />
+            <PostReact
+              post={postState.post}
+              isPostLiked={post.isLiked}
+              isFeedPost={false}
+            />
+            {authState.accessToken && <PostForm />}
+          </PostPanel>
+          {isPostOptionsActive && (
+            <PostOptionsModal
+              handleToggleOptionsModal={handleToggleOptionsModal}
+              currentPostId={postState.post!.id}
+              isPostOwnerFollowed={postState.post!.isPostOwnerFollowed}
+              postOwnerId={postState.post!.user.id}
+            />
+          )}
+        </article>
+      ) : (
+        <>
+          {!postState.errorMessage && <Spinner />}
+          {postState.errorMessage && <p>{postState.errorMessage}</p>}
+        </>
       )}
-    </article>
+    </>
   );
 };
 

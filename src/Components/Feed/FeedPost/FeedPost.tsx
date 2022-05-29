@@ -20,9 +20,12 @@ const FeedPost = (props: Props) => {
   return (
     <article className="feedPost">
       <PostUser
+        postId={props.post.id}
+        userId={props.post.user.id}
         username={props.post.user.username}
         profilePicture={props.post.user.profilePicture}
         handleToggleOptionsModal={handleToggleOptionsModal}
+        isPostOwnerFollowed={props.post.isPostOwnerFollowed}
       />
       <PostImage
         imageUrl={props.post.images[0].fullImage.url}

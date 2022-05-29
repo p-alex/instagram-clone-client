@@ -57,7 +57,6 @@ const Suggestion = (props: Props) => {
         userId={props.suggestion.id}
         username={props.suggestion.username}
         isFollowed={props.isFollowed}
-        handleUpdateState={handleFollowOrUnfollowSuggestion}
       />
     </div>
   );

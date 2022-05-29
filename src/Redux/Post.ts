@@ -44,7 +44,12 @@ const PostSlice = createSlice({
       );
       state.post!.isLiked = false;
     },
-
+    followPostOwner: (state) => {
+      state.post!.isPostOwnerFollowed = true;
+    },
+    unfollowPostOwner: (state) => {
+      state.post!.isPostOwnerFollowed = false;
+    },
     togglePostOptions: (state) => {
       state.isPostOptionsActive = !state.isPostOptionsActive;
     },
@@ -67,6 +72,8 @@ export const {
   setPost,
   likePost,
   dislikePost,
+  followPostOwner,
+  unfollowPostOwner,
   togglePostOptions,
   closePostOptions,
   resetPostState,

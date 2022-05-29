@@ -1,24 +1,31 @@
 import { Link } from "react-router-dom";
+import FollowButton from "../../../FollowButton/FollowButton";
 import "./PostUser.scss";
 
-const PostUser = ({
-  username,
-  profilePicture,
-  handleToggleOptionsModal,
-}: {
-  username: string | undefined;
-  profilePicture: string | undefined;
+interface Props {
+  postId: string;
+  userId: string;
+  username: string;
+  profilePicture: string;
   handleToggleOptionsModal: () => void;
-}) => {
+  isPostOwnerFollowed: boolean;
+}
+
+const PostUser = (props: Props) => {
   return (
     <div className="postUser">
       <div className="postUser__container">
-        <img src={profilePicture} alt="" width="35" height="35" />
-        <Link to={`/users/${username}`}>{username}</Link>
+        <img src={props.profilePicture} alt="" width="35" height="35" />
+        <Link to={`/users/${props.username}`}>{props.username}</Link>
+        <FollowButton
+          isFollowed={props.isPostOwnerFollowed}
+          username={props.username}
+          userId={props.userId}
+        />
       </div>
       <button
         className="postUser__moreOptionsBtn"
-        onClick={handleToggleOptionsModal}
+        onClick={props.handleToggleOptionsModal}
         aria-label="Open post options modal"
       >
         <i className="fa-solid fa-ellipsis"></i>

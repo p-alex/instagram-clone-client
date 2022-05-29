@@ -1,31 +1,10 @@
 import useRedux from "../../Hooks/useRedux";
 import FollowButton from "../FollowButton/FollowButton";
-import { followProfile, unfollowProfile } from "../../Redux/Profile";
 import "./ProfileDetails.scss";
-import { followSuggestion, unfollowSuggestion } from "../../Redux/Suggestions";
 
 const ProfileDetails = () => {
-  const { authState, profileState, suggestionsState, dispatch } = useRedux();
+  const { authState, profileState } = useRedux();
   const profileData = profileState.user;
-
-  const handleFollowOrUnfollowUser = () => {
-    const doesUserExistInSuggestionsState = suggestionsState.suggestions?.find(
-      (suggestion) => suggestion.id === profileState.user?.userId
-    );
-    if (profileState.isFollowed) {
-      dispatch(unfollowProfile());
-      if (doesUserExistInSuggestionsState?.id) {
-        dispatch(
-          unfollowSuggestion({ suggestionId: profileState.user?.userId })
-        );
-      }
-    } else {
-      dispatch(followProfile());
-      if (doesUserExistInSuggestionsState?.id) {
-        dispatch(followSuggestion({ suggestionId: profileState.user?.userId }));
-      }
-    }
-  };
 
   return (
     <>
@@ -51,7 +30,6 @@ const ProfileDetails = () => {
                     userId={profileData.userId}
                     username={profileData.username}
                     isFollowed={profileState.isFollowed}
-                    handleUpdateState={handleFollowOrUnfollowUser}
                   />
                 )}
             </div>

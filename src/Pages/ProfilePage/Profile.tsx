@@ -1,20 +1,21 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails';
-import ProfileNav from '../../Components/ProfileNav/ProfileNav';
-import ProfilePosts from '../../Components/ProfilePosts/ProfilePosts';
-import { GET_USER_QUERY } from '../../GraphQL/Queries/userQueries';
-import useFetch from '../../Hooks/useFetch';
-import useRedux from '../../Hooks/useRedux';
-import { IUserProfileInfo } from '../../interfaces';
-import Layout from '../../Layout/Layout';
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ProfileDetails from "../../Components/ProfileDetails/ProfileDetails";
+import ProfileNav from "../../Components/ProfileNav/ProfileNav";
+import ProfilePosts from "../../Components/ProfilePosts/ProfilePosts";
+import { GET_USER_QUERY } from "../../GraphQL/Queries/userQueries";
+import useFetch from "../../Hooks/useFetch";
+import useRedux from "../../Hooks/useRedux";
+import { IUserProfileInfo } from "../../interfaces";
+import Layout from "../../Layout/Layout";
 import {
   closePostModal,
   loadingProfile,
   loadingProfileError,
   setProfileData,
-} from '../../Redux/Profile';
-import './Profile.scss';
+} from "../../Redux/Profile";
+import Spinner from "../../Ui/Spinner";
+import "./Profile.scss";
 
 interface IUserProfileResponse {
   statusCode: number;
@@ -28,7 +29,7 @@ const Profile = () => {
   const params = useParams();
   const { authState, profileState, dispatch } = useRedux();
 
-  const [getProfile, { error }] = useFetch({
+  const [getProfile, { isLoading, error }] = useFetch({
     query: GET_USER_QUERY,
     variables: {
       username: params.username,
@@ -42,11 +43,14 @@ const Profile = () => {
       const response: IUserProfileResponse = await getProfile();
       if (response?.success)
         return dispatch(
-          setProfileData({ userData: response.user, isFollowed: response.isFollowed })
+          setProfileData({
+            userData: response.user,
+            isFollowed: response.isFollowed,
+          })
         );
       dispatch(loadingProfileError(error));
     } catch (error: any) {
-      dispatch(loadingProfileError(error.message));
+      dispatch(loadingProfileError("Something went wrong."));
     }
   };
 
@@ -60,9 +64,17 @@ const Profile = () => {
 
   return (
     <Layout>
-      <ProfileDetails />
-      <ProfileNav />
-      <ProfilePosts />
+      <>
+        {isLoading && <Spinner />}
+        {!isLoading && profileState.user && (
+          <>
+            <ProfileDetails />
+            <ProfileNav />
+            <ProfilePosts />
+          </>
+        )}
+        {!isLoading && error && <p>{error}</p>}
+      </>
     </Layout>
   );
 };

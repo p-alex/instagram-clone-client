@@ -20,6 +20,7 @@ query GetPost($postId: ID!, $userId: String) {
         description
         likes {
           count
+          users
         }
         comments {
           count

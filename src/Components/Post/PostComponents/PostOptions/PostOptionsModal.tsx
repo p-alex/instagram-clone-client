@@ -6,6 +6,11 @@ import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
 import useRedux from "../../../../Hooks/useRedux";
 import { IDefaultResponse } from "../../../../interfaces";
 import {
+  followFeedPostOwner,
+  unfollowFeedPostOwner,
+} from "../../../../Redux/Feed";
+import { followPostOwner, unfollowPostOwner } from "../../../../Redux/Post";
+import {
   closePostModal,
   deletePost,
   followProfile,
@@ -28,8 +33,14 @@ interface Props {
 
 const PostOptionsModal = (props: Props) => {
   const navigate = useNavigate();
-  const { authState, postState, profileState, suggestionsState, dispatch } =
-    useRedux();
+  const {
+    authState,
+    postState,
+    profileState,
+    suggestionsState,
+    feedState,
+    dispatch,
+  } = useRedux();
 
   const [followBtnText, setFollowBtnText] = useState<"Follow" | "Unfollow">(
     props.isPostOwnerFollowed ? "Unfollow" : "Follow"
@@ -78,21 +89,49 @@ const PostOptionsModal = (props: Props) => {
     }
   };
 
-  const handleChangeStateAfterFollowOrUnfollow = () => {
-    // Change profileState and suggestionsState to reflect changes
-    const doesUserExistInSuggestionsState = suggestionsState.suggestions?.find(
-      (suggestion) => suggestion.id === profileState.user?.userId
+  const handleStateChange = () => {
+    const feedStateUser = feedState.posts.find(
+      (post) => post.user.id === props.postOwnerId
     );
-    if (profileState.isFollowed) {
-      dispatch(unfollowProfile());
-      if (doesUserExistInSuggestionsState?.id)
-        dispatch(
-          unfollowSuggestion({ suggestionId: profileState.user?.userId })
-        );
-    } else {
-      dispatch(followProfile());
-      if (doesUserExistInSuggestionsState?.id)
-        dispatch(followSuggestion({ suggestionId: profileState.user?.userId }));
+
+    if (profileState.user) {
+      if (profileState.isFollowed) {
+        dispatch(unfollowProfile());
+      } else {
+        dispatch(followProfile());
+      }
+    }
+
+    if (postState.post) {
+      if (postState.post.isPostOwnerFollowed === true) {
+        dispatch(unfollowPostOwner());
+      } else {
+        dispatch(followPostOwner());
+      }
+    }
+
+    if (suggestionsState.suggestions) {
+      let isSuggestionFollowed = () => {
+        const suggestion =
+          suggestionsState.suggestions &&
+          suggestionsState.suggestions.find(
+            (suggestion) => suggestion.id === props.postOwnerId
+          );
+        return suggestion?.isFollowed;
+      };
+      if (isSuggestionFollowed()) {
+        dispatch(unfollowSuggestion({ suggestionId: props.postOwnerId }));
+      } else {
+        dispatch(followSuggestion({ suggestionId: props.postOwnerId }));
+      }
+    }
+
+    if (feedStateUser?.id) {
+      if (feedStateUser.isPostOwnerFollowed === true) {
+        dispatch(unfollowFeedPostOwner({ userId: props.postOwnerId }));
+      } else {
+        dispatch(followFeedPostOwner({ userId: props.postOwnerId }));
+      }
     }
   };
 
@@ -101,7 +140,7 @@ const PostOptionsModal = (props: Props) => {
       const response = await followOrUnfollowUserRequest();
       if (response.success) {
         setFollowBtnText(followBtnText === "Follow" ? "Unfollow" : "Follow");
-        handleChangeStateAfterFollowOrUnfollow();
+        handleStateChange();
       }
     } catch (error: any) {
       console.log(error.message);

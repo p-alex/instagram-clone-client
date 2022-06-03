@@ -2,6 +2,8 @@
 .post {
   position: relative;
   display: flex;
+  margin: 0 auto;
+  border: solid silver 1px;
   @media (max-width: 980px) {
     flex-direction: column;
     max-width: 100%;

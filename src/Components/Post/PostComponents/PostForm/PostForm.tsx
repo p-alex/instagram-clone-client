@@ -5,7 +5,11 @@ import useRedux from "../../../../Hooks/useRedux";
 import { addComment } from "../../../../Redux/CommentsSection";
 import "./PostForm.scss";
 
-const PostForm = () => {
+interface Props {
+  lastFocusableElement?: React.MutableRefObject<any>;
+}
+
+const PostForm = (props: Props) => {
   const { authState, postState, dispatch } = useRedux();
   const [text, setText] = useState("");
   const [canPost, setCanPost] = useState(true);
@@ -47,7 +51,11 @@ const PostForm = () => {
           onChange={(event) => setText(event.target.value)}
           ref={formInput}
         ></input>
-        <button type="submit" disabled={isLoading || !text || !canPost}>
+        <button
+          type="submit"
+          disabled={isLoading || !text || !canPost}
+          ref={props.lastFocusableElement}
+        >
           Post
         </button>
       </div>

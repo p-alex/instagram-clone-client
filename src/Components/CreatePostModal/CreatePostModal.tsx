@@ -50,7 +50,7 @@ const CreatePostModal = () => {
   const lastFocusableElementRef = useRef<any>();
 
   useEffect(() => {
-    document.body.style.cssText = `overflow-y:hidden`;
+    document.body.style.cssText = `overflow-y:hidden, overscroll-behavior-y: none;`;
     return () => {
       document.body.removeAttribute("style");
     };

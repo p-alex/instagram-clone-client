@@ -95,6 +95,13 @@ const PostModal = ({ postId }: { postId: string }) => {
     lastFocusedPost.focus();
   };
 
+  useEffect(() => {
+    document.body.style.cssText = `overflow-y:hidden, overscroll-behavior-y: none;`;
+    return () => {
+      document.body.removeAttribute("style");
+    };
+  }, []);
+
   const handleNavigatePosts = (direction: "prev" | "next") => {
     if (userPosts?.length && !isLoading) {
       if (typeof currentPostIndex === "number") {
@@ -147,7 +154,9 @@ const PostModal = ({ postId }: { postId: string }) => {
               isPostLiked={post?.isLiked}
               isFeedPost={false}
             />
-            {authState.accessToken && <PostForm />}
+            {authState.accessToken && (
+              <PostForm lastFocusableElement={lastFocusableElement} />
+            )}
           </PostPanel>
         </div>
       ) : (

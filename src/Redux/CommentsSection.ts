@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IComment } from '../interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IComment } from "../interfaces";
 
 interface ICommentsSectionSliceState {
   comments: IComment[];
@@ -12,13 +12,13 @@ interface ICommentsSectionSliceState {
 const initialState: ICommentsSectionSliceState = {
   comments: [],
   isCommentOptionsActive: false,
-  selectedCommentId: '',
+  selectedCommentId: "",
   isLoadingComments: false,
   errorMessage: null,
 };
 
 const CommentsSectionSlice = createSlice({
-  name: 'CommentsSection',
+  name: "CommentsSection",
   initialState,
   reducers: {
     loadingComments: (state) => {
@@ -32,6 +32,12 @@ const CommentsSectionSlice = createSlice({
       state.comments = action.payload;
       state.isLoadingComments = false;
     },
+    loadMoreComments: (
+      state,
+      action: PayloadAction<{ comments: IComment[] }>
+    ) => {
+      state.comments = [...state.comments, ...action.payload.comments];
+    },
     addComment: (state, action: PayloadAction<IComment>) => {
       state.comments.unshift(action.payload);
     },
@@ -42,7 +48,11 @@ const CommentsSectionSlice = createSlice({
     },
     likeComment: (
       state,
-      action: PayloadAction<{ commentIndex: number; commentId: string; userId: string }>
+      action: PayloadAction<{
+        commentIndex: number;
+        commentId: string;
+        userId: string;
+      }>
     ) => {
       state.comments[action.payload.commentIndex].likes.count += 1;
       state.comments[action.payload.commentIndex].likes.users.unshift(
@@ -51,17 +61,21 @@ const CommentsSectionSlice = createSlice({
     },
     dislikeComment: (
       state,
-      action: PayloadAction<{ commentIndex: number; commentId: string; userId: string }>
+      action: PayloadAction<{
+        commentIndex: number;
+        commentId: string;
+        userId: string;
+      }>
     ) => {
       state.comments[action.payload.commentIndex].likes.count -= 1;
-      const usersArray = state.comments[action.payload.commentIndex].likes.users;
-      state.comments[action.payload.commentIndex].likes.users = usersArray.filter(
-        (id) => id !== action.payload.userId
-      );
+      const usersArray =
+        state.comments[action.payload.commentIndex].likes.users;
+      state.comments[action.payload.commentIndex].likes.users =
+        usersArray.filter((id) => id !== action.payload.userId);
     },
     toggleCommentOptions: (state, action: PayloadAction<string>) => {
       if (state.isCommentOptionsActive) {
-        state.selectedCommentId = '';
+        state.selectedCommentId = "";
         state.isCommentOptionsActive = false;
       } else {
         state.selectedCommentId = action.payload;
@@ -78,6 +92,7 @@ export const {
   loadingComments,
   errorLoadingComments,
   setComments,
+  loadMoreComments,
   addComment,
   deleteComment,
   likeComment,

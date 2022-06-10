@@ -23,4 +23,13 @@
       text-decoration: none;
     }
   }
+  &__loadMoreCommentsBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    gap: 5px;
+    margin: 10px auto;
+    color: var(--secondary-color);
+  }
 }

@@ -27,7 +27,7 @@ const Comment = ({
         )}
       <div className="comment__container">
         <img
-          src={comment.user.profilePicture}
+          src={comment.user.profilePicture.smallPicture}
           alt=""
           width="30"
           height="30"
@@ -46,16 +46,16 @@ const Comment = ({
             />
           )}
         </div>
+        {!isDescription && (
+          <CommentLikeBtn
+            isReply={false}
+            commentId={comment.id}
+            replyId={""}
+            commentIndex={commentIndex}
+            likes={comment.likes}
+          />
+        )}
       </div>
-      {!isDescription && (
-        <CommentLikeBtn
-          isReply={false}
-          commentId={comment.id}
-          replyId={""}
-          commentIndex={commentIndex}
-          likes={comment.likes}
-        />
-      )}
     </div>
   );
 };

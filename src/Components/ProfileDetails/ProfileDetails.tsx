@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import useRedux from "../../Hooks/useRedux";
 import FollowButton from "../FollowButton/FollowButton";
 import "./ProfileDetails.scss";
 
 const ProfileDetails = () => {
+  const navigate = useNavigate();
   const { authState, profileState } = useRedux();
   const profileData = profileState.user;
 
@@ -12,7 +14,7 @@ const ProfileDetails = () => {
         <header className="profileDetails">
           <div className="profileDetails__picture">
             <img
-              src={profileData?.profilePicture}
+              src={profileData?.profilePicture.fullPicture}
               alt={`${profileData?.username}'s profile pic`}
               width="150"
               height="150"
@@ -27,11 +29,19 @@ const ProfileDetails = () => {
               {authState.accessToken &&
                 authState.user?.username !== profileData.username && (
                   <FollowButton
-                    userId={profileData.userId}
+                    userId={profileData.id}
                     username={profileData.username}
                     isFollowed={profileState.isFollowed}
                   />
                 )}
+              {authState.user?.username === profileData.username && (
+                <button
+                  className="profileDetails__settingsBtn"
+                  onClick={() => navigate("/profile/edit")}
+                >
+                  Settings
+                </button>
+              )}
             </div>
             <div className="profileDetails__stats">
               <p className="profileDetails__stat">

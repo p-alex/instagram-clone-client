@@ -9,7 +9,9 @@ export const ADD_COMMENT_MUTATION = `
             user {
               id
               username
-              profilePicture
+              profilePicture {
+                smallPicture
+              }
             }
             comment
             likes {

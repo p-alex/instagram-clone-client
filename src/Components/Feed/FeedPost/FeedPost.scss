@@ -3,6 +3,8 @@
   min-width: 100%;
   background-color: white;
   border: solid silver 1px;
+  border-radius: 10px;
+  overflow: hidden;
   &:last-of-type {
     margin-bottom: 0;
   }

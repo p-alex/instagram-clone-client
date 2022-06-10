@@ -2,14 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFollowers, IFollowing, IPosts } from "../interfaces";
 
 interface IProfileUserData {
-  userId: string;
+  id: string;
   username: string;
   fullname: string;
   bio: string;
   followers: IFollowers;
   following: IFollowing;
   posts: IPosts;
-  profilePicture: string;
+  profilePicture: {
+    fullPicture: string;
+  };
 }
 
 interface IProfileState {
@@ -53,14 +55,16 @@ const ProfileSlice = createSlice({
       state.isLoading = false;
       const user = action.payload.userData;
       state.user = {
-        userId: user.userId,
+        id: user.id,
         username: user.username,
         fullname: user.fullname,
         bio: user.bio,
         followers: user.followers,
         following: user.following,
         posts: user.posts,
-        profilePicture: user.profilePicture,
+        profilePicture: {
+          fullPicture: user.profilePicture.fullPicture,
+        },
       };
       state.isFollowed = action.payload.isFollowed;
     },

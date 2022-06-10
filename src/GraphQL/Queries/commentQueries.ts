@@ -1,6 +1,6 @@
 export const GET_COMMENTS_QUERY = `
-query GetComments($postId: String!) {
-    getComments(postId: $postId) {
+query GetComments($postId: String!, $maxCommentsPerPage: Int!, $currentPage: Int!) {
+    getComments(postId: $postId, maxCommentsPerPage: $maxCommentsPerPage, currentPage: $currentPage) {
       statusCode
       success
       message
@@ -9,7 +9,9 @@ query GetComments($postId: String!) {
         user {
             id
             username
-            profilePicture
+            profilePicture {
+              smallPicture
+            }
         }
         comment
         likes {

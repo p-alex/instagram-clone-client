@@ -6,6 +6,7 @@ import LoginPage from "./Pages/LoginPage/Login";
 import RegisterPage from "./Pages/RegisterPage/Register";
 import ProfilePage from "./Pages/ProfilePage/Profile";
 import PostPage from "./Pages/PostPage/PostPage";
+import SettingsPage from "./Pages/SettingsPage/SettingsPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route element={<PersistLogin />}>
         <Route element={<RequireAuth />}>
           <Route index element={<Home />} />
+          <Route path="profile/edit" element={<SettingsPage />} />
         </Route>
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />

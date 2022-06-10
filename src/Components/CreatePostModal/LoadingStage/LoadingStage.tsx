@@ -13,7 +13,7 @@ const LoadingStage = (props: Props) => {
   return (
     <div className="loadingStage">
       <div className="loadingStage__container">
-        <Spinner />
+        <Spinner size="big" />
         <p ref={props.lastFocusableElementRef} tabIndex={0}>
           Loading
         </p>

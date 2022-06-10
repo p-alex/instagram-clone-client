@@ -7,7 +7,9 @@ query GetSuggestions {
       suggestions {
         id
         username
-        profilePicture
+        profilePicture {
+          smallPicture
+        }
         isFollowed
       }
     }

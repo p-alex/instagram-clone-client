@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FOLLOW_OR_UNFOLLOW_USER } from "../../GraphQL/Mutations/userMutations";
+import { FOLLOW_OR_UNFOLLOW_USER_MUTATION } from "../../GraphQL/Mutations/userMutations";
 import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
 import useRedux from "../../Hooks/useRedux";
 import { followFeedPostOwner, unfollowFeedPostOwner } from "../../Redux/Feed";
@@ -30,7 +30,7 @@ const FollowButton = (props: Props) => {
   );
 
   const [followOrUnfollowUserRequest, { isLoading }] = useFetchWithRetry({
-    query: FOLLOW_OR_UNFOLLOW_USER,
+    query: FOLLOW_OR_UNFOLLOW_USER_MUTATION,
     variables: { userId: props.userId, type: btnText },
     accessToken: authState.accessToken,
   });

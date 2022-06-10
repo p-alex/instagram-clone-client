@@ -1,0 +1,78 @@
+@import "../../variables.scss";
+.editProfileTab {
+  position: relative;
+  width: 100%;
+  &__container {
+    position: relative;
+    margin: auto;
+    max-width: 400px;
+    padding: 40px 20px;
+  }
+  &__changePicture {
+    display: flex;
+    align-items: center;
+    img {
+      border-radius: var(--primary-border-radius);
+    }
+  }
+  &__userAndChange {
+    margin-left: 15px;
+    h1 {
+      font-weight: normal;
+    }
+  }
+  &__changePictureBtn {
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+  &__form {
+    position: relative;
+    width: 100%;
+    margin-top: 50px;
+    button {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: $light-color;
+      padding: 7px 10px;
+      border-radius: 5px;
+    }
+  }
+  &__resultMessage {
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    &.error {
+      color: var(--invalid-color);
+    }
+  }
+  &__inputGroup {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: calc(var(--primary-border-radius) / 2);
+    label {
+      position: relative;
+      display: flex;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+      border: solid silver 1px;
+    }
+    input,
+    textarea {
+      display: block;
+      align-items: center;
+      width: 100%;
+      font-size: 1rem;
+      padding: 10px;
+      border: solid silver 1px;
+      background-color: var(--input-background);
+    }
+    display: flex;
+  }
+}

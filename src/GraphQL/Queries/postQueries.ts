@@ -9,7 +9,9 @@ query GetPost($postId: ID!, $userId: String) {
         user {
           id
           username
-          profilePicture
+          profilePicture {
+            smallPicture
+          }
         }
         images  {
           fullImage {
@@ -44,7 +46,9 @@ query GetFeedPosts($currentPage: Int!, $maxPostsPerPage: Int!) {
       user {
         id
         username
-        profilePicture
+        profilePicture {
+          smallPicture
+        }
       }
       images {
         fullImage {

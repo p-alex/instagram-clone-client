@@ -1,5 +1,5 @@
-@import '../../globals';
-@import '../../variables';
+@import "../../globals";
+@import "../../variables";
 .registerMain {
   position: absolute;
   left: 0;
@@ -15,6 +15,7 @@
   border: solid $border-color 1px;
   padding: 45px;
   text-align: center;
+  border-radius: var(--primary-border-radius);
   &__message {
     color: $medium-color;
     font-size: $HTwoFontSize;
@@ -25,9 +26,17 @@
     margin-top: 30px;
   }
   &__notes {
-    display: block;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    flex-direction: column;
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 0.85rem;
+    i {
+      position: relative;
+      top: 2px;
+      margin-right: 5px;
+    }
     p {
       display: flex;
       margin-bottom: 5px;
@@ -43,7 +52,7 @@
     display: block;
     width: 100%;
     padding: 7px;
-    background: $primary-color;
+    background: var(--primary-color);
     border: none;
     border-radius: 5px;
     color: $light-color;
@@ -65,8 +74,9 @@
     padding: 25px;
     text-align: center;
     margin-top: 20px;
+    border-radius: var(--primary-border-radius);
     a {
-      color: $primary-color;
+      color: var(--primary-color);
       text-decoration: none;
     }
   }

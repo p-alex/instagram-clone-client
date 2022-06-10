@@ -1,4 +1,4 @@
-@import '../../variables';
+@import "../../variables";
 .inputGroup {
   position: relative;
   text-align: left;
@@ -6,14 +6,11 @@
   input {
     display: block;
     width: 100%;
-    padding: 7px;
+    padding: 10px;
+    border-radius: calc(var(--primary-border-radius) / 2);
     border: solid $border-color 1px;
     font-size: 14px;
     background-color: $input-background;
-  }
-  input:focus {
-    border: solid $border-color-dark 1px;
-    outline: none;
   }
   input.invalidInput {
     border: solid $invalid-color 1px;

@@ -144,7 +144,7 @@ const PostModal = ({ postId }: { postId: string }) => {
               postId={post.id}
               userId={post.user.id}
               username={post.user.username}
-              profilePicture={post.user.profilePicture}
+              profilePicture={post.user.profilePicture.smallPicture}
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />

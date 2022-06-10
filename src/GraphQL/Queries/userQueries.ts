@@ -7,8 +7,10 @@ export const GET_USER_QUERY = `
             isFollowed
             hasFollowings
             user {
-              userId
-              profilePicture
+              id
+              profilePicture {
+                fullPicture
+              }
               fullname
               username
               bio

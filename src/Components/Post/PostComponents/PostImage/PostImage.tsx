@@ -53,6 +53,7 @@ const PostImage = (props: Props) => {
         src={props.imageUrl}
         alt=""
         className="postImage__image"
+        draggable="false"
         style={{ width: "100%", aspectRatio: `${props.aspectRatio}` }}
       />
     </div>

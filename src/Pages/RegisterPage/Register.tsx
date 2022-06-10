@@ -1,46 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   EMAIL_REGEX,
   FULLNAME_REGEX,
   PASSWORD_REGEX,
   USERNAME_REGEX,
-} from '../../Util/registerValidationRegex';
-import './Register.scss';
-import InputGroup from '../../Components/InputGroup/InputGroup';
-import { Link, useNavigate } from 'react-router-dom';
-import useFetch from '../../Hooks/useFetch';
-import Logo from '../../Components/Logo/Logo';
-import { REGISTER_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../Redux/Store';
+} from "../../Util/registerValidationRegex";
+import "./Register.scss";
+import InputGroup from "../../Components/InputGroup/InputGroup";
+import { Link, useNavigate } from "react-router-dom";
+import useFetch from "../../Hooks/useFetch";
+import Logo from "../../Components/Logo/Logo";
+import { REGISTER_USER_MUTATION } from "../../GraphQL/Mutations/authMutations";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
+import {
+  ConfirmPasswordNotes,
+  EmailNotes,
+  FullNameNotes,
+  PasswordNotes,
+  UsernameNotes,
+} from "../../Components/InputGroup/Notes/Notes";
 
 const Register = () => {
   const authState = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    authState.user?.id && navigate('/');
+    authState.user?.id && navigate("/");
   }, [authState.user]);
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
 
-  const [fullname, setFullname] = useState('');
+  const [fullname, setFullname] = useState("");
   const [isValidFullname, setIsValidFullname] = useState(false);
   const [isFullnameFocused, setIsFullnameFocused] = useState(false);
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [isValidUsername, setIsValidUsername] = useState(false);
   const [isUsernameFocused, setIsUsernameFocused] = useState(false);
 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
-  const [isConfirmPasswordFocused, setIsConfirmedPasswordFocused] = useState(false);
+  const [isConfirmPasswordFocused, setIsConfirmedPasswordFocused] =
+    useState(false);
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
@@ -106,7 +114,7 @@ const Register = () => {
       try {
         const response = await registerUser();
         if (response.success) {
-          navigate('/login');
+          navigate("/login");
         }
       } catch (error: any) {
         console.log(error.message);
@@ -118,7 +126,9 @@ const Register = () => {
     <main className="registerMain">
       <section className="register">
         <Logo />
-        <h2 className="register__message">Sign up to see photos from your friends.</h2>
+        <h2 className="register__message">
+          Sign up to see photos from your friends.
+        </h2>
         <form className="register__form" onSubmit={handleSubmit}>
           {/* ========================== EMAIL INPUT ========================== */}
           <InputGroup
@@ -129,20 +139,13 @@ const Register = () => {
             setValue={setEmail}
             setIsFocused={setIsEmailFocused}
             autoFocus={true}
+            autoComplete={"off"}
           >
-            <div
-              id="emailnotes"
-              className={
-                isEmailFocused && email && !isValidEmail
-                  ? 'register__notes'
-                  : 'register__notes hide-notes'
-              }
-            >
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Must be a valid email address.
-              </p>
-            </div>
+            <EmailNotes
+              isFocused={isEmailFocused}
+              value={email}
+              isValid={isValidEmail}
+            />
           </InputGroup>
 
           {/* ========================== FULLNAME INPUT ========================== */}
@@ -154,24 +157,15 @@ const Register = () => {
             setValue={setFullname}
             setIsFocused={setIsFullnameFocused}
             autoFocus={false}
+            autoComplete={"off"}
+            maxLength={35}
+            minLength={1}
           >
-            <div
-              id="fullnamenotes"
-              className={
-                isFullnameFocused && fullname && !isValidFullname
-                  ? 'register__notes'
-                  : 'register__notes hide-notes'
-              }
-            >
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Between 1 and 35 characters long.
-              </p>
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Must start with a letter.
-              </p>
-            </div>
+            <FullNameNotes
+              isFocused={isFullnameFocused}
+              value={fullname}
+              isValid={isValidFullname}
+            />
           </InputGroup>
 
           {/* ========================== USERNAME INPUT ========================== */}
@@ -183,28 +177,15 @@ const Register = () => {
             setValue={setUsername}
             setIsFocused={setIsUsernameFocused}
             autoFocus={false}
+            autoComplete={"off"}
+            maxLength={20}
+            minLength={3}
           >
-            <div
-              id="usernamenotes"
-              className={
-                isUsernameFocused && username && !isValidUsername
-                  ? 'register__notes'
-                  : 'register__notes hide-notes'
-              }
-            >
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                24 characters.
-              </p>
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Must begin with a letter.
-              </p>
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Letters, numbers, underscores, hyphens allowed.
-              </p>
-            </div>
+            <UsernameNotes
+              isFocused={isUsernameFocused}
+              value={username}
+              isValid={isValidUsername}
+            />
           </InputGroup>
 
           {/* ========================== PASSWORD INPUT ========================== */}
@@ -216,35 +197,15 @@ const Register = () => {
             setValue={setPassword}
             setIsFocused={setIsPasswordFocused}
             autoFocus={false}
+            autoComplete={"new-password"}
+            maxLength={24}
+            minLength={8}
           >
-            <div
-              id="passwordnotes"
-              className={
-                isPasswordFocused && !isValidPassword
-                  ? 'register__notes'
-                  : 'register__notes hide-notes'
-              }
-            >
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Minimum 8 characters long.
-              </p>
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                Must include uppercase and lowercase letters, a number and a special
-                character.
-              </p>
-              <p>
-                <i className="fa-solid fa-circle-info"></i>
-                <span>Allowed special characters: </span>
-                <span aria-label="exclamation mark">!</span>
-                <span aria-label="question mark">?</span>
-                <span aria-label="at symbol">@</span>
-                <span aria-label="hashtag">#</span>
-                <span aria-label="dollar sign">$</span>
-                <span aria-label="percent">%</span>
-              </p>
-            </div>
+            <PasswordNotes
+              isFocused={isPasswordFocused}
+              value={password}
+              isValid={isValidPassword}
+            />
           </InputGroup>
 
           {/* ========================== CONFIRM PASSWORD INPUT ========================== */}
@@ -256,18 +217,15 @@ const Register = () => {
             setValue={setConfirmPassword}
             setIsFocused={setIsConfirmedPasswordFocused}
             autoFocus={false}
+            autoComplete={"new-password"}
+            maxLength={24}
+            minLength={8}
           >
-            <p
-              id="confirmpasswordnotes"
-              className={
-                isConfirmPasswordFocused && confirmPassword && !isValidConfirmPassword
-                  ? 'register__notes'
-                  : 'register__notes hide-notes'
-              }
-            >
-              <i className="fa-solid fa-circle-info"></i>
-              <span>Passwords must match.</span>
-            </p>
+            <ConfirmPasswordNotes
+              isFocused={isConfirmPasswordFocused}
+              value={confirmPassword}
+              isValid={isValidConfirmPassword}
+            />
           </InputGroup>
 
           <button className="register__submit" disabled={isSubmitDisabled}>

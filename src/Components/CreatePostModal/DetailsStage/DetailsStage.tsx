@@ -21,7 +21,7 @@ const DetailsStage = (props: Props) => {
       <div className="detailsStage__panel">
         <div className="detailsStage__user">
           <img
-            src={authState.user?.profilePicture}
+            src={authState.user?.profilePicture.smallPicture}
             width="40"
             height="40"
             alt=""

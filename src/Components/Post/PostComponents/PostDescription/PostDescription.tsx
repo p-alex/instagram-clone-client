@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { dateConverter } from "../../../../Util/dateConverter";
-import CommentBottom from "../../../Comment/CommentComponents/CommentBottom/CommentBottom";
 
 const PostDescription = ({
   username,
   profilePicture,
   description,
-  postedAt,
 }: {
   username: string;
   profilePicture: string;
@@ -22,8 +19,8 @@ const PostDescription = ({
         <img
           src={profilePicture}
           alt=""
-          width="35"
-          height="35"
+          width="30"
+          height="30"
           className="comment__profileImg"
         />
         <div className="comment__body">

@@ -5,6 +5,7 @@ import Feed from "../../Components/Feed/Feed";
 import Footer from "../../Components/Footer/Footer";
 import Suggestions from "../../Components/Suggestions/Suggestions";
 import UsernameAndName from "../../Components/UsernameAndName/UsernameAndName";
+
 import Layout from "../../Layout/Layout";
 import { RootState } from "../../Redux/Store";
 import "./Home.scss";
@@ -30,7 +31,7 @@ const Home = () => {
               <UsernameAndName
                 username={authState.user.username}
                 fullname={authState.user.fullname}
-                profilePicture={authState.user.profilePicture}
+                profilePicture={authState.user.profilePicture.smallPicture}
               />
               <Suggestions type={"small"} />
               <Footer />

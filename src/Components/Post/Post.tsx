@@ -28,13 +28,14 @@ const Post = () => {
           <PostImage
             imageUrl={post.images[0].fullImage.url}
             aspectRatio={post.images[0].fullImage.aspectRatio}
+            isFeedPost={true}
           />
           <PostPanel>
             <PostUser
               postId={post.id}
               userId={post.user.id}
               username={post.user.username}
-              profilePicture={post.user.profilePicture}
+              profilePicture={post.user.profilePicture.smallPicture}
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
@@ -57,7 +58,7 @@ const Post = () => {
         </article>
       ) : (
         <>
-          {!postState.errorMessage && <Spinner />}
+          {!postState.errorMessage && <Spinner size="big" />}
           {postState.errorMessage && <p>{postState.errorMessage}</p>}
         </>
       )}

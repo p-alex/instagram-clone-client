@@ -1,5 +1,7 @@
 export const imageOptimizer = async (
   imgUrl: string | ArrayBuffer | null,
+  minWidth = 1200,
+  minHeight = 1200,
   maxWidth = 1500,
   maxHeight = 1500
 ): Promise<string> => {
@@ -14,11 +16,17 @@ export const imageOptimizer = async (
           if (img.width > maxWidth) {
             img.height *= maxWidth / img.width;
             img.width = maxWidth;
+          } else if (img.width < minWidth) {
+            img.height *= minWidth / img.width;
+            img.width = minWidth;
           }
         } else {
           if (img.height > maxHeight) {
             img.width *= maxHeight / img.height;
             img.height = maxHeight;
+          } else if (img.height < minHeight) {
+            img.width *= minHeight / img.height;
+            img.height = minHeight;
           }
         }
 

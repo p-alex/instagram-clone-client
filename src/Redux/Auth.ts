@@ -4,8 +4,13 @@ export interface AuthState {
   user: {
     id: string;
     username: string;
+    email: string;
+    bio: string;
     fullname: string;
-    profilePicture: string;
+    profilePicture: {
+      fullPicture: string;
+      smallPicture: string;
+    };
     hasFollowings: boolean;
   } | null;
   accessToken: string | null;
@@ -21,7 +26,6 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action: PayloadAction<AuthState>) => {
-      console.log(action.payload.user);
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
     },
@@ -33,9 +37,23 @@ const AuthSlice = createSlice({
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
     },
+    changeProfilePicture: (state, action) => {
+      state.user!.profilePicture = action.payload.profilePicture;
+    },
+    changeUserInfo: (state, action) => {
+      state.user!.fullname = action.payload.fullname;
+      state.user!.username = action.payload.username;
+      state.user!.bio = action.payload.bio;
+    },
   },
 });
 
-export const { loginUser, logoutUser, refreshToken } = AuthSlice.actions;
+export const {
+  loginUser,
+  logoutUser,
+  refreshToken,
+  changeProfilePicture,
+  changeUserInfo,
+} = AuthSlice.actions;
 
 export default AuthSlice.reducer;

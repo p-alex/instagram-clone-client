@@ -65,7 +65,7 @@ const Profile = () => {
   return (
     <Layout>
       <>
-        {isLoading && <Spinner />}
+        {isLoading && <Spinner size="big" />}
         {!isLoading && profileState.user && (
           <>
             <ProfileDetails />

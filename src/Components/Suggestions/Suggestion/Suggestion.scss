@@ -11,7 +11,7 @@
     }
   }
   &__profileImage {
-    border-radius: 50%;
+    border-radius: var(--primary-border-radius);
     margin-right: 10px;
   }
   &__follow {

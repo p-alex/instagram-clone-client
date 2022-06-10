@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
-import useRefreshToken from '../Hooks/useRefreshToken';
-import { useEffect, useState } from 'react';
-import Spinner from '../Ui/Spinner';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/Store';
+import { Outlet } from "react-router-dom";
+import useRefreshToken from "../Hooks/useRefreshToken";
+import { useEffect, useState } from "react";
+import Spinner from "../Ui/Spinner";
+import { useSelector } from "react-redux";
+import { RootState } from "../Redux/Store";
 
 const PersistLogin = () => {
   const authState = useSelector((state: RootState) => state.auth);
@@ -33,7 +33,7 @@ const PersistLogin = () => {
     };
   }, []);
 
-  return <>{isLoading ? <Spinner /> : <Outlet />}</>;
+  return <>{isLoading ? <Spinner size="big" /> : <Outlet />}</>;
 };
 
 export default PersistLogin;

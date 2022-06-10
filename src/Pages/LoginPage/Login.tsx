@@ -50,8 +50,13 @@ const Login = () => {
               user: {
                 id: response.user.id,
                 username: response.user.username,
+                email: response.user.email,
+                bio: response.user.bio,
                 fullname: response.user.fullname,
-                profilePicture: response.user.profileImg,
+                profilePicture: {
+                  fullPicture: response.user.profilePicture.fullPicture,
+                  smallPicture: response.user.profilePicture.smallPicture,
+                },
                 hasFollowings: response.user.hasFollowings,
               },
               accessToken: response.user.accessToken,
@@ -78,6 +83,9 @@ const Login = () => {
             setValue={setUsername}
             setIsFocused={setIsUsernameFocused}
             autoFocus={true}
+            autoComplete={"off"}
+            maxLength={20}
+            minLength={3}
           />
           <InputGroup
             label="Password"
@@ -87,6 +95,9 @@ const Login = () => {
             setValue={setPassword}
             setIsFocused={setIsPasswordFocused}
             autoFocus={false}
+            autoComplete={"off"}
+            maxLength={24}
+            minLength={8}
           />
           <button
             className="login__submit"

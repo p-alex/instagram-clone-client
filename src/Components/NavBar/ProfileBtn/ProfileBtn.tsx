@@ -38,7 +38,7 @@ const ProfileBtn = () => {
         aria-label="Toggle profile menu"
       >
         <img
-          src={authState.user?.profilePicture}
+          src={authState.user?.profilePicture.smallPicture}
           className="profileBtn__image"
           alt=""
           width="40"
@@ -55,6 +55,9 @@ const ProfileBtn = () => {
             role="link"
           >
             <i className="fa-solid fa-user"></i> Profile
+          </button>
+          <button onClick={() => navigate("/profile/edit")}>
+            <i className="fa-solid fa-gear"></i> Settings
           </button>
           <button
             onClick={() => {

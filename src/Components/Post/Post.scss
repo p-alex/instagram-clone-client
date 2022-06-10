@@ -4,6 +4,9 @@
   display: flex;
   margin: 0 auto;
   border: solid silver 1px;
+  min-height: 550px;
+  border-radius: 10px;
+  overflow: hidden;
   @media (max-width: 980px) {
     flex-direction: column;
     max-width: 100%;

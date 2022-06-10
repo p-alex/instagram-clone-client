@@ -28,13 +28,11 @@ const Feed = () => {
     try {
       const response = await getFeedPostsRequest();
       if (!response.success) throw new Error(response.message);
-
       if (response.posts.length === MAX_POSTS_PER_PAGE) {
         setShowLoadMore(true);
       } else {
         setShowLoadMore(false);
       }
-
       if (type === "initialRequest") {
         dispatch(setFeedPosts({ posts: response.posts }));
       } else if (type === "requestMorePosts") {
@@ -56,7 +54,7 @@ const Feed = () => {
   return (
     <section className="feed">
       {error && <p>{error}</p>}
-      {isLoading && <Spinner />}
+      {isLoading && <Spinner size="small" />}
       {feedState.posts &&
         feedState.posts.map((post, index) => {
           return <FeedPost key={post.id} post={post} postIndex={index} />;

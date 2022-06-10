@@ -5,7 +5,10 @@ export interface IUser {
   email: string;
   password: string;
   bio: string;
-  profilePicture: string;
+  profilePicture: {
+    fullPicture: string;
+    smallPicture: string;
+  } | null;
   posts: IPosts;
   followers: IFollowers;
   following: IFollowing;
@@ -15,8 +18,10 @@ export interface IUser {
   refreshToken?: string[];
 }
 export interface IUserProfileInfo {
-  userId: string;
-  profilePicture: string;
+  id: string;
+  profilePicture: {
+    fullPicture: string;
+  };
   fullname: string;
   username: string;
   bio: string;
@@ -70,7 +75,9 @@ export interface IReply {
 export interface ILiteUser {
   id: string;
   username: string;
-  profilePicture: string;
+  profilePicture: {
+    smallPicture: string;
+  };
 }
 export interface IReplies {
   count: number;
@@ -91,7 +98,9 @@ export interface IFollowing {
 export interface ISuggestion {
   id: string;
   username: string;
-  profilePicture: string;
+  profilePicture: {
+    smallPicture: string;
+  };
   isFollowed: boolean;
 }
 export interface IDefaultResponse {

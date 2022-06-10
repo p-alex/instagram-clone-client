@@ -13,11 +13,16 @@
   --tertiary-color: #182d35;
   --light-color: #fff;
   --medium-color: silver;
+  --invalid-color: #f26672;
   // border colors
   --border-color: var(--medium-color);
   --border-color-active: var(--primary-color);
   // CreatePostModal z-index
   --createPostModalZ: 12;
+
+  //input background-color
+  --input-background: #fafafa;
+  --input-background-darker: #ececec;
 
   // PostModal z-index
   --postModalZ: 101;
@@ -28,6 +33,8 @@
   --optionsModalZ: 200;
   --optionsModalContainerZ: 202;
   --optionsModalBackdropZ: 201;
+
+  --primary-border-radius: 10px;
 }
 
 * {
@@ -35,7 +42,7 @@
   padding: 0;
   box-sizing: border-box;
   font-weight: normal;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -68,7 +75,8 @@ textarea {
   font-size: 1rem;
 }
 
+input,
 textarea {
-  border: none;
+  border-radius: calc(var(--primary-border-radius) / 2);
   background: none;
 }

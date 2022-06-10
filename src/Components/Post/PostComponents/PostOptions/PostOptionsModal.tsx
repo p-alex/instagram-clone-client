@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DELETE_POST_MUTATION } from "../../../../GraphQL/Mutations/postMutations";
-import { FOLLOW_OR_UNFOLLOW_USER } from "../../../../GraphQL/Mutations/userMutations";
+import { FOLLOW_OR_UNFOLLOW_USER_MUTATION } from "../../../../GraphQL/Mutations/userMutations";
 import useFetchWithRetry from "../../../../Hooks/useFetchWithRetry";
 import useRedux from "../../../../Hooks/useRedux";
 import { IDefaultResponse } from "../../../../interfaces";
@@ -29,6 +29,7 @@ interface Props {
   currentPostId: string;
   isPostOwnerFollowed: boolean;
   postOwnerId: string;
+  postIndex?: number;
 }
 
 const PostOptionsModal = (props: Props) => {
@@ -55,7 +56,7 @@ const PostOptionsModal = (props: Props) => {
 
   const [followOrUnfollowUserRequest, { isLoading: isFollowRequestLoading }] =
     useFetchWithRetry({
-      query: FOLLOW_OR_UNFOLLOW_USER,
+      query: FOLLOW_OR_UNFOLLOW_USER_MUTATION,
       variables: { userId: props.postOwnerId, type: followBtnText },
       accessToken: authState.accessToken,
     });
@@ -75,6 +76,13 @@ const PostOptionsModal = (props: Props) => {
   useEffect(() => {
     if (isDeleteMode) confirmDeleteLastFocusable.current.focus();
   }, [isDeleteMode]);
+
+  useEffect(() => {
+    document.body.style.cssText = `overflow-y:hidden`;
+    return () => {
+      document.body.removeAttribute("style");
+    };
+  }, []);
 
   const handleDeletePost = async () => {
     try {
@@ -149,7 +157,9 @@ const PostOptionsModal = (props: Props) => {
 
   const handleCloseModalAndRedirectFocus = () => {
     const optionsToggleBtn = document.querySelector(
-      ".postUser__moreOptionsBtn"
+      `#moreOptionsBtn${
+        typeof props.postIndex === "number" ? props.postIndex : ""
+      }`
     ) as HTMLButtonElement;
     props.handleToggleOptionsModal();
     optionsToggleBtn.focus();
@@ -181,7 +191,7 @@ const PostOptionsModal = (props: Props) => {
         <div className="optionsModal__container">
           <FocusTrapRedirectFocus element={confirmDeleteLastFocusable} />
           <div className="optionsModal__confirmMessage">
-            {isDeletePostRequestLoading && <Spinner />}
+            {isDeletePostRequestLoading && <Spinner size="big" />}
             <h2>
               {!isDeletePostRequestLoading ? "Delete Post?" : "Loading..."}
             </h2>

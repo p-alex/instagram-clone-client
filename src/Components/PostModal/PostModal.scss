@@ -6,6 +6,8 @@
   max-width: 1500px;
   margin: auto;
   animation: fadeIn 200ms;
+  border-radius: 10px;
+  overflow: hidden;
   @media (max-width: 1900px) {
     max-width: 90%;
   }

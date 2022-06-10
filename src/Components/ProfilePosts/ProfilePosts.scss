@@ -4,7 +4,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-
   @media (max-width: 980px) {
     gap: 5px;
   }
@@ -14,14 +13,18 @@
     max-width: 293px;
     max-height: 293px;
     aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
     color: white;
     cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    background-color: silver;
     &:focus .profilePosts__postOverlay {
-      display: flex;
+      opacity: 1;
     }
   }
   &__post:hover .profilePosts__postOverlay {
-    display: flex;
+    opacity: 1;
   }
   &__image {
     position: relative;
@@ -31,18 +34,20 @@
   }
   &__postOverlay {
     position: absolute;
-    display: none;
+    display: flex;
+    opacity: 0;
     justify-content: center;
     align-items: center;
     gap: 25px;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 200ms;
     @media (max-width: 980px) {
-      opacity: 0;
+      display: none;
     }
     i {
       margin-right: 5px;

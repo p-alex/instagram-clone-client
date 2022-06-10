@@ -23,8 +23,13 @@ const useRefreshToken = () => {
         user: {
           id: string;
           username: string;
+          email: string;
+          bio: string;
           fullname: string;
-          profileImg: string;
+          profilePicture: {
+            fullPicture: string;
+            smallPicture: string;
+          };
           hasFollowings: boolean;
           accessToken: string;
         };
@@ -35,8 +40,13 @@ const useRefreshToken = () => {
             user: {
               id: data.user.id,
               username: data.user.username,
+              email: data.user.email,
+              bio: data.user.bio,
               fullname: data.user.fullname,
-              profilePicture: data.user.profileImg,
+              profilePicture: {
+                fullPicture: data.user.profilePicture.fullPicture,
+                smallPicture: data.user.profilePicture.smallPicture,
+              },
               hasFollowings: data.user.hasFollowings,
             },
             accessToken: data.user.accessToken,

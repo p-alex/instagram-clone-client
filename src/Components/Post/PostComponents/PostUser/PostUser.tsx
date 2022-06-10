@@ -3,6 +3,7 @@ import FollowButton from "../../../FollowButton/FollowButton";
 import "./PostUser.scss";
 
 interface Props {
+  postIndex?: number;
   postId: string;
   userId: string;
   username: string;
@@ -27,6 +28,11 @@ const PostUser = (props: Props) => {
         className="postUser__moreOptionsBtn"
         onClick={props.handleToggleOptionsModal}
         aria-label="Open post options modal"
+        id={
+          typeof props.postIndex === "number"
+            ? `moreOptionsBtn${props.postIndex}`
+            : "moreOptionsBtn"
+        }
       >
         <i className="fa-solid fa-ellipsis"></i>
       </button>

@@ -29,7 +29,7 @@
 }
 
 .detailsStage__user img {
-  border-radius: 50%;
+  border-radius: var(--primary-border-radius);
 }
 
 .detailsStage__textarea {

@@ -23,9 +23,10 @@ const FeedPost = (props: Props) => {
         postId={props.post.id}
         userId={props.post.user.id}
         username={props.post.user.username}
-        profilePicture={props.post.user.profilePicture}
+        profilePicture={props.post.user.profilePicture.smallPicture}
         handleToggleOptionsModal={handleToggleOptionsModal}
         isPostOwnerFollowed={props.post.isPostOwnerFollowed}
+        postIndex={props.postIndex}
       />
       <PostImage
         imageUrl={props.post.images[0].fullImage.url}
@@ -44,6 +45,7 @@ const FeedPost = (props: Props) => {
           currentPostId={props.post.id}
           isPostOwnerFollowed={props.post.isPostOwnerFollowed}
           postOwnerId={props.post.user.id}
+          postIndex={props.postIndex}
         />
       )}
     </article>

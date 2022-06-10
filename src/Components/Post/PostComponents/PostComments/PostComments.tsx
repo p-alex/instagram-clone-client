@@ -49,7 +49,7 @@ const PostComments = () => {
             postedAt={post?.createdAt}
           />
         )}
-        {isLoading && <p>Loading...</p>}
+        {isLoading && currentPage === 0 && <Spinner size="small" />}
         {commentsSectionState.comments.length
           ? !isLoading &&
             authState.accessToken &&

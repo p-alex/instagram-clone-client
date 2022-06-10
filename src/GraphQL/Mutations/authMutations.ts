@@ -33,8 +33,13 @@ export const LOGIN_USER_MUTATION = `
             user {
               id
               username
+              email
+              bio
               fullname
-              profileImg
+              profilePicture {
+                fullPicture
+                smallPicture
+              }
               hasFollowings
               accessToken
             }
@@ -60,11 +65,26 @@ mutation {
         user {
           id
           username
+          email
+          bio
           fullname
-          profileImg
+          profilePicture {
+            fullPicture
+            smallPicture
+          }
           hasFollowings
           accessToken
         }
     }
+}
+`;
+
+export const CHANGE_PASSWORD_MUTATION = `
+mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
+  changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+    statusCode
+    success
+    message
+  }
 }
 `;

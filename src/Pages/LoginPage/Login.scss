@@ -15,6 +15,7 @@
   border: solid $border-color 1px;
   padding: 45px;
   text-align: center;
+  border-radius: var(--primary-border-radius);
   &__form {
     margin-top: 30px;
   }
@@ -54,6 +55,7 @@
     padding: 25px;
     text-align: center;
     margin-top: 20px;
+    border-radius: var(--primary-border-radius);
     a {
       color: var(--primary-color);
       text-decoration: none;

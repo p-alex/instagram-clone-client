@@ -148,14 +148,18 @@ const PostModal = ({ postId }: { postId: string }) => {
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
-            <PostComments />
+            <PostComments postId={post.id} />
             <PostReact
               post={postState.post}
               isPostLiked={post?.isLiked}
               isFeedPost={false}
+              handleToggleMobileComments={() => {}}
             />
             {authState.accessToken && (
-              <PostForm lastFocusableElement={lastFocusableElement} />
+              <PostForm
+                lastFocusableElement={lastFocusableElement}
+                postId={post.id}
+              />
             )}
           </PostPanel>
         </div>

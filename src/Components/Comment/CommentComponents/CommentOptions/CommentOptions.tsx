@@ -10,6 +10,7 @@ import {
 import FocusTrapRedirectFocus from "../../../FocusTrap";
 
 interface Props {
+  postId: string;
   commentId: string;
   commentUserId: string;
 }
@@ -19,7 +20,7 @@ const CommentOptions = (props: Props) => {
 
   const [deleteCommentRequest, { isLoading }] = useFetchWithRetry({
     query: DELETE_COMMENT_MUTATION,
-    variables: { commentId: props.commentId, postId: postState.post?.id },
+    variables: { commentId: props.commentId, postId: props.postId },
     accessToken: authState.accessToken,
   });
 

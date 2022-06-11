@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IPost } from "../../../interfaces";
+import MobileComments from "../../MobileComments/MobileComments";
 import PostImage from "../../Post/PostComponents/PostImage/PostImage";
 import PostOptionsModal from "../../Post/PostComponents/PostOptions/PostOptionsModal";
 import PostReact from "../../Post/PostComponents/PostReact/PostReact";
@@ -14,8 +15,13 @@ interface Props {
 const FeedPost = (props: Props) => {
   const [isPostOptionsActive, setIsPostOptionActive] = useState(false);
 
+  const [isMobileCommentsActive, setIsMobileCommentsActive] = useState(false);
+
   const handleToggleOptionsModal = () =>
     setIsPostOptionActive((prevState) => !prevState);
+
+  const handleToggleMobileComments = () =>
+    setIsMobileCommentsActive((prevState) => !prevState);
 
   return (
     <article className="feedPost">
@@ -38,6 +44,7 @@ const FeedPost = (props: Props) => {
         postIndex={props.postIndex}
         isPostLiked={props.post.isLiked}
         isFeedPost={true}
+        handleToggleMobileComments={handleToggleMobileComments}
       />
       {isPostOptionsActive && (
         <PostOptionsModal
@@ -46,6 +53,15 @@ const FeedPost = (props: Props) => {
           isPostOwnerFollowed={props.post.isPostOwnerFollowed}
           postOwnerId={props.post.user.id}
           postIndex={props.postIndex}
+        />
+      )}
+      {isMobileCommentsActive && (
+        <MobileComments
+          postId={props.post.id}
+          postOwner={props.post.user}
+          postDescription={props.post.description}
+          postedAt={props.post.createdAt}
+          handleToggleMobileComments={handleToggleMobileComments}
         />
       )}
     </article>

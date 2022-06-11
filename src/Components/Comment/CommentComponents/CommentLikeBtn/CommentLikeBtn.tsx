@@ -21,9 +21,10 @@ const CommentLikeBtn = ({
   const [isLiked, setIsLiked] = useState(false);
   const [canRequest, setCanRequest] = useState(true);
   const { authState, dispatch } = useRedux();
+
   const [likeCommentRequest, { isLoading }] = useFetchWithRetry({
     query: LIKE_OR_DISLIKE_COMMENT_MUTATION,
-    variables: isReply ? { replyId } : { commentId },
+    variables: { commentId },
     accessToken: authState.accessToken,
   });
   const handleLikeComment = async () => {

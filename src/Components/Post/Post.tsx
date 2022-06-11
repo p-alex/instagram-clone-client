@@ -10,15 +10,20 @@ import useRedux from "../../Hooks/useRedux";
 import "./Post.scss";
 import { useState } from "react";
 import Spinner from "../../Ui/Spinner";
+import MobileComments from "../MobileComments/MobileComments";
 
 const Post = () => {
   const { authState, postState } = useRedux();
   const { post, isLoading } = postState;
 
   const [isPostOptionsActive, setIsPostOptionsActive] = useState(false);
+  const [isMobileCommentsActive, setIsMobileCommentsActive] = useState(false);
 
   const handleToggleOptionsModal = () =>
     setIsPostOptionsActive((prevState) => !prevState);
+
+  const handleToggleMobileComments = () =>
+    setIsMobileCommentsActive((prevState) => !prevState);
 
   return (
     <>
@@ -39,13 +44,14 @@ const Post = () => {
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
-            <PostComments />
+            <PostComments postId={post.id} />
             <PostReact
               post={postState.post}
               isPostLiked={post.isLiked}
               isFeedPost={false}
+              handleToggleMobileComments={handleToggleMobileComments}
             />
-            {authState.accessToken && <PostForm />}
+            {authState.accessToken && <PostForm postId={post.id} />}
           </PostPanel>
           {isPostOptionsActive && (
             <PostOptionsModal
@@ -53,6 +59,15 @@ const Post = () => {
               currentPostId={postState.post!.id}
               isPostOwnerFollowed={postState.post!.isPostOwnerFollowed}
               postOwnerId={postState.post!.user.id}
+            />
+          )}
+          {isMobileCommentsActive && (
+            <MobileComments
+              postId={postState.post!.id}
+              postOwner={postState.post!.user}
+              postDescription={postState.post!.description}
+              postedAt={postState.post!.createdAt}
+              handleToggleMobileComments={handleToggleMobileComments}
             />
           )}
         </article>

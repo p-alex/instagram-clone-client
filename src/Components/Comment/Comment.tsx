@@ -7,25 +7,32 @@ import CommentOptions from "./CommentComponents/CommentOptions/CommentOptions";
 import CommentUserAndText from "./CommentComponents/CommentUserAndText/CommentUserAndText";
 
 const Comment = ({
+  postId,
   comment,
   commentIndex,
   isDescription,
 }: {
+  postId: string;
   comment: IComment;
   commentIndex: number;
   isDescription: boolean;
 }) => {
   const { commentsSectionState } = useRedux();
+
   return (
     <div className="comment">
       {commentsSectionState.isCommentOptionsActive &&
         commentsSectionState.selectedCommentId === comment.id && (
           <CommentOptions
+            postId={postId}
             commentId={comment.id}
             commentUserId={comment.user.id}
           />
         )}
-      <div className="comment__container">
+      <div
+        className="comment__container"
+        style={isDescription ? { border: "none" } : {}}
+      >
         <img
           src={comment.user.profilePicture.smallPicture}
           alt=""

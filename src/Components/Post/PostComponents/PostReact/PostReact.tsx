@@ -4,12 +4,14 @@ import LikeBtn from "../../../LikeBtn/LikeBtn";
 import { Link, useNavigate } from "react-router-dom";
 import "./PostReact.scss";
 import { IPost } from "../../../../interfaces";
+import PostDescription from "../PostDescription/PostDescription";
 
 interface Props {
   post: IPost | null;
   postIndex?: number;
   isPostLiked: boolean | undefined;
   isFeedPost: boolean;
+  handleToggleMobileComments: () => void;
 }
 
 const PostReact = (props: Props) => {
@@ -57,26 +59,34 @@ const PostReact = (props: Props) => {
         }`}</p>
 
         {props.post?.description && props.isFeedPost && (
-          <p className="postReact__description">
-            <Link to={`/users/${props.post?.user.username}`}>
-              {props.post?.user.username}
-            </Link>
-            {` `}
-            {props.post?.description}
-          </p>
+          <PostDescription
+            description={props.post.description}
+            postedAt={props.post.createdAt}
+            profilePicture={props.post.user.profilePicture.smallPicture}
+            username={props.post.user.username}
+            showProfilePicture={false}
+          />
         )}
 
-        {props.isFeedPost &&
-        props.post?.comments.count &&
-        props.post?.comments.count > 0 ? (
-          <Link
-            to={`posts/${props.post.id}`}
-            className="postReact__viewCommentsLink"
-          >
-            {props.post?.comments.count === 1
-              ? `View ${props.post?.comments.count} comment`
-              : `View all ${props.post?.comments.count} comments`}
-          </Link>
+        {props.post?.comments.count && props.post?.comments.count > 0 ? (
+          <div className="postReact__viewCommentsBtnContainer">
+            <Link
+              to={`/posts/${props.post.id}`}
+              className="postReact__viewCommentsLink"
+            >
+              {props.post?.comments.count === 1
+                ? `View ${props.post?.comments.count} comment`
+                : `View all ${props.post?.comments.count} comments`}
+            </Link>
+            <button
+              className="postReact__viewCommentsButton"
+              onClick={props.handleToggleMobileComments}
+            >
+              {props.post?.comments.count === 1
+                ? `View ${props.post?.comments.count} comment`
+                : `View all ${props.post?.comments.count} comments`}
+            </button>
+          </div>
         ) : null}
 
         <small className="postReact__date">

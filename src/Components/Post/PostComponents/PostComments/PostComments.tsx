@@ -15,9 +15,13 @@ import Comment from "../../../Comment/Comment";
 import PostDescription from "../PostDescription/PostDescription";
 import "./PostComments.scss";
 
+interface Props {
+  postId: string;
+}
+
 const MAX_COMMENTS_PER_PAGE = 20;
 
-const PostComments = () => {
+const PostComments = (props: Props) => {
   const { authState, postState, commentsSectionState, dispatch } = useRedux();
   const { post } = postState;
   const [currentPage, setCurrentPage] = useState(0);
@@ -76,6 +80,7 @@ const PostComments = () => {
             username={post?.user.username}
             description={post?.description}
             postedAt={post?.createdAt}
+            showProfilePicture={true}
           />
         )}
         {isLoading && currentPage === 0 && <Spinner size="small" />}
@@ -84,6 +89,7 @@ const PostComments = () => {
             commentsSectionState.comments.map((comment, index) => (
               <Comment
                 key={comment.id}
+                postId={props.postId}
                 comment={comment}
                 commentIndex={index}
                 isDescription={false}

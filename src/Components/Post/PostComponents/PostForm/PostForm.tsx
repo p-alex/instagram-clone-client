@@ -6,17 +6,18 @@ import { addComment } from "../../../../Redux/CommentsSection";
 import "./PostForm.scss";
 
 interface Props {
+  postId: string;
   lastFocusableElement?: React.MutableRefObject<any>;
 }
 
 const PostForm = (props: Props) => {
-  const { authState, postState, dispatch } = useRedux();
+  const { authState, dispatch } = useRedux();
   const [text, setText] = useState("");
   const [canPost, setCanPost] = useState(true);
 
   const [addCommentRequest, { isLoading }] = useFetchWithRetry({
     query: ADD_COMMENT_MUTATION,
-    variables: { comment: text, postId: postState.post?.id },
+    variables: { comment: text, postId: props.postId },
     accessToken: authState.accessToken,
   });
 

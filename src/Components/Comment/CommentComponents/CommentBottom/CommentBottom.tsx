@@ -1,8 +1,8 @@
-import useRedux from '../../../../Hooks/useRedux';
-import { ILikes } from '../../../../interfaces';
-import { toggleCommentOptions } from '../../../../Redux/CommentsSection';
-import { dateConverter } from '../../../../Util/dateConverter';
-import './CommentBottom.scss';
+import useRedux from "../../../../Hooks/useRedux";
+import { ILikes } from "../../../../interfaces";
+import { toggleCommentOptions } from "../../../../Redux/CommentsSection";
+import { dateConverter } from "../../../../Util/dateConverter";
+import "./CommentBottom.scss";
 
 const CommentBottom = ({
   commentId,
@@ -23,7 +23,7 @@ const CommentBottom = ({
 
       {likes.count > 0 && (
         <small>
-          {likes.count} {likes.count === 1 ? 'like' : 'likes'}
+          {likes.count} {likes.count === 1 ? "like" : "likes"}
         </small>
       )}
 

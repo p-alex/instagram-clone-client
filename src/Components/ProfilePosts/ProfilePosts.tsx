@@ -4,7 +4,12 @@ import "./ProfilePosts.scss";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../Redux/Store";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPostId, setLastFocusedPostIndex } from "../../Redux/Profile";
+import {
+  closePostModal,
+  selectPostId,
+  setLastFocusedPostIndex,
+} from "../../Redux/Profile";
+import { resetPostState } from "../../Redux/Post";
 
 const ProfilePosts = () => {
   const navigate = useNavigate();
@@ -25,6 +30,15 @@ const ProfilePosts = () => {
   const handleSetIsMobileWidth = () => {
     if (window.innerWidth <= 980) return setIsMobileWidth(true);
     setIsMobileWidth(false);
+  };
+
+  const handleTogglePostModal = () => {
+    const lastFocusedPost = document.querySelector(
+      `#profile-post-${profileState.lastFocusedPostIndex}`
+    ) as HTMLButtonElement;
+    dispatch(resetPostState());
+    dispatch(closePostModal());
+    lastFocusedPost.focus();
   };
 
   useEffect(() => {
@@ -84,7 +98,11 @@ const ProfilePosts = () => {
           ))}
       </section>
       {profileState.selectedPostId && (
-        <PostModal postId={profileState.selectedPostId} />
+        <PostModal
+          postId={profileState.selectedPostId}
+          isProfileModal={true}
+          handleTogglePostModal={handleTogglePostModal}
+        />
       )}
     </>
   );

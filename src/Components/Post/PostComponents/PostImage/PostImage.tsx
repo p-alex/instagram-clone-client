@@ -5,12 +5,13 @@ interface Props {
   imageUrl: string | undefined;
   aspectRatio: number | undefined;
   isFeedPost?: boolean;
+  isForModal: boolean;
 }
 
 const PostImage = (props: Props) => {
   function resizeEvent() {
     const imageContainer = document.querySelector(
-      ".postImage"
+      "#postModalImage"
     ) as HTMLDivElement;
 
     if (window.innerWidth < 980) {
@@ -20,7 +21,7 @@ const PostImage = (props: Props) => {
 
     const windowHeightPercentage = 94 / 100;
 
-    if (!props.isFeedPost) {
+    if (props.isForModal === true) {
       if (props.aspectRatio === 4 / 5) {
         const maxHeight = window.innerHeight * windowHeightPercentage;
         const maxWidth = maxHeight * props.aspectRatio;
@@ -48,7 +49,7 @@ const PostImage = (props: Props) => {
   }, []);
 
   return (
-    <div className="postImage">
+    <div className="postImage" id={props.isForModal ? "postModalImage" : ""}>
       <img
         src={props.imageUrl}
         alt=""

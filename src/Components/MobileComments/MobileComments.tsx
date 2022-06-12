@@ -62,6 +62,10 @@ const MobileComments = (props: Props) => {
     }
   };
 
+  const checkWindowSize = () => {
+    if (window.innerWidth > 980) props.handleToggleMobileComments();
+  };
+
   useEffect(() => {
     if (props.postId && authState.accessToken)
       handleGetComments("initialRequest");
@@ -72,22 +76,14 @@ const MobileComments = (props: Props) => {
   }, [currentPage]);
 
   useEffect(() => {
+    // Disable scroll when mobileComments is active
     document.body.style.cssText = `overflow-y:hidden`;
-    return () => {
-      document.body.removeAttribute("style");
-    };
+    return () => document.body.removeAttribute("style");
   }, []);
 
   useEffect(() => {
-    function checkWindowSize() {
-      if (window.innerWidth > 980) {
-        props.handleToggleMobileComments();
-      }
-    }
     window.addEventListener("resize", checkWindowSize);
-    return () => {
-      window.removeEventListener("resize", checkWindowSize);
-    };
+    return () => window.removeEventListener("resize", checkWindowSize);
   }, []);
 
   return (
@@ -106,10 +102,6 @@ const MobileComments = (props: Props) => {
           </button>
           <h2>Comments</h2>
         </header>
-        <div className="mobileComments__handle">
-          <div className="mobileComments__handleGrab"></div>
-        </div>
-
         <div className="mobileComments__comments">
           <div className="mobileComments__commentsContainer">
             {props.postDescription && (
@@ -146,7 +138,6 @@ const MobileComments = (props: Props) => {
             )}
           </div>
         </div>
-
         <PostForm postId={props.postId} />
       </div>
     </div>

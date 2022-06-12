@@ -23,7 +23,15 @@ import PostPanel from "../Post/PostComponents/PostPanel/PostPanel";
 import PostModalCtrl from "./PostModalComponents/PostModalCtrl";
 import PostOptionsModal from "../Post/PostComponents/PostOptions/PostOptionsModal";
 
-const PostModal = ({ postId }: { postId: string }) => {
+const PostModal = ({
+  postId,
+  isProfileModal,
+  handleTogglePostModal,
+}: {
+  postId: string;
+  isProfileModal: boolean;
+  handleTogglePostModal: () => void;
+}) => {
   const { authState, profileState, postState, dispatch } = useRedux();
   const { selectedPostId, lastFocusedPostIndex, user } = profileState;
   const { post, isLoading } = postState;
@@ -49,9 +57,10 @@ const PostModal = ({ postId }: { postId: string }) => {
     setIsPostOptionsActive((prevState) => !prevState);
 
   useEffect(() => {
-    setCurrentPostIndex(
-      userPosts!.findIndex((post) => post.id === selectedPost?.id)
-    );
+    if (isProfileModal)
+      setCurrentPostIndex(
+        userPosts!.findIndex((post) => post.id === selectedPost?.id)
+      );
   }, [selectedPostId]);
 
   const handleGetPost = async () => {
@@ -77,8 +86,7 @@ const PostModal = ({ postId }: { postId: string }) => {
   useEffect(() => {
     firstFocusableElement.current.focus();
     return () => {
-      dispatch(closePostModal());
-      dispatch(closePostOptions());
+      handleTogglePostModal();
     };
   }, []);
 
@@ -87,12 +95,15 @@ const PostModal = ({ postId }: { postId: string }) => {
   }, [postId]);
 
   const handleCloseModal = () => {
-    const lastFocusedPost = document.querySelector(
-      `#profile-post-${lastFocusedPostIndex}`
-    ) as HTMLButtonElement;
-    dispatch(resetPostState());
-    dispatch(closePostModal());
-    lastFocusedPost.focus();
+    if (isProfileModal) {
+      const lastFocusedPost = document.querySelector(
+        `#profile-post-${lastFocusedPostIndex}`
+      ) as HTMLButtonElement;
+      dispatch(resetPostState());
+      dispatch(closePostModal());
+      lastFocusedPost.focus();
+    }
+    handleTogglePostModal();
   };
 
   useEffect(() => {
@@ -126,7 +137,7 @@ const PostModal = ({ postId }: { postId: string }) => {
         <i className="fa-solid fa-xmark"></i>
       </button>
 
-      {currentPostIndex && currentPostIndex > 0 ? (
+      {currentPostIndex && currentPostIndex > 0 && isProfileModal ? (
         <PostModalCtrl
           direction="prev"
           handleNavigatePosts={handleNavigatePosts}
@@ -138,13 +149,12 @@ const PostModal = ({ postId }: { postId: string }) => {
           <PostImage
             imageUrl={post.images[0].fullImage.url}
             aspectRatio={post.images[0].fullImage.aspectRatio}
+            isForModal={true}
           />
           <PostPanel>
             <PostUser
               postId={post.id}
-              userId={post.user.id}
-              username={post.user.username}
-              profilePicture={post.user.profilePicture.smallPicture}
+              postOwner={post.user}
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
@@ -153,6 +163,7 @@ const PostModal = ({ postId }: { postId: string }) => {
               post={postState.post}
               isPostLiked={post?.isLiked}
               isFeedPost={false}
+              isForModal={true}
               handleToggleMobileComments={() => {}}
             />
             {authState.accessToken && (
@@ -169,7 +180,8 @@ const PostModal = ({ postId }: { postId: string }) => {
 
       {typeof currentPostIndex === "number" &&
       userPosts &&
-      currentPostIndex < userPosts?.length - 1 ? (
+      currentPostIndex < userPosts?.length - 1 &&
+      isProfileModal ? (
         <PostModalCtrl
           direction="next"
           handleNavigatePosts={handleNavigatePosts}

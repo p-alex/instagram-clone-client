@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FeedContext } from "../../Context/FeedContext";
 import { GET_FEED_POSTS } from "../../GraphQL/Queries/postQueries";
 import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
 import useRedux from "../../Hooks/useRedux";
 import { addMoreFeedPosts, setFeedPosts } from "../../Redux/Feed";
 import Spinner from "../../Ui/Spinner";
+import PostModal from "../PostModal/PostModal";
 import "./Feed.scss";
 import FeedPost from "./FeedPost/FeedPost";
 
@@ -11,9 +13,11 @@ const MAX_POSTS_PER_PAGE = 10;
 
 const Feed = () => {
   const { authState, feedState, dispatch } = useRedux();
+  const { isPostModalActive, selectedPostId, handleTogglePostModal } =
+    useContext(FeedContext);
 
+  // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
-
   const [showLoadMore, setShowLoadMore] = useState(false);
 
   const [getFeedPostsRequest, { isLoading, error }] = useFetchWithRetry({
@@ -67,6 +71,13 @@ const Feed = () => {
         >
           {isLoading ? "Loading..." : "Load More"}
         </button>
+      )}
+      {isPostModalActive && (
+        <PostModal
+          postId={selectedPostId}
+          isProfileModal={false}
+          handleTogglePostModal={handleTogglePostModal}
+        />
       )}
     </section>
   );

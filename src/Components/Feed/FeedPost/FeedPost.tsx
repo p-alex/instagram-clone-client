@@ -27,9 +27,7 @@ const FeedPost = (props: Props) => {
     <article className="feedPost">
       <PostUser
         postId={props.post.id}
-        userId={props.post.user.id}
-        username={props.post.user.username}
-        profilePicture={props.post.user.profilePicture.smallPicture}
+        postOwner={props.post.user}
         handleToggleOptionsModal={handleToggleOptionsModal}
         isPostOwnerFollowed={props.post.isPostOwnerFollowed}
         postIndex={props.postIndex}
@@ -37,12 +35,13 @@ const FeedPost = (props: Props) => {
       <PostImage
         imageUrl={props.post.images[0].fullImage.url}
         aspectRatio={props.post.images[0].fullImage.aspectRatio}
-        isFeedPost={true}
+        isForModal={false}
       />
       <PostReact
         post={props.post}
         postIndex={props.postIndex}
         isPostLiked={props.post.isLiked}
+        isForModal={false}
         isFeedPost={true}
         handleToggleMobileComments={handleToggleMobileComments}
       />

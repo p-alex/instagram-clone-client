@@ -33,14 +33,12 @@ const Post = () => {
           <PostImage
             imageUrl={post.images[0].fullImage.url}
             aspectRatio={post.images[0].fullImage.aspectRatio}
-            isFeedPost={true}
+            isForModal={false}
           />
           <PostPanel>
             <PostUser
               postId={post.id}
-              userId={post.user.id}
-              username={post.user.username}
-              profilePicture={post.user.profilePicture.smallPicture}
+              postOwner={post.user}
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
@@ -50,6 +48,7 @@ const Post = () => {
               isPostLiked={post.isLiked}
               isFeedPost={false}
               handleToggleMobileComments={handleToggleMobileComments}
+              isForModal={false}
             />
             {authState.accessToken && <PostForm postId={post.id} />}
           </PostPanel>

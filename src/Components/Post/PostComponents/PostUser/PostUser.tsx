@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
+import { ILiteUser } from "../../../../interfaces";
 import FollowButton from "../../../FollowButton/FollowButton";
 import "./PostUser.scss";
 
 interface Props {
   postIndex?: number;
   postId: string;
-  userId: string;
-  username: string;
-  profilePicture: string;
+  postOwner: ILiteUser;
   handleToggleOptionsModal: () => void;
   isPostOwnerFollowed: boolean;
 }
@@ -16,12 +15,19 @@ const PostUser = (props: Props) => {
   return (
     <div className="postUser">
       <div className="postUser__container">
-        <img src={props.profilePicture} alt="" width="35" height="35" />
-        <Link to={`/users/${props.username}`}>{props.username}</Link>
+        <img
+          src={props.postOwner.profilePicture.smallPicture}
+          alt=""
+          width="35"
+          height="35"
+        />
+        <Link to={`/users/${props.postOwner.username}`}>
+          {props.postOwner.username}
+        </Link>
         <FollowButton
           isFollowed={props.isPostOwnerFollowed}
-          username={props.username}
-          userId={props.userId}
+          username={props.postOwner.username}
+          userId={props.postOwner.id}
         />
       </div>
       <button

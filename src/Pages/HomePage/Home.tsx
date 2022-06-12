@@ -5,6 +5,7 @@ import Feed from "../../Components/Feed/Feed";
 import Footer from "../../Components/Footer/Footer";
 import Suggestions from "../../Components/Suggestions/Suggestions";
 import UsernameAndName from "../../Components/UsernameAndName/UsernameAndName";
+import FeedContextProvider from "../../Context/FeedContext";
 
 import Layout from "../../Layout/Layout";
 import { RootState } from "../../Redux/Store";
@@ -25,7 +26,9 @@ const Home = () => {
       {!authState.user?.hasFollowings && <Suggestions type={"big"} />}
       {authState.user?.hasFollowings && (
         <div className="homeContainer">
-          <Feed />
+          <FeedContextProvider>
+            <Feed />
+          </FeedContextProvider>
           <aside className="homeContainer__sidePanel">
             <div className="homeContainer__sidePanelContainer">
               <UsernameAndName

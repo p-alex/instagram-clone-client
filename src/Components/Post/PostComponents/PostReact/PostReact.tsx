@@ -1,21 +1,24 @@
 import useRedux from "../../../../Hooks/useRedux";
 import { dateConverter } from "../../../../Util/dateConverter";
 import LikeBtn from "../../../LikeBtn/LikeBtn";
-import { Link, useNavigate } from "react-router-dom";
 import "./PostReact.scss";
 import { IPost } from "../../../../interfaces";
 import PostDescription from "../PostDescription/PostDescription";
+import { useContext } from "react";
+import { FeedContext } from "../../../../Context/FeedContext";
+import { checkIsMobileWindowSize } from "../../../../Util/checkWindowSize";
 
 interface Props {
   post: IPost | null;
   postIndex?: number;
   isPostLiked: boolean | undefined;
   isFeedPost: boolean;
+  isForModal: boolean;
   handleToggleMobileComments: () => void;
 }
 
 const PostReact = (props: Props) => {
-  const navigate = useNavigate();
+  const { handleSelectPost } = useContext(FeedContext);
   const { authState, postState } = useRedux();
 
   const handleRedirectFocusToInput = () => {
@@ -25,12 +28,14 @@ const PostReact = (props: Props) => {
     formInput.focus();
   };
 
-  const handleCommentButton = () => {
-    if (props.isFeedPost) {
-      navigate(`/posts/${props.post?.id}`);
-    } else {
+  const handleViewComments = () => {
+    const isMobileWindowSize = checkIsMobileWindowSize();
+    if (isMobileWindowSize) {
+      if (props.isFeedPost) return props.handleToggleMobileComments();
       handleRedirectFocusToInput();
     }
+    if (props.isFeedPost) return handleSelectPost(props.post!.id);
+    handleRedirectFocusToInput();
   };
 
   return (
@@ -47,7 +52,7 @@ const PostReact = (props: Props) => {
         <button
           title="write a comment"
           disabled={!authState.accessToken}
-          onClick={handleCommentButton}
+          onClick={handleViewComments}
           className="postReact__commentBtn"
         >
           <i className="fa-regular fa-comment"></i>
@@ -68,19 +73,13 @@ const PostReact = (props: Props) => {
           />
         )}
 
-        {props.post?.comments.count && props.post?.comments.count > 0 ? (
+        {props.post?.comments.count &&
+        props.post?.comments.count > 0 &&
+        !props.isForModal ? (
           <div className="postReact__viewCommentsBtnContainer">
-            <Link
-              to={`/posts/${props.post.id}`}
-              className="postReact__viewCommentsLink"
-            >
-              {props.post?.comments.count === 1
-                ? `View ${props.post?.comments.count} comment`
-                : `View all ${props.post?.comments.count} comments`}
-            </Link>
             <button
               className="postReact__viewCommentsButton"
-              onClick={props.handleToggleMobileComments}
+              onClick={handleViewComments}
             >
               {props.post?.comments.count === 1
                 ? `View ${props.post?.comments.count} comment`

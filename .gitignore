@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+Instagram_client_lines_12.6.2022.png
+Instagram_server_lines_12.6.2022.png
+.clocignore
 
 # testing
 /coverage

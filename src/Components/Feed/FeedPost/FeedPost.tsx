@@ -43,6 +43,7 @@ const FeedPost = (props: Props) => {
         isPostLiked={props.post.isLiked}
         isForModal={false}
         isFeedPost={true}
+        showViewAllCommentsBtn={true}
         handleToggleMobileComments={handleToggleMobileComments}
       />
       {isPostOptionsActive && (

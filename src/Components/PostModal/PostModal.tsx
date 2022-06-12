@@ -164,6 +164,7 @@ const PostModal = ({
               isPostLiked={post?.isLiked}
               isFeedPost={false}
               isForModal={true}
+              showViewAllCommentsBtn={false}
               handleToggleMobileComments={() => {}}
             />
             {authState.accessToken && (

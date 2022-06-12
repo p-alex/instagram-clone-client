@@ -48,6 +48,7 @@ const Post = () => {
               isPostLiked={post.isLiked}
               isFeedPost={false}
               handleToggleMobileComments={handleToggleMobileComments}
+              showViewAllCommentsBtn={true}
               isForModal={false}
             />
             {authState.accessToken && <PostForm postId={post.id} />}

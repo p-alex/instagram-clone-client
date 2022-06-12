@@ -9,13 +9,16 @@ interface Props {
 }
 
 const PostImage = (props: Props) => {
-  function resizeEvent() {
+  const handleResizeModalImage = () => {
     const imageContainer = document.querySelector(
       "#postModalImage"
     ) as HTMLDivElement;
 
+    if (!imageContainer) return;
+
     if (window.innerWidth < 980) {
-      imageContainer.removeAttribute("style");
+      if (imageContainer.hasAttribute("style"))
+        imageContainer.removeAttribute("style");
       return;
     }
 
@@ -38,13 +41,17 @@ const PostImage = (props: Props) => {
         }px; aspect-ratio: 1 / 1; flex-basis: ${maxWidth}px`;
       }
     }
-  }
+  };
 
   useEffect(() => {
-    resizeEvent();
-    window.addEventListener("resize", resizeEvent);
+    if (props.isForModal) {
+      handleResizeModalImage();
+      window.addEventListener("resize", handleResizeModalImage);
+    }
     return () => {
-      window.removeEventListener("resize", resizeEvent);
+      if (props.isForModal) {
+        window.removeEventListener("resize", handleResizeModalImage);
+      }
     };
   }, []);
 

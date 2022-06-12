@@ -102,6 +102,10 @@ const MobileComments = (props: Props) => {
           </button>
           <h2>Comments</h2>
         </header>
+        <div className="mobileComments__form">
+          <PostForm postId={props.postId} />
+        </div>
+
         <div className="mobileComments__comments">
           <div className="mobileComments__commentsContainer">
             {props.postDescription && (
@@ -138,7 +142,6 @@ const MobileComments = (props: Props) => {
             )}
           </div>
         </div>
-        <PostForm postId={props.postId} />
       </div>
     </div>
   );

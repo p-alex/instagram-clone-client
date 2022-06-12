@@ -40,6 +40,7 @@ const PostPage = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     handleGetPost();
     return () => {
       dispatch(resetPostState());

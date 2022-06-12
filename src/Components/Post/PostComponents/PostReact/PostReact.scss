@@ -18,13 +18,10 @@
   }
 
   &__viewCommentsButton {
-    display: none;
+    display: inline-block;
     color: var(--primary-color);
     text-decoration: none;
     text-align: left;
-    @media (max-width: 980px) {
-      display: inline-block;
-    }
   }
   &__description {
     a {

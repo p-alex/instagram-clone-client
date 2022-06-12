@@ -11,15 +11,13 @@ const SettingsPage = () => {
   const navigate = useNavigate();
   const { authState } = useRedux();
 
-  const [isChangeImageModalActive, setIsChangeImageModalActive] =
-    useState(false);
-
-  const handleToggleChangeImageModal = () =>
-    setIsChangeImageModalActive((prevState) => !prevState);
-
   const [currentTab, setCurrentTab] = useState<
     "edit profile" | "change password"
   >("edit profile");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (!authState.user?.id) navigate("/login");

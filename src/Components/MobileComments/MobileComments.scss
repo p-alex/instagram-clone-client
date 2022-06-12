@@ -88,6 +88,11 @@
     margin-top: 10px;
     white-space: pre-line;
   }
+  &__form {
+    position: relative;
+    border-bottom: solid silver 1px;
+    padding: 0 5px;
+  }
   &__comments {
     position: relative;
     flex: 1;
@@ -107,22 +112,6 @@
     gap: 5px;
     margin: 10px auto;
     color: var(--secondary-color);
-  }
-  &__form {
-    display: flex;
-    align-items: center;
-    padding: 5px 15px;
-    border-top: solid silver 1px;
-    input {
-      flex: 1;
-      border: none;
-      padding: 5px;
-      outline: none;
-    }
-    button {
-      padding: 10px;
-      color: var(--primary-color);
-    }
   }
 }
 

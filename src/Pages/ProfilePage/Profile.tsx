@@ -55,6 +55,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (profileState.user?.username !== params.username) handleGetProfileData();
   }, [params.username]);
 

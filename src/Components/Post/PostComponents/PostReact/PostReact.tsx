@@ -14,6 +14,7 @@ interface Props {
   isPostLiked: boolean | undefined;
   isFeedPost: boolean;
   isForModal: boolean;
+  showViewAllCommentsBtn: boolean;
   handleToggleMobileComments: () => void;
 }
 
@@ -31,8 +32,7 @@ const PostReact = (props: Props) => {
   const handleViewComments = () => {
     const isMobileWindowSize = checkIsMobileWindowSize();
     if (isMobileWindowSize) {
-      if (props.isFeedPost) return props.handleToggleMobileComments();
-      handleRedirectFocusToInput();
+      props.handleToggleMobileComments();
     }
     if (props.isFeedPost) return handleSelectPost(props.post!.id);
     handleRedirectFocusToInput();
@@ -69,13 +69,14 @@ const PostReact = (props: Props) => {
             postedAt={props.post.createdAt}
             profilePicture={props.post.user.profilePicture.smallPicture}
             username={props.post.user.username}
-            showProfilePicture={false}
+            showProfilePicture={true}
           />
         )}
 
         {props.post?.comments.count &&
         props.post?.comments.count > 0 &&
-        !props.isForModal ? (
+        !props.isForModal &&
+        props.showViewAllCommentsBtn ? (
           <div className="postReact__viewCommentsBtnContainer">
             <button
               className="postReact__viewCommentsButton"

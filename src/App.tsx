@@ -7,6 +7,7 @@ import RegisterPage from "./Pages/RegisterPage/Register";
 import ProfilePage from "./Pages/ProfilePage/Profile";
 import PostPage from "./Pages/PostPage/PostPage";
 import SettingsPage from "./Pages/SettingsPage/SettingsPage";
+import EmailConfirmationPage from "./Pages/EmailConfirmationPage/EmailConfirmationPage";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
           <Route path="profile/edit" element={<SettingsPage />} />
         </Route>
         <Route path="register" element={<RegisterPage />} />
+        <Route
+          path="confirm-email/:confirmationCode"
+          element={<EmailConfirmationPage />}
+        />
         <Route path="login" element={<LoginPage />} />
         <Route path="users/:username" element={<ProfilePage />} />
         <Route path="posts/:postId" element={<PostPage />} />

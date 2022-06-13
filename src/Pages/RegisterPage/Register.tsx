@@ -29,6 +29,8 @@ const Register = () => {
     authState.user?.id && navigate("/");
   }, [authState.user]);
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -114,7 +116,9 @@ const Register = () => {
       try {
         const response = await registerUser();
         if (response.success) {
-          navigate("/login");
+          setSuccessMessage(
+            "Account created successfully! Please check your inbox to confirm your email."
+          );
         }
       } catch (error: any) {
         console.log(error.message);
@@ -126,119 +130,126 @@ const Register = () => {
     <main className="registerMain">
       <section className="register">
         <Logo />
-        <h2 className="register__message">
-          Sign up to see photos from your friends.
-        </h2>
-        <form className="register__form" onSubmit={handleSubmit}>
-          {/* ========================== EMAIL INPUT ========================== */}
-          <InputGroup
-            label="Email"
-            inputType="email"
-            isValid={isValidEmail}
-            value={email}
-            setValue={setEmail}
-            setIsFocused={setIsEmailFocused}
-            autoFocus={true}
-            autoComplete={"off"}
-          >
-            <EmailNotes
-              isFocused={isEmailFocused}
-              value={email}
-              isValid={isValidEmail}
-            />
-          </InputGroup>
+        {successMessage && (
+          <p className="register__successMessage">{successMessage}</p>
+        )}
+        {!successMessage && (
+          <>
+            <form className="register__form" onSubmit={handleSubmit}>
+              {/* ========================== EMAIL INPUT ========================== */}
+              <InputGroup
+                label="Email"
+                inputType="email"
+                isValid={isValidEmail}
+                value={email}
+                setValue={setEmail}
+                setIsFocused={setIsEmailFocused}
+                autoFocus={true}
+                autoComplete={"off"}
+              >
+                <EmailNotes
+                  isFocused={isEmailFocused}
+                  value={email}
+                  isValid={isValidEmail}
+                />
+              </InputGroup>
 
-          {/* ========================== FULLNAME INPUT ========================== */}
-          <InputGroup
-            label="Full Name"
-            inputType="text"
-            isValid={isValidFullname}
-            value={fullname}
-            setValue={setFullname}
-            setIsFocused={setIsFullnameFocused}
-            autoFocus={false}
-            autoComplete={"off"}
-            maxLength={35}
-            minLength={1}
-          >
-            <FullNameNotes
-              isFocused={isFullnameFocused}
-              value={fullname}
-              isValid={isValidFullname}
-            />
-          </InputGroup>
+              {/* ========================== FULLNAME INPUT ========================== */}
+              <InputGroup
+                label="Full Name"
+                inputType="text"
+                isValid={isValidFullname}
+                value={fullname}
+                setValue={setFullname}
+                setIsFocused={setIsFullnameFocused}
+                autoFocus={false}
+                autoComplete={"off"}
+                maxLength={35}
+                minLength={1}
+              >
+                <FullNameNotes
+                  isFocused={isFullnameFocused}
+                  value={fullname}
+                  isValid={isValidFullname}
+                />
+              </InputGroup>
 
-          {/* ========================== USERNAME INPUT ========================== */}
-          <InputGroup
-            label="Username"
-            inputType="text"
-            isValid={isValidUsername}
-            value={username}
-            setValue={setUsername}
-            setIsFocused={setIsUsernameFocused}
-            autoFocus={false}
-            autoComplete={"off"}
-            maxLength={20}
-            minLength={3}
-          >
-            <UsernameNotes
-              isFocused={isUsernameFocused}
-              value={username}
-              isValid={isValidUsername}
-            />
-          </InputGroup>
+              {/* ========================== USERNAME INPUT ========================== */}
+              <InputGroup
+                label="Username"
+                inputType="text"
+                isValid={isValidUsername}
+                value={username}
+                setValue={setUsername}
+                setIsFocused={setIsUsernameFocused}
+                autoFocus={false}
+                autoComplete={"off"}
+                maxLength={20}
+                minLength={3}
+              >
+                <UsernameNotes
+                  isFocused={isUsernameFocused}
+                  value={username}
+                  isValid={isValidUsername}
+                />
+              </InputGroup>
 
-          {/* ========================== PASSWORD INPUT ========================== */}
-          <InputGroup
-            label="Password"
-            inputType="password"
-            isValid={isValidPassword}
-            value={password}
-            setValue={setPassword}
-            setIsFocused={setIsPasswordFocused}
-            autoFocus={false}
-            autoComplete={"new-password"}
-            maxLength={24}
-            minLength={8}
-          >
-            <PasswordNotes
-              isFocused={isPasswordFocused}
-              value={password}
-              isValid={isValidPassword}
-            />
-          </InputGroup>
+              {/* ========================== PASSWORD INPUT ========================== */}
+              <InputGroup
+                label="Password"
+                inputType="password"
+                isValid={isValidPassword}
+                value={password}
+                setValue={setPassword}
+                setIsFocused={setIsPasswordFocused}
+                autoFocus={false}
+                autoComplete={"new-password"}
+                maxLength={24}
+                minLength={8}
+              >
+                <PasswordNotes
+                  isFocused={isPasswordFocused}
+                  value={password}
+                  isValid={isValidPassword}
+                />
+              </InputGroup>
 
-          {/* ========================== CONFIRM PASSWORD INPUT ========================== */}
-          <InputGroup
-            label="Confirm Password"
-            inputType="password"
-            isValid={isValidConfirmPassword}
-            value={confirmPassword}
-            setValue={setConfirmPassword}
-            setIsFocused={setIsConfirmedPasswordFocused}
-            autoFocus={false}
-            autoComplete={"new-password"}
-            maxLength={24}
-            minLength={8}
-          >
-            <ConfirmPasswordNotes
-              isFocused={isConfirmPasswordFocused}
-              value={confirmPassword}
-              isValid={isValidConfirmPassword}
-            />
-          </InputGroup>
+              {/* ========================== CONFIRM PASSWORD INPUT ========================== */}
+              <InputGroup
+                label="Confirm Password"
+                inputType="password"
+                isValid={isValidConfirmPassword}
+                value={confirmPassword}
+                setValue={setConfirmPassword}
+                setIsFocused={setIsConfirmedPasswordFocused}
+                autoFocus={false}
+                autoComplete={"new-password"}
+                maxLength={24}
+                minLength={8}
+              >
+                <ConfirmPasswordNotes
+                  isFocused={isConfirmPasswordFocused}
+                  value={confirmPassword}
+                  isValid={isValidConfirmPassword}
+                />
+              </InputGroup>
 
-          <button className="register__submit" disabled={isSubmitDisabled}>
-            Sign Up
-          </button>
-        </form>
-        {error && <p className="register__errorMessage">{error}</p>}
+              <button className="register__submit" disabled={isSubmitDisabled}>
+                Sign Up
+              </button>
+            </form>
+            {error && <p className="register__errorMessage">{error}</p>}
+          </>
+        )}
       </section>
-      <div className="register__login">
-        <p>
-          Have an account? <Link to="/login">Log in</Link>
-        </p>
-      </div>
+
+      {!successMessage && (
+        <div className="register__login">
+          <p>
+            Have an account? <Link to="/login">Log in</Link>
+          </p>
+        </div>
+      )}
     </main>
   );
 };

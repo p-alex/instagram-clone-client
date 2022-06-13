@@ -1,0 +1,38 @@
+@import "../../globals";
+@import "../../variables";
+.emailConfirmationMain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin: auto;
+  transform: translateY(-50%);
+  max-width: 350px;
+}
+.emailConfirmation {
+  --marginBottom: 20px;
+  background-color: $light-color;
+  border: solid $border-color 1px;
+  padding: 45px;
+  text-align: center;
+  border-radius: var(--primary-border-radius);
+  &__message {
+    margin-top: 30px;
+  }
+  &__loginLink {
+    display: block;
+    text-decoration: none;
+    margin-top: 15px;
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .registerMain {
+    position: relative;
+    margin: 20px auto;
+    transform: translateY(0);
+  }
+}

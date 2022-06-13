@@ -88,3 +88,13 @@ mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
   }
 }
 `;
+
+export const CONFIRM_EMAIL_MUTATION = `
+mutation ConfirmEmail($confirmationCode: String!) {
+  confirmEmail(confirmationCode: $confirmationCode) {
+    statusCode
+    success
+    message
+  }
+}
+`;

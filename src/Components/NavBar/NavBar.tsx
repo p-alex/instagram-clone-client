@@ -16,7 +16,9 @@ const NavBar = () => {
   return (
     <nav className="navBar">
       <div className="navBar__container">
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <SearchBar />
         <div className="navBar__buttonsAndLinks">
           {authState.user?.id ? (

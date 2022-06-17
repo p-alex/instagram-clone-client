@@ -8,6 +8,8 @@ import ProfilePage from "./Pages/ProfilePage/Profile";
 import PostPage from "./Pages/PostPage/PostPage";
 import SettingsPage from "./Pages/SettingsPage/SettingsPage";
 import EmailConfirmationPage from "./Pages/EmailConfirmationPage/EmailConfirmationPage";
+import ResetPasswordPage from "./Pages/ResetPasswordPage/ResetPasswordPage";
+import ResetPasswordSendEmailPage from "./Pages/ResetPasswordSendEmailPage/ResetPasswordSendEmailPage";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           element={<EmailConfirmationPage />}
         />
         <Route path="login" element={<LoginPage />} />
+        <Route path="reset-password" element={<ResetPasswordSendEmailPage />} />
+        <Route path="reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="users/:username" element={<ProfilePage />} />
         <Route path="posts/:postId" element={<PostPage />} />
       </Route>

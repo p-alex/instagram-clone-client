@@ -108,6 +108,9 @@ const Login = () => {
             Log In
           </button>
         </form>
+        <Link to="/reset-password" className="login__forgotPassword">
+          Forgot password?
+        </Link>
         {error && <p className="login__errorMessage">{error}</p>}
       </section>
       <div className="login__register">

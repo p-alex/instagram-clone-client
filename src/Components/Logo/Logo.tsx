@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
-import './Logo.scss';
+import "./Logo.scss";
 const Logo = () => {
   return (
     <div className="logo">
-      <Link to="/">Bubble</Link>
+      <p>bubble</p>
     </div>
   );
 };

@@ -41,8 +41,8 @@ const ProfileBtn = () => {
           src={authState.user?.profilePicture.smallPicture}
           className="profileBtn__image"
           alt=""
-          width="40"
-          height="40"
+          width="35"
+          height="35"
         />
       </button>
       {isDropdownActive && (

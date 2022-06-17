@@ -5,6 +5,7 @@ mutation RegisterUser(
   $username: String!
   $password: String!
   $confirmPassword: String!
+  $recaptchaToken: String!
 ) {
   registerUser(
     email: $email
@@ -12,6 +13,7 @@ mutation RegisterUser(
     username: $username
     password: $password
     confirmPassword: $confirmPassword
+    recaptchaToken: $recaptchaToken
   ) {
     statusCode
     success
@@ -92,6 +94,36 @@ mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
 export const CONFIRM_EMAIL_MUTATION = `
 mutation ConfirmEmail($confirmationCode: String!) {
   confirmEmail(confirmationCode: $confirmationCode) {
+    statusCode
+    success
+    message
+  }
+}
+`;
+
+export const RESET_PASSWORD_MUTATION = `
+mutation ResetPasswordSendEmail($token: String!, $newPassword: String!, $confirmNewPassword: String!) {
+  resetPassword(token: $token, newPassword: $newPassword, confirmNewPassword: $confirmNewPassword) {
+    statusCode
+    success
+    message
+  }
+}
+`;
+
+export const RESET_PASSWORD_SEND_EMAIL_MUTATION = `
+mutation ResetPasswordSendEmail($email: String!, $recaptchaToken: String!) {
+  resetPasswordSendEmail(email: $email, recaptchaToken: $recaptchaToken) {
+    statusCode
+    success
+    message
+  }
+}
+`;
+
+export const VERIFY_RESET_PASSWORD_TOKEN = `
+mutation VerifyResetPasswordToken($token: String!) {
+  verifyResetPasswordToken(token: $token) {
     statusCode
     success
     message

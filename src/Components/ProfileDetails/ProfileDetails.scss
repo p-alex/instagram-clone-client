@@ -68,5 +68,9 @@
   &__bio {
     margin-top: 20px;
     white-space: pre-line;
+    @media (max-width: 980px) {
+      width: 100%;
+      padding: 0 40px;
+    }
   }
 }

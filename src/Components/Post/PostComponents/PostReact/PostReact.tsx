@@ -35,6 +35,7 @@ const PostReact = (props: Props) => {
     const isMobileWindowSize = checkIsMobileWindowSize();
     if (isMobileWindowSize) {
       props.handleToggleMobileComments();
+      return;
     }
     if (props.isFeedPost) return handleSelectPost(props.post!.id);
     handleRedirectFocusToInput();

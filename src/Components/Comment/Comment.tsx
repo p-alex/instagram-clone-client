@@ -1,5 +1,6 @@
 import useRedux from "../../Hooks/useRedux";
 import { IComment } from "../../interfaces";
+import { defaultProfilePicture } from "../../Util/defaultProfilePicture";
 import "./Comment.scss";
 import CommentBottom from "./CommentComponents/CommentBottom/CommentBottom";
 import CommentLikeBtn from "./CommentComponents/CommentLikeBtn/CommentLikeBtn";
@@ -34,7 +35,11 @@ const Comment = ({
         style={isDescription ? { border: "none" } : {}}
       >
         <img
-          src={comment.user.profilePicture.smallPicture}
+          src={
+            comment.user.profilePicture
+              ? comment.user.profilePicture.smallPicture
+              : defaultProfilePicture
+          }
           alt=""
           width="30"
           height="30"

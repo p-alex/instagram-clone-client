@@ -4,7 +4,7 @@ import LikeBtn from "../../../LikeBtn/LikeBtn";
 import "./PostReact.scss";
 import { IPost } from "../../../../interfaces";
 import PostDescription from "../PostDescription/PostDescription";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FeedContext } from "../../../../Context/FeedContext";
 import { checkIsMobileWindowSize } from "../../../../Util/checkWindowSize";
 
@@ -22,6 +22,8 @@ const PostReact = (props: Props) => {
   const { handleSelectPost } = useContext(FeedContext);
   const { authState, postState } = useRedux();
 
+  const [isMobileWindowSize, setIsMobileWindowSize] = useState(false);
+
   const handleRedirectFocusToInput = () => {
     const formInput = document.querySelector(
       ".postForm__input"
@@ -37,6 +39,20 @@ const PostReact = (props: Props) => {
     if (props.isFeedPost) return handleSelectPost(props.post!.id);
     handleRedirectFocusToInput();
   };
+
+  const checkWindowSize = () => {
+    if (window.innerWidth > 980) {
+      setIsMobileWindowSize(false);
+    } else {
+      setIsMobileWindowSize(true);
+    }
+  };
+
+  useEffect(() => {
+    checkWindowSize();
+    window.addEventListener("resize", checkWindowSize);
+    return () => window.removeEventListener("resize", checkWindowSize);
+  }, []);
 
   return (
     <div className="postReact">
@@ -70,13 +86,15 @@ const PostReact = (props: Props) => {
             profilePicture={props.post.user.profilePicture.smallPicture}
             username={props.post.user.username}
             showProfilePicture={true}
+            noPadding={true}
           />
         )}
 
         {props.post?.comments.count &&
         props.post?.comments.count > 0 &&
         !props.isForModal &&
-        props.showViewAllCommentsBtn ? (
+        props.showViewAllCommentsBtn &&
+        isMobileWindowSize ? (
           <div className="postReact__viewCommentsBtnContainer">
             <button
               className="postReact__viewCommentsButton"

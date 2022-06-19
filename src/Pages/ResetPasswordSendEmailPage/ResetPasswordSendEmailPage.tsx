@@ -6,8 +6,13 @@ import InputGroup from "../../Components/InputGroup/InputGroup";
 import { EMAIL_REGEX } from "../../Util/registerValidationRegex";
 import "./ResetPasswordSendEmailPage.scss";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
+import { useNavigate } from "react-router-dom";
 
 const ResetPasswordSendEmailPage = () => {
+  const navigate = useNavigate();
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -19,6 +24,7 @@ const ResetPasswordSendEmailPage = () => {
   const [recaptchaToken, setRecaptchaToken] = useState("");
 
   useEffect(() => {
+    if (accessToken) return navigate("/");
     setIsValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
 

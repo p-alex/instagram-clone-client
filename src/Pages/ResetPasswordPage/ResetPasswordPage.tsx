@@ -12,10 +12,14 @@ import {
   ConfirmPasswordNotes,
   PasswordNotes,
 } from "../../Components/InputGroup/Notes/Notes";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../Ui/Spinner";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
 
 const ResetPasswordPage = () => {
+  const navigate = useNavigate();
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const { token } = useParams();
 
   const [verifyErrorMessage, setVerifyErrorMessage] = useState("");
@@ -57,6 +61,7 @@ const ResetPasswordPage = () => {
   };
 
   useEffect(() => {
+    if (accessToken) return navigate("/");
     handleVerifyToken();
   }, []);
 

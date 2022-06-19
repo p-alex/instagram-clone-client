@@ -2,7 +2,7 @@
   width: 300px;
   border-right: solid silver 1px;
   @media (max-width: 980px) {
-    width: 200px;
+    display: none;
   }
   &__btn {
     width: 100%;
@@ -10,10 +10,6 @@
     display: block;
     padding: 15px 25px;
     border-left: solid transparent 4px;
-    @media (max-width: 980px) {
-      padding: 15px;
-      font-size: 1rem;
-    }
     &:active {
       background: #f3f3f3;
     }

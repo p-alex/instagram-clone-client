@@ -9,18 +9,23 @@ const PostDescription = ({
   profilePicture,
   description,
   showProfilePicture,
+  noPadding,
 }: {
   username: string;
   profilePicture: string;
   description: string;
   postedAt: string;
   showProfilePicture: boolean;
+  noPadding?: boolean;
 }) => {
   const [isShowMore, setIsShowMore] = useState(true);
   const handleToggleShowMore = () => setIsShowMore(!isShowMore);
   return (
     <div className="postDescription">
-      <div className="postDescription__container">
+      <div
+        className="postDescription__container"
+        style={noPadding ? { padding: "0" } : {}}
+      >
         {showProfilePicture && (
           <img
             src={profilePicture}

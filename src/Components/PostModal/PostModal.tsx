@@ -124,6 +124,15 @@ const PostModal = ({
     }
   };
 
+  const checkWindowSize = () => {
+    if (window.innerWidth < 980) handleCloseModal();
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", checkWindowSize);
+    return () => window.removeEventListener("resize", checkWindowSize);
+  }, []);
+
   return (
     <div className="postModal__container" role={"dialog"}>
       <FocusTrapRedirectFocus element={lastFocusableElement} />

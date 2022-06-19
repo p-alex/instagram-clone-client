@@ -1,0 +1,70 @@
+.settingsMobileNav {
+  display: block;
+  padding: 20px;
+  @media (min-width: 980px) {
+    display: none;
+  }
+  &__topBar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    h2 {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  }
+  &__toggleDrawerBtn {
+    font-size: 1.5rem;
+  }
+  &__drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+  }
+  &__drawerBackdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 101;
+    animation: fadeIn 300ms;
+  }
+  &__drawerContainer {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    z-index: 102;
+    animation: slideInFromLeft 300ms;
+  }
+  &__closeDrawerBtn {
+    font-size: 1.6rem;
+    padding: 20px;
+  }
+  &__drawerBtn {
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-left: 5px solid transparent;
+    &.activeTab {
+      border-left: 5px solid var(--primary-color);
+      font-weight: bold;
+    }
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

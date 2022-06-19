@@ -20,6 +20,6 @@
   }
   &__sidePanelContainer {
     position: sticky;
-    top: 107px;
+    top: calc(var(--navbar-height) + 35px);
   }
 }

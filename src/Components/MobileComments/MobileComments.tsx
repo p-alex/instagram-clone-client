@@ -62,10 +62,6 @@ const MobileComments = (props: Props) => {
     }
   };
 
-  const checkWindowSize = () => {
-    if (window.innerWidth > 980) props.handleToggleMobileComments();
-  };
-
   useEffect(() => {
     if (props.postId && authState.accessToken)
       handleGetComments("initialRequest");
@@ -80,6 +76,10 @@ const MobileComments = (props: Props) => {
     document.body.style.cssText = `overflow-y:hidden`;
     return () => document.body.removeAttribute("style");
   }, []);
+
+  const checkWindowSize = () => {
+    if (window.innerWidth > 980) props.handleToggleMobileComments();
+  };
 
   useEffect(() => {
     window.addEventListener("resize", checkWindowSize);

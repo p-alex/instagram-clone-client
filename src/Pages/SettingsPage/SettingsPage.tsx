@@ -6,6 +6,7 @@ import EditProfileTab from "../../Components/EditProfileTab/EditProfileTab";
 import SettingsNav from "../../Components/SettingsNav/SettingsNav";
 import Layout from "../../Layout/Layout";
 import "./SettingsPage.scss";
+import SettingsMobileNav from "../../Components/SettingsMobileNav/SettingsMobileNav";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -26,9 +27,15 @@ const SettingsPage = () => {
   return (
     <Layout>
       <div className="settingsPage">
-        <SettingsNav currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        {currentTab === "edit profile" && <EditProfileTab />}
-        {currentTab === "change password" && <ChangePasswordTab />}
+        <div className="settingsPage__container">
+          <SettingsNav currentTab={currentTab} setCurrentTab={setCurrentTab} />
+          <SettingsMobileNav
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+          />
+          {currentTab === "edit profile" && <EditProfileTab />}
+          {currentTab === "change password" && <ChangePasswordTab />}
+        </div>
       </div>
     </Layout>
   );

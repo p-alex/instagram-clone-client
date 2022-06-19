@@ -8,9 +8,10 @@ import PostForm from "./PostComponents/PostForm/PostForm";
 import PostOptionsModal from "./PostComponents/PostOptions/PostOptionsModal";
 import useRedux from "../../Hooks/useRedux";
 import "./Post.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "../../Ui/Spinner";
 import MobileComments from "../MobileComments/MobileComments";
+import { checkIsMobileWindowSize } from "../../Util/checkWindowSize";
 
 const Post = () => {
   const { authState, postState } = useRedux();
@@ -19,11 +20,27 @@ const Post = () => {
   const [isPostOptionsActive, setIsPostOptionsActive] = useState(false);
   const [isMobileCommentsActive, setIsMobileCommentsActive] = useState(false);
 
+  const [showPostForm, setShowPostForm] = useState(true);
+
   const handleToggleOptionsModal = () =>
     setIsPostOptionsActive((prevState) => !prevState);
 
   const handleToggleMobileComments = () =>
     setIsMobileCommentsActive((prevState) => !prevState);
+
+  const checkWindowSize = () => {
+    if (checkIsMobileWindowSize()) {
+      setShowPostForm(false);
+    } else {
+      setShowPostForm(true);
+    }
+  };
+
+  useEffect(() => {
+    if (checkIsMobileWindowSize()) setShowPostForm(false);
+    window.addEventListener("resize", checkWindowSize);
+    return () => window.removeEventListener("resize", checkWindowSize);
+  }, []);
 
   return (
     <>
@@ -51,7 +68,9 @@ const Post = () => {
               showViewAllCommentsBtn={true}
               isForModal={false}
             />
-            {authState.accessToken && <PostForm postId={post.id} />}
+            {authState.accessToken && showPostForm && (
+              <PostForm postId={post.id} />
+            )}
           </PostPanel>
           {isPostOptionsActive && (
             <PostOptionsModal

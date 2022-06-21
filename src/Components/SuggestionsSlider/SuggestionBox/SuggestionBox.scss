@@ -1,0 +1,21 @@
+.suggetionBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-right: solid rgb(239, 239, 239) 1px;
+  &:first-child {
+    border-left: solid rgb(239, 239, 239) 1px;
+  }
+  &__image {
+    width: 50px;
+    height: 50px;
+    background-color: silver;
+    overflow: hidden;
+    img {
+      border-radius: var(--primary-border-radius);
+    }
+  }
+}

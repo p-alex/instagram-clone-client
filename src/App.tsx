@@ -10,6 +10,7 @@ import SettingsPage from "./Pages/SettingsPage/SettingsPage";
 import EmailConfirmationPage from "./Pages/EmailConfirmationPage/EmailConfirmationPage";
 import ResetPasswordPage from "./Pages/ResetPasswordPage/ResetPasswordPage";
 import ResetPasswordSendEmailPage from "./Pages/ResetPasswordSendEmailPage/ResetPasswordSendEmailPage";
+import SuggestionsPage from "./Pages/SuggestionsPage/SuggestionsPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route index element={<Home />} />
           <Route path="profile/edit" element={<SettingsPage />} />
+          <Route path="suggestions" element={<SuggestionsPage />} />
         </Route>
         <Route path="register" element={<RegisterPage />} />
         <Route

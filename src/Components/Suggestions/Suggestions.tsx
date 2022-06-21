@@ -7,6 +7,8 @@ import Suggestion from "./Suggestion/Suggestion";
 import "./Suggestions.scss";
 
 interface Props {
+  // small means max 5 suggestions
+  // big means max 25 suggestions
   type: "small" | "big";
 }
 
@@ -53,14 +55,15 @@ const Suggestions = (props: Props) => {
                     />
                   );
               } else {
-                return (
-                  <Suggestion
-                    key={suggestion.id}
-                    suggestion={suggestion}
-                    suggestionIndex={index}
-                    isFollowed={suggestion.isFollowed}
-                  />
-                );
+                if (index < 25)
+                  return (
+                    <Suggestion
+                      key={suggestion.id}
+                      suggestion={suggestion}
+                      suggestionIndex={index}
+                      isFollowed={suggestion.isFollowed}
+                    />
+                  );
               }
             })}
         </div>

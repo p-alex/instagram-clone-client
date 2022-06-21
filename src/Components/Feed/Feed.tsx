@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Fragment } from "react";
 import { FeedContext } from "../../Context/FeedContext";
 import { GET_FEED_POSTS } from "../../GraphQL/Queries/postQueries";
 import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
@@ -6,6 +6,7 @@ import useRedux from "../../Hooks/useRedux";
 import { addMoreFeedPosts, setFeedPosts } from "../../Redux/Feed";
 import Spinner from "../../Ui/Spinner";
 import PostModal from "../PostModal/PostModal";
+import SuggestionsSlider from "../SuggestionsSlider/SuggestionsSlider";
 import "./Feed.scss";
 import FeedPost from "./FeedPost/FeedPost";
 
@@ -59,8 +60,24 @@ const Feed = () => {
     <section className="feed">
       {error && <p>{error}</p>}
       {isLoading && <Spinner size="small" />}
+      {feedState.posts.length === 0 && <SuggestionsSlider />}
       {feedState.posts &&
         feedState.posts.map((post, index) => {
+          if (feedState.posts.length > 2 && index === 1) {
+            return (
+              <Fragment key={post.id}>
+                <FeedPost post={post} postIndex={index} />
+                <SuggestionsSlider />
+              </Fragment>
+            );
+          } else if (feedState.posts.length <= 2 && index === 0) {
+            return (
+              <Fragment key={post.id}>
+                <SuggestionsSlider />
+                <FeedPost post={post} postIndex={index} />
+              </Fragment>
+            );
+          }
           return <FeedPost key={post.id} post={post} postIndex={index} />;
         })}
       {showLoadMore && (

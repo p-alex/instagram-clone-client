@@ -75,7 +75,7 @@ const Register = () => {
     query: REGISTER_USER_MUTATION,
     variables: {
       email,
-      username,
+      username: username.toLowerCase(),
       password,
       confirmPassword,
       recaptchaToken,

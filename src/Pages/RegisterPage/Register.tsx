@@ -5,7 +5,6 @@ import {
   PASSWORD_REGEX,
   USERNAME_REGEX,
 } from "../../Util/registerValidationRegex";
-import "./Register.scss";
 import InputGroup from "../../Components/InputGroup/InputGroup";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../Hooks/useFetch";
@@ -21,10 +20,13 @@ import {
   UsernameNotes,
 } from "../../Components/InputGroup/Notes/Notes";
 import ReCAPTCHA from "react-google-recaptcha";
+import "./Register.scss";
 
 const Register = () => {
   const authState = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+
+  const [recaptchaToken, setRecaptchaToken] = useState("");
 
   useEffect(() => {
     authState.user?.id && navigate("/");
@@ -32,9 +34,8 @@ const Register = () => {
 
   const [successMessage, setSuccessMessage] = useState("");
 
-  const [recaptchaToken, setRecaptchaToken] = useState("");
-
   const reRef = useRef<any>();
+  const formRef = useRef<any>();
 
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -59,26 +60,21 @@ const Register = () => {
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const emailRegex = EMAIL_REGEX;
-  const fullnameRegex = FULLNAME_REGEX;
-  const usernameRegex = USERNAME_REGEX;
-  const passwordRegex = PASSWORD_REGEX;
+  useEffect(() => {
+    setIsValidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
 
   useEffect(() => {
-    setIsValidEmail(emailRegex.test(email));
-  }, [email, emailRegex]);
+    setIsValidFullname(FULLNAME_REGEX.test(fullname));
+  }, [fullname]);
 
   useEffect(() => {
-    setIsValidFullname(fullnameRegex.test(fullname));
-  }, [fullname, fullnameRegex]);
+    setIsValidUsername(USERNAME_REGEX.test(username));
+  }, [username]);
 
   useEffect(() => {
-    setIsValidUsername(usernameRegex.test(username));
-  }, [username, usernameRegex]);
-
-  useEffect(() => {
-    setIsValidPassword(passwordRegex.test(password));
-  }, [password, passwordRegex]);
+    setIsValidPassword(PASSWORD_REGEX.test(password));
+  }, [password]);
 
   useEffect(() => {
     setIsValidConfirmPassword(confirmPassword === password);
@@ -96,17 +92,24 @@ const Register = () => {
     },
   });
 
+  const executeRecaptcha = async () => {
+    const recaptchaToken = await reRef.current!.executeAsync();
+    reRef.current.reset();
+    setRecaptchaToken(recaptchaToken);
+  };
+
   useEffect(() => {
-    setIsSubmitDisabled(
+    const isAllValid =
       isValidEmail &&
-        isValidFullname &&
-        isValidUsername &&
-        isValidPassword &&
-        isValidConfirmPassword &&
-        !isLoading
-        ? false
-        : true
-    );
+      isValidFullname &&
+      isValidUsername &&
+      isValidPassword &&
+      isValidConfirmPassword &&
+      !isLoading;
+    setIsSubmitDisabled(!isAllValid);
+    if (isAllValid) {
+      executeRecaptcha();
+    }
   }, [
     isValidEmail,
     isValidFullname,
@@ -115,6 +118,14 @@ const Register = () => {
     isValidConfirmPassword,
     isLoading,
   ]);
+
+  const handleResetForm = () => {
+    setEmail("");
+    setFullname("");
+    setUsername("");
+    setPassword("");
+    setConfirmPassword("");
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -125,15 +136,11 @@ const Register = () => {
       isValidPassword &&
       isValidConfirmPassword
     ) {
-      if (reRef.current !== null) {
-        const recaptchaToken = await reRef.current!.executeAsync();
-        setRecaptchaToken(recaptchaToken);
-        reRef.current.reset();
-      }
-
       try {
         const response = await registerUser();
         if (response.success) {
+          handleResetForm();
+          setRecaptchaToken("");
           setSuccessMessage(
             "Account created successfully! Please check your inbox to confirm your email."
           );
@@ -154,7 +161,11 @@ const Register = () => {
           )}
           {!successMessage && (
             <>
-              <form className="register__form" onSubmit={handleSubmit}>
+              <form
+                className="register__form"
+                ref={formRef}
+                onSubmit={handleSubmit}
+              >
                 {/* ========================== EMAIL INPUT ========================== */}
                 <InputGroup
                   label="Email"
@@ -274,11 +285,13 @@ const Register = () => {
           </div>
         )}
       </main>
-      <ReCAPTCHA
-        sitekey="6Lcjl3cgAAAAAKE-Dj5sZ5dIvVLdEAc7CPScWwgC"
-        size="invisible"
-        ref={reRef}
-      />
+      {!successMessage && (
+        <ReCAPTCHA
+          sitekey="6Lcjl3cgAAAAAKE-Dj5sZ5dIvVLdEAc7CPScWwgC"
+          size="invisible"
+          ref={reRef}
+        />
+      )}
     </>
   );
 };

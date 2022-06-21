@@ -28,6 +28,20 @@ const ResetPasswordSendEmailPage = () => {
     setIsValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
 
+  useEffect(() => {
+    if (isValidEmail && !recaptchaToken) {
+      executeRecaptcha();
+    } else {
+      setRecaptchaToken("");
+    }
+  }, [isValidEmail]);
+
+  const executeRecaptcha = async () => {
+    const recaptchaToken = await reRef.current!.executeAsync();
+    reRef.current.reset();
+    setRecaptchaToken(recaptchaToken);
+  };
+
   const [resetPasswordSendEmailRequest, { isLoading, error }] = useFetch({
     query: RESET_PASSWORD_SEND_EMAIL_MUTATION,
     variables: { email, recaptchaToken },
@@ -37,9 +51,6 @@ const ResetPasswordSendEmailPage = () => {
     event.preventDefault();
     setSuccessMessage("");
     setErrorMessage("");
-    const recaptchaToken = await reRef.current!.executeAsync();
-    setRecaptchaToken(recaptchaToken);
-    reRef.current.reset();
     try {
       const response = await resetPasswordSendEmailRequest();
       if (response.success) {
@@ -54,7 +65,6 @@ const ResetPasswordSendEmailPage = () => {
 
   return (
     <>
-      {" "}
       <main className="resetPasswordsSendEmailPageMain">
         <section className="resetPasswordsSendEmailPage">
           <Logo />
@@ -96,11 +106,13 @@ const ResetPasswordSendEmailPage = () => {
           )}
         </section>
       </main>
-      <ReCAPTCHA
-        sitekey="6Lcjl3cgAAAAAKE-Dj5sZ5dIvVLdEAc7CPScWwgC"
-        size="invisible"
-        ref={reRef}
-      />
+      {!successMessage && (
+        <ReCAPTCHA
+          sitekey="6Lcjl3cgAAAAAKE-Dj5sZ5dIvVLdEAc7CPScWwgC"
+          size="invisible"
+          ref={reRef}
+        />
+      )}
     </>
   );
 };

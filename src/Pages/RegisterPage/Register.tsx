@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   EMAIL_REGEX,
-  FULLNAME_REGEX,
   PASSWORD_REGEX,
   USERNAME_REGEX,
 } from "../../Util/registerValidationRegex";
@@ -41,10 +40,6 @@ const Register = () => {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
 
-  const [fullname, setFullname] = useState("");
-  const [isValidFullname, setIsValidFullname] = useState(false);
-  const [isFullnameFocused, setIsFullnameFocused] = useState(false);
-
   const [username, setUsername] = useState("");
   const [isValidUsername, setIsValidUsername] = useState(false);
   const [isUsernameFocused, setIsUsernameFocused] = useState(false);
@@ -65,10 +60,6 @@ const Register = () => {
   }, [email]);
 
   useEffect(() => {
-    setIsValidFullname(FULLNAME_REGEX.test(fullname));
-  }, [fullname]);
-
-  useEffect(() => {
     setIsValidUsername(USERNAME_REGEX.test(username));
   }, [username]);
 
@@ -84,7 +75,6 @@ const Register = () => {
     query: REGISTER_USER_MUTATION,
     variables: {
       email,
-      fullname,
       username,
       password,
       confirmPassword,
@@ -101,7 +91,6 @@ const Register = () => {
   useEffect(() => {
     const isAllValid =
       isValidEmail &&
-      isValidFullname &&
       isValidUsername &&
       isValidPassword &&
       isValidConfirmPassword &&
@@ -112,7 +101,6 @@ const Register = () => {
     }
   }, [
     isValidEmail,
-    isValidFullname,
     isValidUsername,
     isValidPassword,
     isValidConfirmPassword,
@@ -121,7 +109,6 @@ const Register = () => {
 
   const handleResetForm = () => {
     setEmail("");
-    setFullname("");
     setUsername("");
     setPassword("");
     setConfirmPassword("");
@@ -131,7 +118,6 @@ const Register = () => {
     event.preventDefault();
     if (
       isValidEmail &&
-      isValidFullname &&
       isValidUsername &&
       isValidPassword &&
       isValidConfirmPassword
@@ -184,26 +170,6 @@ const Register = () => {
                   />
                 </InputGroup>
 
-                {/* ========================== FULLNAME INPUT ========================== */}
-                <InputGroup
-                  label="Full Name"
-                  inputType="text"
-                  isValid={isValidFullname}
-                  value={fullname}
-                  setValue={setFullname}
-                  setIsFocused={setIsFullnameFocused}
-                  autoFocus={false}
-                  autoComplete={"off"}
-                  maxLength={35}
-                  minLength={1}
-                >
-                  <FullNameNotes
-                    isFocused={isFullnameFocused}
-                    value={fullname}
-                    isValid={isValidFullname}
-                  />
-                </InputGroup>
-
                 {/* ========================== USERNAME INPUT ========================== */}
                 <InputGroup
                   label="Username"
@@ -214,7 +180,7 @@ const Register = () => {
                   setIsFocused={setIsUsernameFocused}
                   autoFocus={false}
                   autoComplete={"off"}
-                  maxLength={20}
+                  maxLength={16}
                   minLength={3}
                 >
                   <UsernameNotes

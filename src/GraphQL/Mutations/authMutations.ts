@@ -1,7 +1,6 @@
 export const REGISTER_USER_MUTATION = `
 mutation RegisterUser(
   $email: String!
-  $fullname: String!
   $username: String!
   $password: String!
   $confirmPassword: String!
@@ -9,7 +8,6 @@ mutation RegisterUser(
 ) {
   registerUser(
     email: $email
-    fullname: $fullname
     username: $username
     password: $password
     confirmPassword: $confirmPassword

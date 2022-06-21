@@ -87,9 +87,11 @@ const EditProfileTab = () => {
         dispatch(
           changeUserInfo({ fullname, username, bio: replaceBlankLines(bio) })
         );
+        setErrorMessage("");
         setSuccessMessage(response.message);
       } else {
-        setSuccessMessage(response.message);
+        setSuccessMessage("");
+        setErrorMessage("Something went wrong...");
       }
     } catch (error: any) {
       console.log(error.message);
@@ -132,7 +134,7 @@ const EditProfileTab = () => {
             <p className="editProfileTab__resultMessage">{successMessage}</p>
           )}
           <div className="editProfileTab__inputGroup">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Full name</label>
             <input
               type="text"
               name="name"
@@ -153,7 +155,7 @@ const EditProfileTab = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoComplete={"off"}
-              maxLength={20}
+              maxLength={14}
               minLength={3}
             />
           </div>

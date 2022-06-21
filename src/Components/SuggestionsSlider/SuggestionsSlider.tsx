@@ -39,7 +39,7 @@ const SuggestionsSlider = () => {
   };
   return (
     <>
-      {suggestions && (
+      {suggestions && suggestions.length > 4 && (
         <section className="suggestionsSlider">
           <header className="suggestionsSlider__header">
             <h2 className="suggestionsSlider__title">Suggestions for you</h2>

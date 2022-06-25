@@ -7,7 +7,7 @@
   width: 100%;
   height: 100vh;
   z-index: 200;
-  border-top: solid silver 1px;
+  border-top: solid var(--primary-border-color) 1px;
   @media (max-width: 980px) {
     display: flex;
   }
@@ -51,20 +51,6 @@
     width: 30px;
     height: 30px;
   }
-  &__handle {
-    display: none;
-    width: 100%;
-    min-height: 40px;
-    background-color: #e0e0e0;
-    justify-content: center;
-  }
-  &__handleGrab {
-    width: 50px;
-    height: 5px;
-    border-radius: 500px;
-    background-color: rgb(137, 137, 137);
-    margin-top: 10px;
-  }
   &__description {
     display: flex;
     width: 100%;
@@ -75,7 +61,7 @@
     align-items: center;
     gap: 10px;
     img {
-      border-radius: var(--primary-border-radius);
+      border-radius: var(--profile-picture-border-radius);
     }
     a {
       color: var(--primary-color);

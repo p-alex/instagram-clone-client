@@ -5,7 +5,7 @@
   align-items: flex-start;
   gap: 20px;
   padding: 0 0 35px 0;
-  border-bottom: solid silver 1px;
+  border-bottom: solid var(--primary-border-color) 1px;
   color: var(--secondary-color);
   @media (max-width: 980px) {
     flex-direction: column;
@@ -16,7 +16,7 @@
     margin: 0 70px;
   }
   &__picture img {
-    border-radius: var(--primary-border-radius);
+    border-radius: var(--profile-picture-border-radius);
     @media (max-width: 980px) {
       flex-direction: column;
       width: 120px;
@@ -36,8 +36,8 @@
     align-items: center;
     padding: 7px;
     margin-left: 15px;
-    border-radius: 5px;
-    border: solid silver 1px;
+    border-radius: var(--primary-btn-border-radius);
+    border: solid var(--primary-border-color) 1px;
   }
   &__username {
     font-size: 2rem;

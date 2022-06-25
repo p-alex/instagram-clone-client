@@ -1,9 +1,9 @@
 @import "../../variables.scss";
 .followButton {
-  padding: 7px 15px;
+  padding: 5px 9px;
   color: $light-color;
   background-color: var(--primary-color);
-  border-radius: 5px;
+  border-radius: var(--primary-btn-border-radius);
   border: solid transparent 1px;
   &.followButton--followed {
     color: var(--primary-color);

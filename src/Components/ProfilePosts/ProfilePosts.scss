@@ -13,7 +13,7 @@
     max-width: 293px;
     max-height: 293px;
     aspect-ratio: 1;
-    border-radius: 10px;
+    border-radius: var(--primary-border-radius);
     overflow: hidden;
     color: white;
     cursor: pointer;

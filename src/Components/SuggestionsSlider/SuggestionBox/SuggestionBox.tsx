@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import FollowButton from "../../FollowButton/FollowButton";
 import "./SuggestionBox.scss";
 
@@ -14,18 +15,20 @@ interface Props {
 function SuggestionBox(props: Props) {
   return (
     <div
-      className="suggetionBox"
+      className="suggestionBox"
       style={{ minWidth: `${100 / props.boxesPerSlide}%` }}
     >
       <div className="suggestionBox__image">
-        <img
-          src={props.profilePicture.smallPicture}
-          alt=""
-          width={50}
-          height={50}
-        />
+        <Link to={`/users/${props.username}`}>
+          <img
+            src={props.profilePicture.smallPicture}
+            alt=""
+            width={60}
+            height={60}
+          />
+        </Link>
       </div>
-      <p>{props.username}</p>
+      <Link to={`/users/${props.username}`}>{props.username}</Link>
       <FollowButton
         userId={props.id}
         username={props.username}

@@ -12,7 +12,7 @@
 .login {
   --marginBottom: 20px;
   background-color: $light-color;
-  border: solid $border-color 1px;
+  border: solid var(--primary-border-color) 1px;
   padding: 45px;
   text-align: center;
   border-radius: var(--primary-border-radius);
@@ -35,7 +35,7 @@
     padding: 10px;
     background: var(--primary-color);
     border: none;
-    border-radius: 5px;
+    border-radius: var(--primary-btn-border-radius);
     color: $light-color;
     font-weight: 700;
     cursor: pointer;

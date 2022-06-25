@@ -3,7 +3,7 @@
   z-index: 1;
   padding: 15px;
   background-color: white;
-  border-top: solid silver 1px;
+  border-top: solid var(--primary-border-color) 1px;
   &__commentBtn {
     width: 30px;
     height: 30px;

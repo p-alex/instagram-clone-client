@@ -7,21 +7,27 @@ import "./SuggestionsSlider.scss";
 
 const SuggestionsSlider = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
-  const [boxesPerSlide, setBoxesPerSlide] = useState(4);
+  const [boxesPerSlide, setBoxesPerSlide] = useState(3);
   const suggestions = useSelector(
     (state: RootState) => state.suggestions.suggestions
   );
 
   const checkWindowSize = () => {
     const windowWidth = window.innerWidth;
-    if (windowWidth >= 980) {
-      setBoxesPerSlide(4);
+
+    if (windowWidth <= 480) {
+      setBoxesPerSlide(2.5);
       return;
     }
-    setBoxesPerSlide(3);
+
+    if (windowWidth <= 980) {
+      setBoxesPerSlide(3);
+      return;
+    }
   };
 
   useEffect(() => {
+    checkWindowSize();
     window.addEventListener("resize", checkWindowSize);
     return () => window.removeEventListener("resize", checkWindowSize);
   }, []);
@@ -32,7 +38,7 @@ const SuggestionsSlider = () => {
         setSliderIndex((prevState) => prevState - 1);
       }
     } else if (direction === "right" && suggestions) {
-      if (sliderIndex + 1 < Math.round(suggestions.length / boxesPerSlide)) {
+      if (sliderIndex + 1 <= Math.round(suggestions.length / boxesPerSlide)) {
         setSliderIndex((prevState) => prevState + 1);
       }
     }
@@ -48,12 +54,14 @@ const SuggestionsSlider = () => {
             </Link>
           </header>
           <div className="suggestionsSlider__rowContainer">
-            <button
-              className="suggestionsSlider__ctrl ctrl-left"
-              onClick={() => handleMoveSlider("left")}
-            >
-              <i className="fa-solid fa-chevron-left"></i>
-            </button>
+            {sliderIndex !== 0 && (
+              <button
+                className="suggestionsSlider__ctrl ctrl-left"
+                onClick={() => handleMoveSlider("left")}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </button>
+            )}
             <div
               className="suggestionsSlider__row"
               style={{
@@ -74,7 +82,7 @@ const SuggestionsSlider = () => {
               })}
             </div>
             {sliderIndex !==
-              Math.round(suggestions!.length / boxesPerSlide) && (
+              Math.floor(suggestions!.length / boxesPerSlide) && (
               <button
                 className="suggestionsSlider__ctrl ctrl-right"
                 onClick={() => handleMoveSlider("right")}

@@ -2,7 +2,7 @@
 
 :root {
   //site
-  --site-background: #fafafa;
+  --site-background: #dedede;
   --logo-font-family: "Noto Sans", sans-serif;
   --primary-font-family: "Noto Sans", sans-serif;
   // navbar height
@@ -16,9 +16,12 @@
   --light-color: #fff;
   --medium-color: #686868;
   --invalid-color: #f26672;
+
   // border colors
-  --border-color: var(--medium-color);
-  --border-color-active: var(--primary-color);
+  --input-border-color: rgb(165, 165, 165);
+  --input-border-color-active: var(--primary-color);
+  --primary-border-color: rgb(215, 215, 215);
+
   // CreatePostModal z-index
   --createPostModalZ: 12;
 
@@ -36,7 +39,9 @@
   --optionsModalContainerZ: 202;
   --optionsModalBackdropZ: 201;
 
-  --primary-border-radius: 10px;
+  --primary-border-radius: 3px;
+  --primary-btn-border-radius: 3px;
+  --profile-picture-border-radius: 50%;
 }
 
 * {

@@ -2,8 +2,8 @@
   margin-bottom: 30px;
   min-width: 100%;
   background-color: white;
-  border: solid silver 1px;
-  border-radius: 10px;
+  border: solid var(--primary-border-color) 1px;
+  border-radius: var(--primary-border-radius);
   overflow: hidden;
   &:last-of-type {
     margin-bottom: 0;
@@ -13,7 +13,7 @@
   }
   @media (max-width: 620px) {
     border: none;
-    border-top: solid silver 1px;
-    border-bottom: solid silver 1px;
+    border-top: solid var(--primary-border-color) 1px;
+    border-bottom: solid var(--primary-border-color) 1px;
   }
 }

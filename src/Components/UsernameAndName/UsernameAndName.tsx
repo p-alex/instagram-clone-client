@@ -10,10 +10,26 @@ interface Props {
 const UsernameAndName = (props: Props) => {
   return (
     <div className="usernameAndName">
-      <img src={props.profilePicture} width="60" height="60" alt="" />
+      <Link
+        to={`/users/${props.username}`}
+        className="usernameAndName__profileImageLink"
+      >
+        <img
+          src={props.profilePicture}
+          width="60"
+          height="60"
+          alt=""
+          className="usernameAndName__profileImage"
+        />
+      </Link>
       <div className="usernameAndName__container">
-        <Link to={`/users/${props.username}`}>{props.username}</Link>
-        <p>{props.fullname}</p>
+        <Link
+          to={`/users/${props.username}`}
+          className="usernameAndName__usernameLink"
+        >
+          {props.username}
+        </Link>
+        <p className="usernameAndName__name">{props.fullname}</p>
       </div>
     </div>
   );

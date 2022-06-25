@@ -32,7 +32,7 @@
     margin-bottom: 10px;
   }
   &__profilePic {
-    border-radius: 10px;
+    border-radius: var(--profile-picture-border-radius);
     margin-bottom: 10px;
   }
   &__fileInput {

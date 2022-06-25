@@ -1,11 +1,11 @@
-@import "../../variables.scss";
 .navBar {
   --navBar-btn-size: 35px;
+  --navBar-btn-b-radius: 50%;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  border-bottom: solid $border-color 1px;
+  border-bottom: solid var(--primary-border-color) 1px;
   background: #fff;
   padding: 10px 20px;
   z-index: 10;
@@ -24,10 +24,10 @@
     align-items: center;
     .navBar__link {
       padding: 7px 10px;
-      color: $light-color;
+      color: var(--light-color);
       background-color: var(--primary-color);
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: var(--navBar-btn-b-radius);
       margin-right: 10px;
     }
     .navBar__link:last-child {

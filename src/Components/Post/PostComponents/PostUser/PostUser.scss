@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  border-bottom: solid silver 1px;
+  border-bottom: solid var(--primary-border-color) 1px;
   &__container {
     display: flex;
     align-items: center;
@@ -21,6 +21,6 @@
   }
   img {
     margin-right: 15px;
-    border-radius: var(--primary-border-radius);
+    border-radius: var(--profile-picture-border-radius);
   }
 }

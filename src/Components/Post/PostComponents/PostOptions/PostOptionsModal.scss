@@ -36,7 +36,7 @@
     display: block;
     padding: 15px;
     width: 100%;
-    border-top: solid silver 1px;
+    border-top: solid var(--primary-border-color) 1px;
     &.optionsModal__red-option {
       color: red;
       font-weight: 700;

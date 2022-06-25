@@ -3,7 +3,7 @@
   --top-bar-border-size: 2px;
   width: 100%;
   height: var(--top-bar-height);
-  border-bottom: solid silver var(--top-bar-border-size);
+  border-bottom: solid var(--primary-border-color) var(--top-bar-border-size);
   display: flex;
   justify-content: space-between;
   align-items: center;

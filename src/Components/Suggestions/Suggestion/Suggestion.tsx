@@ -13,13 +13,18 @@ const Suggestion = (props: Props) => {
   return (
     <div className="suggestion">
       <div className="suggestion__user">
-        <img
-          src={props.suggestion.profilePicture.smallPicture}
-          width="35"
-          height="35"
-          alt=""
-          className="suggestion__profileImage"
-        />
+        <Link
+          to={`users/${props.suggestion.username}`}
+          className="suggestion__profileImgLink"
+        >
+          <img
+            src={props.suggestion.profilePicture.smallPicture}
+            width="35"
+            height="35"
+            alt=""
+            className="suggestion__profileImage"
+          />
+        </Link>
         <Link
           to={`users/${props.suggestion.username}`}
           className="suggestion__username"

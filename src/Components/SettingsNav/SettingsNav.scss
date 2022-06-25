@@ -1,6 +1,6 @@
 .settingsNav {
   width: 300px;
-  border-right: solid silver 1px;
+  border-right: solid var(--primary-border-color) 1px;
   @media (max-width: 980px) {
     display: none;
   }

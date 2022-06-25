@@ -8,8 +8,8 @@
     width: 100%;
     padding: 10px;
     border-radius: calc(var(--primary-border-radius) / 2);
-    border: solid $border-color 1px;
-    font-size: 14px;
+    border: solid var(--input-border-color) 1px;
+    font-size: 1rem;
     background-color: $input-background;
   }
   input.invalidInput {

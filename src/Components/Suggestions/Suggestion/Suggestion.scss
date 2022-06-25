@@ -5,14 +5,22 @@
   &__user {
     display: flex;
     align-items: center;
-    a {
-      color: var(--secondary-color);
-      text-decoration: none;
-    }
+  }
+  &__username {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
+  &__profileImgLink {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    width: 35px;
+    height: 35px;
   }
   &__profileImage {
-    border-radius: var(--primary-border-radius);
-    margin-right: 10px;
+    border-radius: var(--profile-picture-border-radius);
+    width: 35px;
+    height: 35px;
   }
   &__follow {
     padding: 7px 15px;

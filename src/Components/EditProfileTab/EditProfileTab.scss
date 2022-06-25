@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     img {
-      border-radius: var(--primary-border-radius);
+      border-radius: var(--profile-picture-border-radius);
     }
   }
   &__userAndChange {
@@ -39,7 +39,7 @@
       background-color: var(--primary-color);
       color: $light-color;
       padding: 7px 10px;
-      border-radius: 5px;
+      border-radius: var(--primary-btn-border-radius);
     }
   }
   &__resultMessage {
@@ -67,7 +67,7 @@
     textarea {
       resize: vertical;
       min-height: 150px;
-      border: solid silver 1px;
+      border: solid var(--input-border-color) 1px;
     }
     input,
     textarea {
@@ -76,7 +76,7 @@
       width: 100%;
       font-size: 1rem;
       padding: 10px;
-      border: solid silver 1px;
+      border: solid var(--input-border-color) 1px;
       background-color: var(--input-background);
     }
     display: flex;

@@ -7,11 +7,11 @@
   &__container {
     display: flex;
     align-items: center;
-    a {
-      color: var(--secondary-color);
-      text-decoration: none;
-      margin-right: 15px;
-    }
+  }
+  &__usernameLink {
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin-right: 15px;
   }
   &__moreOptionsBtn {
     padding: 5px;
@@ -19,8 +19,12 @@
     color: var(--secondary-color);
     margin-left: 20px;
   }
-  img {
+  &__profileImageLink {
     margin-right: 15px;
     border-radius: var(--profile-picture-border-radius);
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    background-color: silver;
   }
 }

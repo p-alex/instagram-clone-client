@@ -10,6 +10,8 @@
   &__profileImageLink {
     width: 60px;
     height: 60px;
+    background-color: silver;
+    border-radius: var(--profile-picture-border-radius);
   }
   &__profileImage {
     border-radius: var(--profile-picture-border-radius);

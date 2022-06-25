@@ -35,7 +35,6 @@
     justify-content: center;
     align-items: center;
     padding: 7px;
-    margin-left: 15px;
     border-radius: var(--primary-btn-border-radius);
     border: solid var(--primary-border-color) 1px;
   }
@@ -47,6 +46,7 @@
   }
   &__nameAndSettings {
     display: flex;
+    align-items: center;
   }
   &__stats {
     display: flex;

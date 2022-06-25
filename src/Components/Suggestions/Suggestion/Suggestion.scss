@@ -17,6 +17,8 @@
     width: 35px;
     height: 35px;
     color: var(--seconday-color);
+    background-color: silver;
+    border-radius: var(--profile-picture-border-radius);
   }
   &__profileImage {
     border-radius: var(--profile-picture-border-radius);

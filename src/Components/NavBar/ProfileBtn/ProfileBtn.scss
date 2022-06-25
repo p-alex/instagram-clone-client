@@ -2,6 +2,9 @@
 .profileBtn {
   position: relative;
   display: flex;
+  background-color: silver;
+  border-radius: var(--navBar-btn-b-radius);
+  overflow: hidden;
   &__btn {
     width: var(--navBar-btn-size);
     height: var(--navBar-btn-size);
@@ -31,6 +34,7 @@
         width: 20px;
         height: 20px;
         margin-right: 5px;
+        color: var(--secondary-color);
       }
     }
     & button:last-of-type {

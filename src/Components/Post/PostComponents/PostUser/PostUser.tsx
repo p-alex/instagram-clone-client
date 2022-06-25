@@ -15,13 +15,21 @@ const PostUser = (props: Props) => {
   return (
     <div className="postUser">
       <div className="postUser__container">
-        <img
-          src={props.postOwner.profilePicture.smallPicture}
-          alt=""
-          width="35"
-          height="35"
-        />
-        <Link to={`/users/${props.postOwner.username}`}>
+        <Link
+          to={`/users/${props.postOwner.username}`}
+          className="postUser__profileImageLink"
+        >
+          <img
+            src={props.postOwner.profilePicture.smallPicture}
+            alt=""
+            width="35"
+            height="35"
+          />
+        </Link>
+        <Link
+          to={`/users/${props.postOwner.username}`}
+          className="postUser__usernameLink"
+        >
           {props.postOwner.username}
         </Link>
         <FollowButton

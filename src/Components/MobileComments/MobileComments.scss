@@ -76,7 +76,7 @@
   &__form {
     position: relative;
     border-top: none;
-    border-bottom: solid silver 1px;
+    border-bottom: solid var(--primary-border-color) 1px;
     padding: 0 5px;
   }
   &__comments {

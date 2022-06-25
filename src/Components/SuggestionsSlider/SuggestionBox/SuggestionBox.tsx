@@ -28,7 +28,12 @@ function SuggestionBox(props: Props) {
           />
         </Link>
       </div>
-      <Link to={`/users/${props.username}`}>{props.username}</Link>
+      <Link
+        to={`/users/${props.username}`}
+        className="suggestionBox__usernameLink"
+      >
+        {props.username}
+      </Link>
       <FollowButton
         userId={props.id}
         username={props.username}

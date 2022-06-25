@@ -16,7 +16,7 @@ const SuggestionsSlider = () => {
     const windowWidth = window.innerWidth;
 
     if (windowWidth <= 480) {
-      setBoxesPerSlide(2.5);
+      setBoxesPerSlide(2.35);
       return;
     }
 

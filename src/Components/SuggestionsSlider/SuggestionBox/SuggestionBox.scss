@@ -11,4 +11,7 @@
     overflow: hidden;
     border-radius: var(--profile-picture-border-radius);
   }
+  &__usernameLink {
+    color: var(--secondary-color);
+  }
 }

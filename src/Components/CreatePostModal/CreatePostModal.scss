@@ -29,7 +29,7 @@
   max-height: calc(800px + var(--top-bar-height));
   border: solid var(--primary-border-color) 1px;
   background: white;
-  border-radius: 10px;
+  border-radius: var(--primary-border-radius);
   overflow: hidden;
 }
 

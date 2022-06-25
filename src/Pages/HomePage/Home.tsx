@@ -13,6 +13,9 @@ import "./Home.scss";
 
 const Home = () => {
   const authState = useSelector((state: RootState) => state.auth);
+  const suggestions = useSelector(
+    (state: RootState) => state.suggestions.suggestions
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const Home = () => {
                 profilePicture={authState.user.profilePicture.smallPicture}
               />
               <Suggestions type={"small"} />
-              <Footer />
+              {suggestions && <Footer />}
             </div>
           </aside>
         </div>

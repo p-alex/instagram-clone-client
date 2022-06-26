@@ -70,3 +70,27 @@ query GetFeedPosts($currentPage: Int!, $maxPostsPerPage: Int!) {
   }
 }
 `;
+
+export const GET_MORE_PROFILE_POSTS = `
+query GetMoreProfilePosts($userId: String!, $currentPostId: String!) {
+  getMoreProfilePosts(userId: $userId, currentPostId: $currentPostId) {
+    statusCode
+    success
+    message
+    posts {
+      id
+      images {
+        croppedImage {
+          url
+        }
+      }
+      likes {
+        count
+      }
+      comments {
+        count
+      }
+    }
+  }
+}
+`;

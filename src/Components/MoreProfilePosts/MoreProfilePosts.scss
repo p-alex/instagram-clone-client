@@ -1,0 +1,18 @@
+.moreProfilePosts {
+  position: relative;
+  margin-top: 60px;
+  padding: 40px 0;
+  border-top: solid var(--primary-border-color) 1px;
+  &__title {
+    font-weight: 400;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    @media (max-width: 980px) {
+      text-align: center;
+    }
+  }
+  &__profileLink {
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+}

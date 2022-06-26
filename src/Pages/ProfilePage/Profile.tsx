@@ -74,7 +74,10 @@ const Profile = () => {
           <>
             <ProfileDetails />
             <ProfileNav />
-            <ProfilePosts />
+            <ProfilePosts
+              posts={profileState.user.posts.postsList}
+              isProfilePage={true}
+            />
           </>
         )}
         {!isLoading && error && <p>{error}</p>}

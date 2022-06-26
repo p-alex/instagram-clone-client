@@ -10,21 +10,31 @@ import {
   setLastFocusedPostIndex,
 } from "../../Redux/Profile";
 import { resetPostState } from "../../Redux/Post";
+import { IPost } from "../../interfaces";
 
-const ProfilePosts = () => {
+interface Props {
+  posts: IPost[];
+  isProfilePage: boolean;
+}
+
+const ProfilePosts = (props: Props) => {
   const navigate = useNavigate();
   const profileState = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
   const [isMobileWidth, setIsMobileWidth] = useState(false);
 
   const handleViewPost = (postId: string, postIndex: number) => {
-    if (isMobileWidth) {
-      dispatch(setLastFocusedPostIndex(null));
+    if (props.isProfilePage) {
+      if (isMobileWidth) {
+        dispatch(setLastFocusedPostIndex(null));
+        navigate(`/posts/${postId}`);
+        return;
+      }
+      dispatch(setLastFocusedPostIndex(postIndex));
+      dispatch(selectPostId(postId));
+    } else {
       navigate(`/posts/${postId}`);
-      return;
     }
-    dispatch(setLastFocusedPostIndex(postIndex));
-    dispatch(selectPostId(postId));
   };
 
   const handleSetIsMobileWidth = () => {
@@ -61,8 +71,8 @@ const ProfilePosts = () => {
   return (
     <>
       <section className="profilePosts">
-        {profileState.user &&
-          profileState.user.posts.postsList.map((post, index) => (
+        {props.posts &&
+          props.posts.map((post, index) => (
             <button
               className="profilePosts__post"
               role={isMobileWidth ? "link" : "button"}

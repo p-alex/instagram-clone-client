@@ -4,7 +4,7 @@ import "./PostPage.scss";
 import { GET_POST_QUERY } from "../../GraphQL/Queries/postQueries";
 import { useParams } from "react-router-dom";
 import useFetch from "../../Hooks/useFetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useRedux from "../../Hooks/useRedux";
 import {
   loadingPost,
@@ -12,11 +12,13 @@ import {
   resetPostState,
   setPost,
 } from "../../Redux/Post";
-import { IPost } from "../../interfaces";
+import { ILiteUser, IPost } from "../../interfaces";
+import MoreProfilePosts from "../../Components/MoreProfilePosts/MoreProfilePosts";
 
 const PostPage = () => {
   const params = useParams();
   const { authState } = useRedux();
+  const [postOwner, setPostOwner] = useState<ILiteUser>();
   const [getPost, { error }] = useFetch({
     query: GET_POST_QUERY,
     variables: { postId: params.postId, userId: authState.user?.id },
@@ -32,7 +34,10 @@ const PostPage = () => {
         message: string;
         post: IPost;
       } = await getPost();
-      if (response.success) return dispatch(setPost({ ...response.post }));
+      if (response.success) {
+        dispatch(setPost({ ...response.post }));
+        setPostOwner(response.post.user);
+      }
       dispatch(loadingPostError(error));
     } catch (error: any) {
       dispatch(loadingPostError("Something went wrong..."));
@@ -45,12 +50,18 @@ const PostPage = () => {
     return () => {
       dispatch(resetPostState());
     };
-  }, []);
+  }, [params.postId]);
 
   return (
     <>
       <Layout>
         <Post />
+        {postOwner && (
+          <MoreProfilePosts
+            currentPostPagePostId={params.postId!}
+            postOwner={postOwner}
+          />
+        )}
       </Layout>
     </>
   );

@@ -71,9 +71,9 @@ query GetFeedPosts($currentPage: Int!, $maxPostsPerPage: Int!) {
 }
 `;
 
-export const GET_MORE_PROFILE_POSTS = `
-query GetMoreProfilePosts($userId: String!, $currentPostId: String!) {
-  getMoreProfilePosts(userId: $userId, currentPostId: $currentPostId) {
+export const GET_MORE_POSTS_FROM_USER = `
+query GetMorePostsFromUser($userId: String!, $currentPostId: String!) {
+  getMorePostsFromUser(userId: $userId, currentPostId: $currentPostId) {
     statusCode
     success
     message
@@ -93,4 +93,5 @@ query GetMoreProfilePosts($userId: String!, $currentPostId: String!) {
     }
   }
 }
+
 `;

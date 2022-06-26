@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { GET_MORE_PROFILE_POSTS } from "../../GraphQL/Queries/postQueries";
+import { GET_MORE_POSTS_FROM_USER } from "../../GraphQL/Queries/postQueries";
 import useFetch from "../../Hooks/useFetch";
 import ProfilePosts from "../ProfilePosts/ProfilePosts";
 import "./MoreProfilePosts.scss";
@@ -20,7 +20,7 @@ const MoreProfilePosts = (props: Props) => {
   const [posts, setPosts] = useState([]);
 
   const [getMoreProfilePostsRequest, { isLoading }] = useFetch({
-    query: GET_MORE_PROFILE_POSTS,
+    query: GET_MORE_POSTS_FROM_USER,
     variables: {
       userId: props.postOwner.id,
       currentPostId: props.currentPostPagePostId,

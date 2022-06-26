@@ -216,6 +216,8 @@ function Cropper({
   const handleAddCorrectCssClass = (image: HTMLImageElement) => {
     if (image.naturalHeight < image.naturalWidth) {
       image.classList.add("maxHeight");
+    } else if (image.naturalHeight === image.naturalWidth) {
+      image.classList.add("maxHeight");
     } else {
       image.classList.remove("maxHeight");
     }

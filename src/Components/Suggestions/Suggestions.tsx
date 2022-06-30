@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { GET_SUGGESTIONS_QUERY } from "../../GraphQL/Queries/suggestionsQueries";
 import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
 import useRedux from "../../Hooks/useRedux";
@@ -40,7 +41,14 @@ const Suggestions = (props: Props) => {
     <>
       {suggestionsState.suggestions && suggestionsState.suggestions.length > 0 && (
         <div className="suggestions">
-          <p>Suggestions for you</p>
+          <div className="suggestions__header">
+            <p>Suggestions for you</p>
+            {props.type === "small" && (
+              <Link to="/suggestions" className="suggestions__seeAllLink">
+                See all
+              </Link>
+            )}
+          </div>
           {!isLoading &&
             suggestionsState.suggestions &&
             suggestionsState.suggestions.map((suggestion, index) => {

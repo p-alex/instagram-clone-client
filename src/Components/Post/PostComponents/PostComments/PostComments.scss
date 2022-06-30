@@ -3,6 +3,9 @@
   position: relative;
   flex-grow: 1;
   min-height: 0;
+  @media (max-width: 980px) {
+    display: none;
+  }
   &__container {
     position: absolute;
     height: 100%;
@@ -18,9 +21,11 @@
   scrollbar-width: none; /* Firefox */
   &__loginMessage {
     color: var(--secondary-color);
+    margin-top: 10px;
     a {
       color: var(--primary-color);
       text-decoration: none;
+      font-weight: 700;
     }
   }
   &__loadMoreCommentsBtn {

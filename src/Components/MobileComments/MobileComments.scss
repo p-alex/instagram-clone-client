@@ -25,12 +25,18 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 600px;
+    left: 0;
+    right: 0;
+    margin: auto;
     height: 75vh;
     bottom: 0;
     background-color: white;
     z-index: 202;
     animation: slideInFromBottom 300ms;
+    @media (max-width: 600px) {
+      width: 100%;
+    }
   }
   &__header {
     width: 100%;

@@ -2,6 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &:last-of-type {
+    border-bottom: none;
+  }
   &__user {
     display: flex;
     align-items: center;

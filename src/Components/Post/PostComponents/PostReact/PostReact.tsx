@@ -57,24 +57,27 @@ const PostReact = (props: Props) => {
 
   return (
     <div className="postReact">
-      <div className="postReact__likeAndComment">
-        <LikeBtn
-          isPostLiked={
-            props.isFeedPost ? props?.isPostLiked : postState.post?.isLiked
-          }
-          postId={props.post?.id}
-          postIndex={props?.postIndex}
-          isFeedPost={props?.isFeedPost}
-        />
-        <button
-          title="write a comment"
-          disabled={!authState.accessToken}
-          onClick={handleViewComments}
-          className="postReact__commentBtn"
-        >
-          <i className="fa-regular fa-comment"></i>
-        </button>
-      </div>
+      {authState.accessToken && (
+        <div className="postReact__likeAndComment">
+          <LikeBtn
+            isPostLiked={
+              props.isFeedPost ? props?.isPostLiked : postState.post?.isLiked
+            }
+            postId={props.post?.id}
+            postIndex={props?.postIndex}
+            isFeedPost={props?.isFeedPost}
+          />
+          <button
+            title="write a comment"
+            disabled={!authState.accessToken}
+            onClick={handleViewComments}
+            className="postReact__commentBtn"
+          >
+            <i className="fa-regular fa-comment"></i>
+          </button>
+        </div>
+      )}
+
       <div className="postReact__details">
         <p className="postReact__likeCount">{`${props.post?.likes.count} ${
           props.post?.likes.count === 1 ? "like" : "likes"
@@ -91,22 +94,20 @@ const PostReact = (props: Props) => {
           />
         )}
 
-        {props.post?.comments.count &&
-        props.post?.comments.count > 0 &&
-        !props.isForModal &&
-        props.showViewAllCommentsBtn &&
-        isMobileWindowSize ? (
-          <div className="postReact__viewCommentsBtnContainer">
-            <button
-              className="postReact__viewCommentsButton"
-              onClick={handleViewComments}
-            >
-              {props.post?.comments.count === 1
-                ? `View ${props.post?.comments.count} comment`
-                : `View all ${props.post?.comments.count} comments`}
-            </button>
-          </div>
-        ) : null}
+        {props.post?.comments.count !== 0 &&
+          props.showViewAllCommentsBtn &&
+          authState.accessToken && (
+            <div className="postReact__viewCommentsBtnContainer">
+              <button
+                className="postReact__viewCommentsButton"
+                onClick={handleViewComments}
+              >
+                {props.post?.comments.count === 1
+                  ? `View ${props.post?.comments.count} comment`
+                  : `View all ${props.post?.comments.count} comments`}
+              </button>
+            </div>
+          )}
 
         <small className="postReact__date">
           {dateConverter(parseInt(props.post?.createdAt!))}

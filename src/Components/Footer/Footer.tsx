@@ -24,7 +24,7 @@ const Footer = () => {
       <p>
         Developed by{" "}
         <a
-          href="https://github.com/p-alex"
+          href="https://www.linkedin.com/in/alexandru-daniel-pistol/"
           target="_blank"
           rel="noopener noreferrer"
         >

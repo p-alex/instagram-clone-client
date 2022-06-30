@@ -21,6 +21,7 @@ const Post = () => {
   const [isMobileCommentsActive, setIsMobileCommentsActive] = useState(false);
 
   const [showPostForm, setShowPostForm] = useState(true);
+  const [showMoreComentsBtn, setShowMoreCommentsBtn] = useState(false);
 
   const handleToggleOptionsModal = () =>
     setIsPostOptionsActive((prevState) => !prevState);
@@ -31,8 +32,10 @@ const Post = () => {
   const checkWindowSize = () => {
     if (checkIsMobileWindowSize()) {
       setShowPostForm(false);
+      setShowMoreCommentsBtn(true);
     } else {
       setShowPostForm(true);
+      setShowMoreCommentsBtn(false);
     }
   };
 
@@ -65,7 +68,7 @@ const Post = () => {
               isPostLiked={post.isLiked}
               isFeedPost={false}
               handleToggleMobileComments={handleToggleMobileComments}
-              showViewAllCommentsBtn={true}
+              showViewAllCommentsBtn={showMoreComentsBtn}
               isForModal={false}
             />
             {authState.accessToken && showPostForm && (

@@ -18,10 +18,6 @@ query GetComments($postId: String!, $maxCommentsPerPage: Int!, $currentPage: Int
           count
           users
         }
-        replies {
-          count
-          userReplies
-        }
         createdAt
         updatedAt
       }

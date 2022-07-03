@@ -18,10 +18,6 @@ export const ADD_COMMENT_MUTATION = `
               count
               users
             }
-            replies {
-              count
-              userReplies
-            }
             createdAt
             updatedAt
           }

@@ -144,7 +144,7 @@ const FollowersModal = (props: Props) => {
                 </div>
               );
             })}
-          {users.length === 0 && <p>No users found.</p>}
+          {!isLoading && users.length === 0 && <p>No users found.</p>}
           {isLoading && <Spinner size="small" />}
         </div>
         {showLoadMore && (

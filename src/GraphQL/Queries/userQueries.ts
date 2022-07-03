@@ -44,3 +44,19 @@ export const GET_USER_QUERY = `
           }
     }
 `;
+
+export const GET_USER_FOLLOWERS = `
+query GetUserFollowers($userId: String!, $type: String!, $currentPage: Int!, $maxUsersPerPage: Int!) {
+  getUserFollowers(userId: $userId, type: $type, currentPage: $currentPage, maxUsersPerPage: $maxUsersPerPage) {
+    statusCode
+    success
+    message
+    users {
+      id
+      username
+      profilePicture
+      isFollowed
+    }
+  }
+}
+`;

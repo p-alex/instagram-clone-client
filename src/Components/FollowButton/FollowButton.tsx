@@ -13,6 +13,8 @@ interface Props {
   userId: string;
   username: string;
   isFollowed: boolean;
+  buttonRef?: any;
+  changeStateFunction?: () => void;
 }
 
 const FollowButton = (props: Props) => {
@@ -36,11 +38,13 @@ const FollowButton = (props: Props) => {
   });
 
   const handleStateChange = () => {
+    if (props.changeStateFunction) props.changeStateFunction();
+
     const feedStateUser = feedState.posts.find(
       (post) => post.user.id === props.userId
     );
 
-    if (profileState.user) {
+    if (profileState.user?.username === props.username) {
       if (profileState.isFollowed) {
         dispatch(unfollowProfile());
       } else {
@@ -115,6 +119,7 @@ const FollowButton = (props: Props) => {
               ? `Unfollow ${props.username}`
               : `Follow ${props.username}`
           }
+          ref={props.buttonRef}
         >
           {btnText}
         </button>

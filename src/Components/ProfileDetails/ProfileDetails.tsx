@@ -3,7 +3,13 @@ import useRedux from "../../Hooks/useRedux";
 import FollowButton from "../FollowButton/FollowButton";
 import "./ProfileDetails.scss";
 
-const ProfileDetails = () => {
+interface Props {
+  setSelectedUsersModal: React.Dispatch<
+    React.SetStateAction<"followers" | "following" | null>
+  >;
+}
+
+const ProfileDetails = (props: Props) => {
   const navigate = useNavigate();
   const { authState, profileState } = useRedux();
   const profileData = profileState.user;
@@ -44,17 +50,23 @@ const ProfileDetails = () => {
               )}
             </div>
             <div className="profileDetails__stats">
-              <p className="profileDetails__stat">
+              <button className="profileDetails__stat">
                 <span>{profileData?.posts.count}</span>{" "}
                 {profileData?.posts.count === 1 ? "post" : "posts"}
-              </p>
-              <p className="profileDetails__stat">
+              </button>
+              <button
+                className="profileDetails__stat"
+                onClick={() => props.setSelectedUsersModal("followers")}
+              >
                 <span>{profileData?.followers.count}</span>{" "}
                 {profileData?.followers.count === 1 ? "follower" : "followers"}
-              </p>
-              <p className="profileDetails__stat">
+              </button>
+              <button
+                className="profileDetails__stat"
+                onClick={() => props.setSelectedUsersModal("following")}
+              >
                 <span>{profileData?.following.count}</span> following
-              </p>
+              </button>
             </div>
             <p className="profileDetails__fullname">{profileData?.fullname}</p>
             {profileData?.bio && (

@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import FollowersModal from "../../Components/FollowersModal/FollowersModal";
 import ProfileDetails from "../../Components/ProfileDetails/ProfileDetails";
 import ProfileNav from "../../Components/ProfileNav/ProfileNav";
 import ProfilePosts from "../../Components/ProfilePosts/ProfilePosts";
@@ -28,6 +29,10 @@ interface IUserProfileResponse {
 const Profile = () => {
   const params = useParams();
   const { authState, profileState, dispatch } = useRedux();
+
+  const [selectedUsersModal, setSelectedUsersModal] = useState<
+    "followers" | "following" | null
+  >(null);
 
   const [getProfile, { isLoading, error }] = useFetch({
     query: GET_USER_QUERY,
@@ -72,12 +77,19 @@ const Profile = () => {
         {isLoading && <Spinner size="big" />}
         {!isLoading && profileState.user && (
           <>
-            <ProfileDetails />
+            <ProfileDetails setSelectedUsersModal={setSelectedUsersModal} />
             <ProfileNav />
             <ProfilePosts
               posts={profileState.user.posts.postsList}
               isProfilePage={true}
             />
+            {selectedUsersModal && (
+              <FollowersModal
+                userId={profileState.user.id}
+                type={selectedUsersModal}
+                setSelectedUsersModal={setSelectedUsersModal}
+              />
+            )}
           </>
         )}
         {!isLoading && error && <p>{error}</p>}

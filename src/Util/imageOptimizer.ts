@@ -1,9 +1,9 @@
 export const imageOptimizer = async (
   imgUrl: string | ArrayBuffer | null,
-  minWidth = 1200,
-  minHeight = 1200,
-  maxWidth = 1500,
-  maxHeight = 1500
+  minWidth = 1080,
+  minHeight = 1080,
+  maxWidth = 1625,
+  maxHeight = 1625
 ): Promise<string> => {
   const result: string = await new Promise((resolve) => {
     if (typeof imgUrl === "string") {
@@ -34,7 +34,7 @@ export const imageOptimizer = async (
         canvas.height = img.height;
 
         ctx?.drawImage(img, 0, 0, img.width, img.height);
-        const result: string = canvas.toDataURL("image/jpeg", 0.8);
+        const result: string = canvas.toDataURL("image/jpeg", 0.75);
         resolve(result);
       };
     } else {

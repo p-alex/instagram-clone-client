@@ -24,7 +24,7 @@ const SuggestionsPage = lazy(
 
 function App() {
   return (
-    <Suspense fallback={<Spinner size={"big"} />}>
+    <Suspense fallback={<Spinner size={"small"} />}>
       <Routes>
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>

@@ -33,7 +33,7 @@ const PersistLogin = () => {
     };
   }, []);
 
-  return <>{isLoading ? <Spinner size="big" /> : <Outlet />}</>;
+  return <>{isLoading ? <Spinner size="small" /> : <Outlet />}</>;
 };
 
 export default PersistLogin;

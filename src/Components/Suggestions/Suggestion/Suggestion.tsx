@@ -14,7 +14,7 @@ const Suggestion = (props: Props) => {
     <div className="suggestion">
       <div className="suggestion__user">
         <Link
-          to={`users/${props.suggestion.username}`}
+          to={`/users/${props.suggestion.username}`}
           className="suggestion__profileImgLink"
         >
           <img
@@ -26,7 +26,7 @@ const Suggestion = (props: Props) => {
           />
         </Link>
         <Link
-          to={`users/${props.suggestion.username}`}
+          to={`/users/${props.suggestion.username}`}
           className="suggestion__username"
         >
           {props.suggestion.username}

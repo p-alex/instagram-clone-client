@@ -71,6 +71,10 @@ const CreatePostModal = () => {
 
   const handleCloseModal = () => {
     if (!isLoading) handleToggleCreatePostModal();
+    const lastFocusedBtn = document.getElementById(
+      "create-post-toggle-modal-btn"
+    ) as HTMLButtonElement;
+    lastFocusedBtn.focus();
   };
 
   const handleNavigateStages = (direction: "previous" | "next") => {

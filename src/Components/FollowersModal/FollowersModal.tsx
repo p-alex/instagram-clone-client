@@ -94,21 +94,38 @@ const FollowersModal = (props: Props) => {
     };
   }, []);
 
+  const handleCloseModal = () => {
+    let lastFocusedBtn;
+    if (props.type === "followers") {
+      lastFocusedBtn = document.getElementById(
+        "profile-details-followers-btn"
+      ) as HTMLButtonElement;
+    } else {
+      lastFocusedBtn = document.getElementById(
+        "profile-details-following-btn"
+      ) as HTMLButtonElement;
+    }
+    props.setSelectedUsersModal(null);
+    lastFocusedBtn.focus();
+  };
+
   return (
     <div className="followersModal">
       <FocusTrapRedirectFocus element={lastFocusableElement} />
       <div
         className="followersModal__backdrop"
-        onClick={() => props.setSelectedUsersModal(null)}
+        aria-label="Close modal."
+        onClick={handleCloseModal}
       ></div>
       <div className="followersModal__container">
         <div className="followersModal__header">
           <h2 className="followersModal__title">{props.type}</h2>
           <button
             className="followersModal__closeBtn"
-            onClick={() => props.setSelectedUsersModal(null)}
+            onClick={handleCloseModal}
             ref={firstFocusableElement}
             autoFocus={true}
+            aria-label="Close modal."
           >
             <i className="fa-solid fa-xmark"></i>
           </button>

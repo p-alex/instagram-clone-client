@@ -57,6 +57,8 @@ const ProfileDetails = (props: Props) => {
               <button
                 className="profileDetails__stat"
                 onClick={() => props.setSelectedUsersModal("followers")}
+                id="profile-details-followers-btn"
+                aria-label={`See ${profileData.username}'s followers.`}
               >
                 <span>{profileData?.followers.count}</span>{" "}
                 {profileData?.followers.count === 1 ? "follower" : "followers"}
@@ -64,6 +66,8 @@ const ProfileDetails = (props: Props) => {
               <button
                 className="profileDetails__stat"
                 onClick={() => props.setSelectedUsersModal("following")}
+                id="profile-details-following-btn"
+                aria-label={`See ${profileData.username}'s followings.`}
               >
                 <span>{profileData?.following.count}</span> following
               </button>

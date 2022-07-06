@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch, useEffect } from "react";
+import { useEffect } from "react";
 import { STAGES } from "../CreatePostModal";
 import "./CreateModalTopBar.scss";
 
@@ -24,6 +24,7 @@ const CreateModalTopBar = (props: Props) => {
           className="createModalTopBar__btn close-btn"
           onClick={props.handleCloseModal}
           ref={props.firstFocusableElementRef}
+          aria-label="Close create post modal."
         >
           <i className="fa-solid fa-xmark"></i>
         </button>

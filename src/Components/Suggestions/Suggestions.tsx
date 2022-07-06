@@ -44,7 +44,11 @@ const Suggestions = (props: Props) => {
           <div className="suggestions__header">
             <p>Suggestions for you</p>
             {props.type === "small" && (
-              <Link to="/suggestions" className="suggestions__seeAllLink">
+              <Link
+                to="/suggestions"
+                className="suggestions__seeAllLink"
+                aria-label="See all suggestions."
+              >
                 See all
               </Link>
             )}

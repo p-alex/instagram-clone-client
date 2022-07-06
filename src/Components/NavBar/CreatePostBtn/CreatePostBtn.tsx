@@ -9,6 +9,7 @@ const CreatePostBtn = () => {
       className="navBarCreatePostBtn"
       onClick={handleToggleCreatePostModal}
       aria-label="Create new post"
+      id="create-post-toggle-modal-btn"
     >
       <i className="fa-solid fa-plus"></i>
     </button>

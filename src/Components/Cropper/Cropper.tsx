@@ -222,6 +222,7 @@ function Cropper({
       image.classList.remove("maxHeight");
     }
   };
+
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
@@ -233,6 +234,7 @@ function Cropper({
       isMounted = false;
     };
   }, [handleAddImage, handleCalculateCropSize, handleCalculateMaxMove]);
+
   useEffect(() => {
     let isMounted = true;
     if (isMounted) handleCalculations();
@@ -242,12 +244,14 @@ function Cropper({
       isMounted = false;
     };
   }, [aspectRatio, handleCalculateCropSize, handleCalculateMaxMove]);
+
   useEffect(() => {
     (async () => {
       await handleCropImage();
     })();
     setSavedImagePos(pos);
   }, [pos]);
+
   useEffect(() => {
     const image = document.querySelector(".cropper__image") as HTMLImageElement;
     if (savedImagePos) {

@@ -8,7 +8,7 @@ import "./ResetPasswordSendEmailPage.scss";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ResetPasswordSendEmailPage = () => {
   const navigate = useNavigate();
@@ -65,12 +65,12 @@ const ResetPasswordSendEmailPage = () => {
 
   return (
     <>
-      <main className="resetPasswordsSendEmailPageMain">
-        <section className="resetPasswordsSendEmailPage">
+      <main className="resetPasswordSendEmailPageMain">
+        <section className="resetPasswordSendEmailPage">
           <Logo />
           {!successMessage && (
             <form
-              className="resetPasswordsSendEmailPage__form"
+              className="resetPasswordSendEmailPage__form"
               onSubmit={handleSubmit}
             >
               <InputGroup
@@ -87,7 +87,7 @@ const ResetPasswordSendEmailPage = () => {
                 maxLength={150}
               />
               <button
-                className="resetPasswordsSendEmailPage__submit"
+                className="resetPasswordSendEmailPage__submit"
                 disabled={!isValidEmail || isLoading ? true : false}
               >
                 {!isLoading ? "Send password reset email" : "Loading..."}
@@ -95,15 +95,21 @@ const ResetPasswordSendEmailPage = () => {
             </form>
           )}
           {successMessage && (
-            <p className="resetPasswordsSendEmailPage__resultMessage">
+            <p className="resetPasswordSendEmailPage__resultMessage">
               {successMessage}
             </p>
           )}
           {errorMessage && (
-            <p className="resetPasswordsSendEmailPage__resultMessage error">
+            <p className="resetPasswordSendEmailPage__resultMessage error">
               {errorMessage}
             </p>
           )}
+          <Link
+            to={"/login"}
+            className="resetPasswordSendEmailPage__backToLoginLink"
+          >
+            Back to login
+          </Link>
         </section>
       </main>
       {!successMessage && (

@@ -91,6 +91,7 @@ const MobileSearchBar = (props: Props) => {
           onChange={(event) => setQuery(event.target.value)}
           className="mobileSearchBar__input"
           ref={searchResults.length === 0 ? lastFocusableElement : undefined}
+          autoFocus={true}
         />
         {query.length > 2 && (
           <div className="mobileSearchBar__results">

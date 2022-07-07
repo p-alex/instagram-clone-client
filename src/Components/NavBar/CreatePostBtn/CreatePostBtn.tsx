@@ -6,7 +6,7 @@ const CreatePostBtn = () => {
   const { handleToggleCreatePostModal } = useContext(NavBarContext);
   return (
     <button
-      className="navBarCreatePostBtn"
+      className="navBar__btn"
       onClick={handleToggleCreatePostModal}
       aria-label="Create new post"
       id="create-post-toggle-modal-btn"

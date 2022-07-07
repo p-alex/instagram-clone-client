@@ -74,7 +74,7 @@ const Profile = () => {
   return (
     <Layout>
       <>
-        {isLoading && <Spinner size="big" />}
+        {isLoading && <Spinner size="small" />}
         {!isLoading && profileState.user && (
           <>
             <ProfileDetails setSelectedUsersModal={setSelectedUsersModal} />

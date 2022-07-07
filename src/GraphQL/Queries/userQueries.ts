@@ -60,3 +60,18 @@ query GetUserFollowers($userId: String!, $type: String!, $currentPage: Int!, $ma
   }
 }
 `;
+
+export const SEARCH_USERS_QUERY = `
+query SearchUsers($query: String!) {
+  searchUsers(query: $query) {
+    statusCode
+    success
+    message
+    results {
+      id
+      username
+      profilePicture
+    }
+  }
+}
+`;

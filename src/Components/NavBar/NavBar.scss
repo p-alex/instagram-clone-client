@@ -36,4 +36,23 @@
       margin-right: 0px;
     }
   }
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--navBar-btn-size);
+    height: var(--navBar-btn-size);
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-right: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    color: white;
+    &.navBar-searchBtn {
+      display: none;
+      @media (max-width: 980px) {
+        display: block;
+      }
+    }
+  }
 }

@@ -48,7 +48,7 @@ const InputGroup = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
-      {children}
+      {value.length > 0 && children}
     </div>
   );
 };

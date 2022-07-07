@@ -14,7 +14,6 @@ import { RootState } from "../../Redux/Store";
 import {
   ConfirmPasswordNotes,
   EmailNotes,
-  FullNameNotes,
   PasswordNotes,
   UsernameNotes,
 } from "../../Components/InputGroup/Notes/Notes";

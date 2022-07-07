@@ -100,7 +100,7 @@ export const PasswordNotes = (props: NotesProps) => {
 
 export const ConfirmPasswordNotes = (props: NotesProps) => {
   return (
-    <p
+    <div
       id="confirmpasswordnotes"
       className={
         props.isFocused && props.value && !props.isValid
@@ -108,8 +108,10 @@ export const ConfirmPasswordNotes = (props: NotesProps) => {
           : "register__notes hide-notes"
       }
     >
-      <i className="fa-solid fa-circle-info"></i>{" "}
-      <span>Passwords must match.</span>
-    </p>
+      <p>
+        <i className="fa-solid fa-circle-info"></i>{" "}
+        <span>Passwords must match.</span>
+      </p>
+    </div>
   );
 };

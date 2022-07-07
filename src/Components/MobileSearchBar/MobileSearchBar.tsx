@@ -101,7 +101,7 @@ const MobileSearchBar = (props: Props) => {
               searchResults?.length > 0 &&
               searchResults.map((user, index) => {
                 return (
-                  <div className="search__result">
+                  <div className="search__result" key={user.id}>
                     <Link
                       to={`/users/${user.username}`}
                       ref={
@@ -109,6 +109,7 @@ const MobileSearchBar = (props: Props) => {
                           ? lastFocusableElement
                           : null
                       }
+                      onClick={props.toggleMobileSearch}
                     >
                       <img
                         src={user.profilePicture}

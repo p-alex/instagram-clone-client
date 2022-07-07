@@ -75,7 +75,7 @@ const SearchBar = () => {
             searchResults?.length > 0 &&
             searchResults.map((user) => {
               return (
-                <div className="search__result">
+                <div className="search__result" key={user.id}>
                   <Link to={`/users/${user.username}`}>
                     <img
                       src={user.profilePicture}

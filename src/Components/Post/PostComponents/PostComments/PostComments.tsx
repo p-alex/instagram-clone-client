@@ -60,9 +60,11 @@ const PostComments = (props: Props) => {
   };
 
   useEffect(() => {
-    if (postState.post?.id && authState.accessToken)
+    let isMounted = true;
+    if (isMounted && postState.post?.id && authState.accessToken)
       handleGetComments("initialRequest");
     return () => {
+      isMounted = false;
       dispatch(resetComments());
     };
   }, [postState.post?.id]);

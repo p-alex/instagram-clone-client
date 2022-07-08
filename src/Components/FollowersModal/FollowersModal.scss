@@ -15,7 +15,7 @@
     top: 0;
     left: 0;
     z-index: 201;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--primary-backdrop-bg);
   }
   &__container {
     position: relative;

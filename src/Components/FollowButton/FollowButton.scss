@@ -2,12 +2,12 @@
 .followButton {
   padding: 5px 9px;
   color: $light-color;
-  background-color: var(--primary-color);
+  background: var(--primary-gradient-bg);
   border-radius: var(--primary-btn-border-radius);
   border: solid transparent 1px;
   &.followButton--followed {
     color: var(--primary-color);
-    background-color: white;
+    background: white;
     border: solid var(--primary-color) 1px;
   }
 }

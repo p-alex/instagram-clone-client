@@ -36,7 +36,7 @@
     margin-top: 50px;
     button {
       display: inline-block;
-      background-color: var(--primary-color);
+      background: var(--primary-gradient-bg);
       color: $light-color;
       padding: 7px 10px;
       border-radius: var(--primary-btn-border-radius);

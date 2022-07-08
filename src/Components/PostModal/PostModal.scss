@@ -4,7 +4,7 @@
   z-index: var(--postModalZ);
   max-width: 1500px;
   margin: auto;
-  animation: fadeIn 200ms;
+  animation: fadeIn 300ms;
   border-radius: var(--primary-border-radius);
   overflow: hidden;
   @media (max-width: 1900px) {
@@ -51,7 +51,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--primary-backdrop-bg);
     z-index: 99;
   }
   &__ctrl {

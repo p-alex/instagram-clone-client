@@ -8,6 +8,7 @@
   width: 100%;
   height: 100%;
   z-index: 100;
+  animation: fadeIn 300ms;
 }
 
 .createPostModal__backdrop {
@@ -17,7 +18,7 @@
   width: 100%;
   height: 100%;
   z-index: 101;
-  background: rgba(0, 0, 0, 0.7);
+  background-color: var(--primary-backdrop-bg);
 }
 
 .createPostModal__container {

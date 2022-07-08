@@ -10,6 +10,12 @@
   --navbar-height-mobile: 50px;
   // colors
   // rgb(14, 127, 165)
+  --primary-gradient-bg: linear-gradient(
+    90deg,
+    rgba(79, 81, 140, 1) 0%,
+    rgb(62, 63, 110) 100%
+  );
+  --primary-backdrop-bg: rgba(0, 0, 0, 0.9);
   --primary-color: #4f518c;
   --secondary-color: #1a2f38;
   --tertiary-color: #0f1c21;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useRedux from "../../Hooks/useRedux";
 import { IComment } from "../../interfaces";
 import { defaultProfilePicture } from "../../Util/defaultProfilePicture";
@@ -34,17 +35,20 @@ const Comment = ({
         className="comment__container"
         style={isDescription ? { border: "none" } : {}}
       >
-        <img
-          src={
-            comment.user.profilePicture
-              ? comment.user.profilePicture.smallPicture
-              : defaultProfilePicture
-          }
-          alt=""
-          width="30"
-          height="30"
-          className="comment__profileImg"
-        />
+        <Link to={`/users/${comment.user.username}`}>
+          <img
+            src={
+              comment.user.profilePicture
+                ? comment.user.profilePicture.smallPicture
+                : defaultProfilePicture
+            }
+            alt=""
+            width="30"
+            height="30"
+            className="comment__profileImg"
+          />
+        </Link>
+
         <div className="comment__body">
           <CommentUserAndText
             username={comment.user.username}

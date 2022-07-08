@@ -15,7 +15,7 @@
     }
     &.settingsNav__btn--active {
       border-left: solid var(--primary-color) 4px;
-      background: var(--primary-color);
+      background: var(--primary-gradient-bg);
       color: white;
     }
   }

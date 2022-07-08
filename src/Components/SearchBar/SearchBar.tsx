@@ -76,7 +76,10 @@ const SearchBar = () => {
             searchResults.map((user) => {
               return (
                 <div className="search__result" key={user.id}>
-                  <Link to={`/users/${user.username}`}>
+                  <Link
+                    to={`/users/${user.username}`}
+                    onClick={() => setQuery("")}
+                  >
                     <img
                       src={user.profilePicture}
                       alt=""

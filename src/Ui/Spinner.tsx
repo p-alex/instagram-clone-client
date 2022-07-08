@@ -2,12 +2,13 @@ import "./Spinner.scss";
 
 interface Props {
   size: "small" | "big";
+  center?: boolean;
 }
 
 const Spinner = (props: Props) => {
   return (
     <span
-      className="loader"
+      className={props.center ? "loader center" : "loader"}
       style={
         props.size === "small"
           ? { width: "35px", height: "35px", borderWidth: "6px" }

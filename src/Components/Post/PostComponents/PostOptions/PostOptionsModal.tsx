@@ -192,7 +192,7 @@ const PostOptionsModal = (props: Props) => {
           <FocusTrapRedirectFocus element={confirmDeleteLastFocusable} />
           <div className="optionsModal__confirmMessage">
             {isDeletePostRequestLoading && <Spinner size="big" />}
-            <h2>
+            <h2 className="optionsModal__loadingMsg">
               {!isDeletePostRequestLoading ? "Delete Post?" : "Loading..."}
             </h2>
             {!isDeletePostRequestLoading && (

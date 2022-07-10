@@ -19,6 +19,7 @@ import {
 } from "../../Components/InputGroup/Notes/Notes";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./Register.scss";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const authState = useSelector((state: RootState) => state.auth);
@@ -138,6 +139,10 @@ const Register = () => {
 
   return (
     <>
+      <Helmet>
+        <meta name="description" content="Create your Bubble account." />
+        <title>Bubble</title>
+      </Helmet>
       <main className="registerMain">
         <section className="register">
           <Logo />

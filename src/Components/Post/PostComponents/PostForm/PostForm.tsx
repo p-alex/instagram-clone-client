@@ -23,6 +23,7 @@ const PostForm = (props: Props) => {
 
   const handleAddComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!text.length) return;
     setCanPost(false);
     try {
       const response = await addCommentRequest();
@@ -33,6 +34,7 @@ const PostForm = (props: Props) => {
           setCanPost(true);
         }, 5000);
       }
+      return;
     } catch (error: any) {
       console.log(error.message);
       setCanPost(true);
@@ -50,12 +52,13 @@ const PostForm = (props: Props) => {
           placeholder={"Add a comment..."}
           value={text}
           onChange={(event) => setText(event.target.value)}
+          aria-invalid={!text.length}
           ref={formInput}
         ></input>
         <button
           type="submit"
-          disabled={isLoading || !text || !canPost}
           ref={props.lastFocusableElement}
+          disabled={!canPost || isLoading}
         >
           Post
         </button>

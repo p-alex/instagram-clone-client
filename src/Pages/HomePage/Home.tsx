@@ -6,9 +6,9 @@ import Footer from "../../Components/Footer/Footer";
 import Suggestions from "../../Components/Suggestions/Suggestions";
 import UsernameAndName from "../../Components/UsernameAndName/UsernameAndName";
 import FeedContextProvider from "../../Context/FeedContext";
-
 import Layout from "../../Layout/Layout";
 import { RootState } from "../../Redux/Store";
+import { Helmet } from "react-helmet";
 import "./Home.scss";
 
 const Home = () => {
@@ -29,6 +29,13 @@ const Home = () => {
       {!authState.user?.hasFollowings && <Suggestions type={"big"} />}
       {authState.user?.hasFollowings && (
         <div className="homeContainer">
+          <Helmet>
+            <meta
+              name="description"
+              content="Bubble is a social media application created with React, Node, Graphql and MongoDB by Alexandru Daniel Pistol."
+            />
+            <title>Bubble</title>
+          </Helmet>
           <FeedContextProvider>
             <Feed />
           </FeedContextProvider>

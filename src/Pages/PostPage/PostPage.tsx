@@ -14,6 +14,7 @@ import {
 } from "../../Redux/Post";
 import { ILiteUser, IPost } from "../../interfaces";
 import MoreProfilePosts from "../../Components/MoreProfilePosts/MoreProfilePosts";
+import { Helmet } from "react-helmet";
 
 const PostPage = () => {
   const params = useParams();

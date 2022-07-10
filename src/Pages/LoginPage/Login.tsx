@@ -7,6 +7,7 @@ import Logo from "../../Components/Logo/Logo";
 import { LOGIN_USER_MUTATION } from "../../GraphQL/Mutations/authMutations";
 import { loginUser } from "../../Redux/Auth";
 import useRedux from "../../Hooks/useRedux";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -72,6 +73,13 @@ const Login = () => {
 
   return (
     <main className="loginMain">
+      <Helmet>
+        <meta
+          name="description"
+          content="Create an account or log in to Bubble."
+        />
+        <title>Bubble</title>
+      </Helmet>
       <section className="login">
         <Logo />
         <form className="login__form" onSubmit={handleSubmit}>

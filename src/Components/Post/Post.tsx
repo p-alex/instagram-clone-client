@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../../Ui/Spinner";
 import MobileComments from "../MobileComments/MobileComments";
 import { checkIsMobileWindowSize } from "../../Util/checkWindowSize";
+import { Helmet } from "react-helmet";
 
 const Post = () => {
   const { authState, postState } = useRedux();
@@ -23,6 +24,8 @@ const Post = () => {
   const [showPostForm, setShowPostForm] = useState(true);
   const [showMoreComentsBtn, setShowMoreCommentsBtn] = useState(false);
 
+  const [showComments, setShowComments] = useState(true);
+
   const handleToggleOptionsModal = () =>
     setIsPostOptionsActive((prevState) => !prevState);
 
@@ -33,9 +36,11 @@ const Post = () => {
     if (checkIsMobileWindowSize()) {
       setShowPostForm(false);
       setShowMoreCommentsBtn(true);
+      setShowComments(false);
     } else {
       setShowPostForm(true);
       setShowMoreCommentsBtn(false);
+      setShowComments(true);
     }
   };
 
@@ -47,8 +52,29 @@ const Post = () => {
 
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content={
+            post?.description
+              ? post.description
+              : `Bubble image by ${post?.user.username} • ${
+                  post?.createdAt &&
+                  new Date(parseInt(post?.createdAt) * 1000).toUTCString()
+                }`
+          }
+        />
+        <title>
+          {post?.description
+            ? `${post.user.username} on Bubble: "${post.description}"`
+            : `Bubble image by ${post?.user.username} • ${
+                post?.createdAt &&
+                new Date(parseInt(post?.createdAt) * 1000).toUTCString()
+              }`}
+        </title>
+      </Helmet>
       {post ? (
-        <article className="post">
+        <article className="post" role="presentation">
           {isLoading && <PostLoader />}
           <PostImage
             imageUrl={post.images[0].fullImage.url}
@@ -62,7 +88,7 @@ const Post = () => {
               handleToggleOptionsModal={handleToggleOptionsModal}
               isPostOwnerFollowed={post.isPostOwnerFollowed}
             />
-            <PostComments postId={post.id} />
+            {showComments && <PostComments postId={post.id} />}
             <PostReact
               post={postState.post}
               isPostLiked={post.isLiked}

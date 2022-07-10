@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import FollowersModal from "../../Components/FollowersModal/FollowersModal";
 import ProfileDetails from "../../Components/ProfileDetails/ProfileDetails";
@@ -74,6 +75,15 @@ const Profile = () => {
   return (
     <Layout>
       <>
+        <Helmet>
+          <meta
+            name="description"
+            content={`${profileState.user?.username}'s profile page on Bubble.`}
+          />
+          <title>{`${profileState.user?.fullname + " "}@${
+            profileState.user?.username
+          } • Bubble photos`}</title>
+        </Helmet>
         {isLoading && <Spinner size="small" />}
         {!isLoading && profileState.user && (
           <>

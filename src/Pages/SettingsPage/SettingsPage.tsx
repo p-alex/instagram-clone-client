@@ -7,6 +7,7 @@ import SettingsNav from "../../Components/SettingsNav/SettingsNav";
 import Layout from "../../Layout/Layout";
 import "./SettingsPage.scss";
 import SettingsMobileNav from "../../Components/SettingsMobileNav/SettingsMobileNav";
+import { Helmet } from "react-helmet";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ const SettingsPage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{"Settings page • Bubble"}</title>
+      </Helmet>
       <div className="settingsPage">
         <div className="settingsPage__container">
           <SettingsNav currentTab={currentTab} setCurrentTab={setCurrentTab} />

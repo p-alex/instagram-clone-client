@@ -24,7 +24,7 @@ const FeedPost = (props: Props) => {
     setIsMobileCommentsActive((prevState) => !prevState);
 
   return (
-    <article className="feedPost">
+    <article className="feedPost" role="presentation">
       <PostUser
         postId={props.post.id}
         postOwner={props.post.user}

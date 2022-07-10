@@ -16,7 +16,6 @@ import {
   loadingPost,
   loadingPostError,
   resetPostState,
-  closePostOptions,
 } from "../../Redux/Post";
 import PostLoader from "../Post/PostComponents/PostLoader/PostLoader";
 import PostPanel from "../Post/PostComponents/PostPanel/PostPanel";
@@ -48,8 +47,8 @@ const PostModal = ({
     },
   });
 
-  const [currentPostIndex, setCurrentPostIndex] = useState<number | undefined>(
-    0
+  const [currentPostIndex, setCurrentPostIndex] = useState<number>(
+    typeof lastFocusedPostIndex === "number" ? lastFocusedPostIndex : 0
   );
   const [isPostOptionsActive, setIsPostOptionsActive] = useState(false);
 
@@ -96,12 +95,12 @@ const PostModal = ({
 
   const handleCloseModal = () => {
     if (isProfileModal) {
-      const lastFocusedPost = document.querySelector(
-        `#profile-post-${lastFocusedPostIndex}`
+      const redirectToLastPostViewed = document.getElementById(
+        `profile-post-${currentPostIndex}`
       ) as HTMLButtonElement;
       dispatch(resetPostState());
       dispatch(closePostModal());
-      lastFocusedPost.focus();
+      redirectToLastPostViewed.focus();
     }
     handleTogglePostModal();
   };
@@ -116,10 +115,14 @@ const PostModal = ({
   const handleNavigatePosts = (direction: "prev" | "next") => {
     if (userPosts?.length && !isLoading) {
       if (typeof currentPostIndex === "number") {
-        if (direction === "prev" && currentPostIndex > 0)
+        if (direction === "prev" && currentPostIndex > 0) {
+          setCurrentPostIndex((prevState) => prevState - 1);
           return dispatch(selectPostId(userPosts[currentPostIndex - 1].id));
-        if (direction === "next" && currentPostIndex < userPosts.length - 1)
+        }
+        if (direction === "next" && currentPostIndex < userPosts.length - 1) {
+          setCurrentPostIndex((prevState) => prevState + 1);
           return dispatch(selectPostId(userPosts[currentPostIndex + 1].id));
+        }
       }
     }
   };
@@ -195,6 +198,7 @@ const PostModal = ({
         <PostModalCtrl
           direction="next"
           handleNavigatePosts={handleNavigatePosts}
+          lastFocusableElementRef={lastFocusableElement}
         />
       ) : null}
 

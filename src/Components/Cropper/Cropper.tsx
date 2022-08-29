@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import CropperFooter from "./CropperFooter/CropperFooter";
-import { imageCropper } from "../../Util/imageCropper";
-import "./Cropper.scss";
+import { useCallback, useEffect, useState } from 'react';
+import CropperFooter from './CropperFooter/CropperFooter';
+import { imageCropper } from '../../Util/imageCropper';
+import './Cropper.scss';
 
 function Cropper({
   imgUrl,
@@ -33,19 +33,16 @@ function Cropper({
   const [canMove, setCanMove] = useState(false);
 
   const handleCalculateCropSize = useCallback(() => {
-    const cropper = document.querySelector(".cropper") as HTMLDivElement;
-    const cropArea = document.querySelector(
-      ".cropper__cropArea"
-    ) as HTMLDivElement;
-    const image = document.querySelector(".cropper__image") as HTMLImageElement;
+    const cropper = document.querySelector('.cropper') as HTMLDivElement;
+    const cropArea = document.querySelector('.cropper__cropArea') as HTMLDivElement;
+    const image = document.querySelector('.cropper__image') as HTMLImageElement;
 
     if (cropper && cropArea && image) {
       const cropperWidth = cropper.offsetWidth;
       const cropperHeight = cropper.offsetHeight;
 
       if (aspectRatio === 16 / 9) {
-        if (image.classList.contains("maxHeight"))
-          image.classList.remove("maxHeight");
+        if (image.classList.contains('maxHeight')) image.classList.remove('maxHeight');
         cropArea.style.width = `${cropperWidth}px`;
         cropArea.style.height = `${cropperHeight / aspectRatio}px`;
       } else if (aspectRatio === 4 / 5) {
@@ -61,10 +58,8 @@ function Cropper({
   }, [aspectRatio]);
 
   const handleCalculateMaxMove = useCallback(() => {
-    const cropArea = document.querySelector(
-      ".cropper__cropArea"
-    ) as HTMLDivElement;
-    const image = document.querySelector(".cropper__image") as HTMLImageElement;
+    const cropArea = document.querySelector('.cropper__cropArea') as HTMLDivElement;
+    const image = document.querySelector('.cropper__image') as HTMLImageElement;
 
     let maxMoveX = image.offsetWidth - cropArea.offsetWidth;
     let maxMoveY = image.offsetHeight - cropArea.offsetHeight;
@@ -87,9 +82,7 @@ function Cropper({
   function onMouseMove(event: any) {
     event.preventDefault();
     if (canMove) {
-      const image = document.querySelector(
-        ".cropper__image"
-      ) as HTMLImageElement;
+      const image = document.querySelector('.cropper__image') as HTMLImageElement;
       let newXPos = pos.x + (initialMousePos.x - event.screenX);
       let newYPos = pos.y + (initialMousePos.y - event.screenY);
       if (newXPos > maxMove.x) {
@@ -136,15 +129,12 @@ function Cropper({
     }));
   }
 
-  function onTouchMove(event: any) {
+  function onTouchMove(event: React.TouchEvent<HTMLDivElement>) {
+    event.preventDefault();
     if (canMove) {
-      const image = document.querySelector(
-        ".cropper__image"
-      ) as HTMLImageElement;
-      let newXPos =
-        pos.x + (initialMousePos.x - event.changedTouches[0].screenX);
-      let newYPos =
-        pos.y + (initialMousePos.y - event.changedTouches[0].screenY);
+      const image = document.querySelector('.cropper__image') as HTMLImageElement;
+      let newXPos = pos.x + (initialMousePos.x - event.changedTouches[0].screenX);
+      let newYPos = pos.y + (initialMousePos.y - event.changedTouches[0].screenY);
       if (newXPos > maxMove.x) {
         newXPos = maxMove.x;
         setNewPos((prevState) => ({ ...prevState, x: maxMove.x }));
@@ -175,17 +165,15 @@ function Cropper({
   }
 
   const handleAddImage = useCallback(() => {
-    if (typeof imgUrl === "string") {
-      const image = document.querySelector(
-        ".cropper__image"
-      ) as HTMLImageElement;
+    if (typeof imgUrl === 'string') {
+      const image = document.querySelector('.cropper__image') as HTMLImageElement;
       if (!image) {
-        const cropArea = document.querySelector(
-          ".cropper__cropArea"
-        ) as HTMLDivElement;
-        const img = document.createElement("img");
+        const cropArea = document.querySelector('.cropper__cropArea') as HTMLDivElement;
+        const img = document.createElement('img');
 
-        img.classList.add("cropper__image");
+        img.draggable = false;
+
+        img.classList.add('cropper__image');
 
         img.src = imgUrl;
 
@@ -206,20 +194,18 @@ function Cropper({
   };
 
   const handleCropImage = async () => {
-    const cropArea = document.querySelector(
-      ".cropper__cropArea"
-    ) as HTMLDivElement;
-    const image = document.querySelector(".cropper__image") as HTMLImageElement;
+    const cropArea = document.querySelector('.cropper__cropArea') as HTMLDivElement;
+    const image = document.querySelector('.cropper__image') as HTMLImageElement;
     const result = await imageCropper({ pos, cropArea, image });
     setCroppedImageUrl(result);
   };
   const handleAddCorrectCssClass = (image: HTMLImageElement) => {
     if (image.naturalHeight < image.naturalWidth) {
-      image.classList.add("maxHeight");
+      image.classList.add('maxHeight');
     } else if (image.naturalHeight === image.naturalWidth) {
-      image.classList.add("maxHeight");
+      image.classList.add('maxHeight');
     } else {
-      image.classList.remove("maxHeight");
+      image.classList.remove('maxHeight');
     }
   };
 
@@ -227,10 +213,10 @@ function Cropper({
     let isMounted = true;
     if (isMounted) {
       handleAddImage();
-      window.addEventListener("resize", handleCalculations);
+      window.addEventListener('resize', handleCalculations);
     }
     return () => {
-      window.removeEventListener("resize", handleCalculations);
+      window.removeEventListener('resize', handleCalculations);
       isMounted = false;
     };
   }, [handleAddImage, handleCalculateCropSize, handleCalculateMaxMove]);
@@ -253,7 +239,7 @@ function Cropper({
   }, [pos]);
 
   useEffect(() => {
-    const image = document.querySelector(".cropper__image") as HTMLImageElement;
+    const image = document.querySelector('.cropper__image') as HTMLImageElement;
     if (savedImagePos) {
       image.style.left = `${-savedImagePos.x}px`;
       image.style.top = `${-savedImagePos.y}px`;
@@ -267,7 +253,7 @@ function Cropper({
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseLeave}
       onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
+      onTouchMove={(event) => onTouchMove(event)}
       onTouchEnd={onTouchEnd}
     >
       <div className="cropper__container">

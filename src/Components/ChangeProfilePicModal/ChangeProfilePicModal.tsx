@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   CHANGE_PROFILE_PICTURE_MUTATION,
   REMOVE_PROFILE_PICTURE_MUTATION,
-} from "../../GraphQL/Mutations/userMutations";
-import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
-import useRedux from "../../Hooks/useRedux";
-import { changeProfilePicture } from "../../Redux/Auth";
-import Spinner from "../../Ui/Spinner";
-import { imageOptimizer } from "../../Util/imageOptimizer";
-import FocusTrapRedirectFocus from "../FocusTrap";
-import "./ChangeProfilePicModal.scss";
+} from '../../GraphQL/Mutations/userMutations';
+import useFetchWithRetry from '../../Hooks/useFetchWithRetry';
+import useRedux from '../../Hooks/useRedux';
+import { changeProfilePicture } from '../../Redux/Auth';
+import Spinner from '../../Ui/Spinner';
+import { imageOptimizer } from '../../Util/imageOptimizer';
+import FocusTrapRedirectFocus from '../FocusTrap';
+import './ChangeProfilePicModal.scss';
 
 interface Props {
   handleToggleModal: () => void;
@@ -18,9 +18,9 @@ interface Props {
 const ChangeProfilePicModal = (props: Props) => {
   const { authState, dispatch } = useRedux();
 
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const [
     changeProfilePictureRequest,
@@ -45,7 +45,7 @@ const ChangeProfilePicModal = (props: Props) => {
 
   const handleChooseFile = () => {
     const fileInput = document.querySelector(
-      ".changeProfilePicModal__fileInput"
+      '.changeProfilePicModal__fileInput'
     ) as HTMLInputElement;
     fileInput.click();
   };
@@ -99,7 +99,6 @@ const ChangeProfilePicModal = (props: Props) => {
   };
 
   useEffect(() => {
-    console.log("here");
     if (image) {
       handleChangeProfilePicture();
     }
@@ -118,7 +117,7 @@ const ChangeProfilePicModal = (props: Props) => {
       setError(changeRequestError ? changeRequestError : removeRequestError);
       return;
     }
-    setError("");
+    setError('');
   }, [changeRequestError, removeRequestError]);
 
   return (

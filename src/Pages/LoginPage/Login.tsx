@@ -49,7 +49,6 @@ const Login = () => {
       try {
         const recaptchaToken = await reRef.current!.executeAsync();
         const response = await loginUserRequest({ username, password, recaptchaToken });
-        console.log(response);
         if (response?.success) {
           dispatch(
             loginUser({

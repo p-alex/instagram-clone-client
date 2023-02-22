@@ -1,26 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { SEARCH_USERS_QUERY } from "../../GraphQL/Queries/userQueries";
-import useFetch from "../../Hooks/useFetch";
-import Spinner from "../../Ui/Spinner";
-import FocusTrapRedirectFocus from "../FocusTrap";
-import { ISearchResult } from "../SearchBar/SearchBar";
-import "./MobileSearchBar.scss";
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { SEARCH_USERS_QUERY } from '../../GraphQL/Queries/userQueries';
+import useFetch from '../../Hooks/useFetch';
+import Spinner from '../../Ui/Spinner';
+import FocusTrapRedirectFocus from '../FocusTrap';
+import { ISearchResult } from '../SearchBar/SearchBar';
+import './MobileSearchBar.scss';
 
 interface Props {
   toggleMobileSearch: () => void;
 }
 
 const MobileSearchBar = (props: Props) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   const [searchResults, setSearchResults] = useState<ISearchResult[]>([]);
 
-  const [noResultsMessage, setNoResultsMessage] = useState("");
+  const [noResultsMessage, setNoResultsMessage] = useState('');
 
-  const [searchRequest, { isLoading }] = useFetch({
+  const [searchRequest, { isLoading }] = useFetch<{ query: string }>({
     query: SEARCH_USERS_QUERY,
-    variables: { query: query.toLowerCase() },
   });
 
   const firstFocusableElement = useRef<any>();
@@ -38,24 +37,22 @@ const MobileSearchBar = (props: Props) => {
 
   useEffect(() => {
     return () => {
-      const lastBtnFocused = document.getElementById(
-        "navbar-toggle-mobile-search"
-      );
+      const lastBtnFocused = document.getElementById('navbar-toggle-mobile-search');
       lastBtnFocused?.focus();
     };
   }, []);
 
   const handleSearch = async () => {
     setSearchResults([]);
-    setNoResultsMessage("");
+    setNoResultsMessage('');
     clearTimeout(timeout.current);
 
     timeout.current = setTimeout(async () => {
       try {
-        const response = await searchRequest();
+        const response = await searchRequest({ query: query.toLowerCase() });
         if (response.success) {
           if (response.results.length === 0) {
-            setNoResultsMessage("No results");
+            setNoResultsMessage('No results');
             return;
           }
           setSearchResults(response.results);
@@ -69,10 +66,7 @@ const MobileSearchBar = (props: Props) => {
   return (
     <div className="mobileSearchBar">
       <FocusTrapRedirectFocus element={lastFocusableElement} />
-      <div
-        className="mobileSearchBar__backdrop"
-        onClick={props.toggleMobileSearch}
-      ></div>
+      <div className="mobileSearchBar__backdrop" onClick={props.toggleMobileSearch}></div>
       <div className="mobileSearchBar__container">
         <div className="mobileSearchBar__topBar">
           <button
@@ -95,9 +89,9 @@ const MobileSearchBar = (props: Props) => {
         />
         {query.length > 2 && (
           <div className="mobileSearchBar__results">
-            {query.length > 2 &&
-              searchResults.length === 0 &&
-              !noResultsMessage && <Spinner size="small" />}
+            {query.length > 2 && searchResults.length === 0 && !noResultsMessage && (
+              <Spinner size="small" />
+            )}
             {!isLoading &&
               searchResults?.length > 0 &&
               searchResults.map((user, index) => {
@@ -106,18 +100,11 @@ const MobileSearchBar = (props: Props) => {
                     <Link
                       to={`/users/${user.username}`}
                       ref={
-                        index === searchResults.length - 1
-                          ? lastFocusableElement
-                          : null
+                        index === searchResults.length - 1 ? lastFocusableElement : null
                       }
                       onClick={props.toggleMobileSearch}
                     >
-                      <img
-                        src={user.profilePicture}
-                        alt=""
-                        width={35}
-                        height={35}
-                      />
+                      <img src={user.profilePicture} alt="" width={35} height={35} />
                       <p>{user.username}</p>
                     </Link>
                   </div>

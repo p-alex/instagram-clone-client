@@ -1,9 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { GET_MORE_POSTS_FROM_USER } from "../../GraphQL/Queries/postQueries";
-import useFetch from "../../Hooks/useFetch";
-import ProfilePosts from "../ProfilePosts/ProfilePosts";
-import "./MoreProfilePosts.scss";
+import { Fragment, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { GET_MORE_POSTS_FROM_USER } from '../../GraphQL/Queries/postQueries';
+import useFetch from '../../Hooks/useFetch';
+import ProfilePosts from '../ProfilePosts/ProfilePosts';
+import './MoreProfilePosts.scss';
 
 interface Props {
   postOwner: {
@@ -21,20 +21,19 @@ const MoreProfilePosts = (props: Props) => {
 
   const [getMoreProfilePostsRequest, { isLoading }] = useFetch({
     query: GET_MORE_POSTS_FROM_USER,
-    variables: {
-      userId: props.postOwner.id,
-      currentPostId: props.currentPostPagePostId,
-    },
   });
 
   const handleGetMoreProfilePosts = async () => {
     try {
-      const response = await getMoreProfilePostsRequest();
+      const response = await getMoreProfilePostsRequest({
+        userId: props.postOwner.id,
+        currentPostId: props.currentPostPagePostId,
+      });
       if (response.success) {
         setPosts(response.posts);
       }
     } catch (error) {
-      console.log("Something went wrong");
+      console.log('Something went wrong');
     }
   };
 
@@ -47,7 +46,7 @@ const MoreProfilePosts = (props: Props) => {
       {posts[0] && (
         <section className="moreProfilePosts">
           <h2 className="moreProfilePosts__title">
-            More posts from{" "}
+            More posts from{' '}
             <Link
               to={`/users/${props.postOwner.username}`}
               className="moreProfilePosts__profileLink"

@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from "react";
-import InputGroup from "../../Components/InputGroup/InputGroup";
-import { Link, useNavigate } from "react-router-dom";
-import "./Login.scss";
-import useFetch from "../../Hooks/useFetch";
-import Logo from "../../Components/Logo/Logo";
-import { LOGIN_USER_MUTATION } from "../../GraphQL/Mutations/authMutations";
-import { loginUser } from "../../Redux/Auth";
-import useRedux from "../../Hooks/useRedux";
-import { Helmet } from "react-helmet";
+import React, { useEffect, useState } from 'react';
+import InputGroup from '../../Components/InputGroup/InputGroup';
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.scss';
+import useFetch from '../../Hooks/useFetch';
+import Logo from '../../Components/Logo/Logo';
+import { LOGIN_USER_MUTATION } from '../../GraphQL/Mutations/authMutations';
+import { loginUser } from '../../Redux/Auth';
+import useRedux from '../../Hooks/useRedux';
+import { Helmet } from 'react-helmet';
 
 const Login = () => {
   const navigate = useNavigate();
   const { authState, dispatch } = useRedux();
 
-  const [errMessage, setErrMessage] = useState("");
+  const [errMessage, setErrMessage] = useState('');
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [isValidUsername, setIsValidUsername] = useState(false);
   const [isUsernameFocused, setIsUsernameFocused] = useState(false);
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const [loginUserRequest, { isLoading, error }] = useFetch({
     query: LOGIN_USER_MUTATION,
-    variables: { username, password },
   });
 
   useEffect(() => {
-    authState.user?.id && navigate("/");
+    authState.user?.id && navigate('/');
   }, [authState.user]);
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const Login = () => {
     event.preventDefault();
     if (isValidUsername && isValidPassword) {
       try {
-        const response = await loginUserRequest();
+        const response = await loginUserRequest({ username, password });
         if (response?.success) {
           dispatch(
             loginUser({
@@ -63,7 +62,7 @@ const Login = () => {
               accessToken: response.user.accessToken,
             })
           );
-          navigate("/");
+          navigate('/');
         }
       } catch (error: any) {
         console.log(error.message);
@@ -74,10 +73,7 @@ const Login = () => {
   return (
     <main className="loginMain">
       <Helmet>
-        <meta
-          name="description"
-          content="Create an account or log in to Bubble."
-        />
+        <meta name="description" content="Create an account or log in to Bubble." />
         <title>Bubble</title>
       </Helmet>
       <section className="login">
@@ -91,7 +87,7 @@ const Login = () => {
             setValue={setUsername}
             setIsFocused={setIsUsernameFocused}
             autoFocus={true}
-            autoComplete={"off"}
+            autoComplete={'off'}
             maxLength={20}
             minLength={3}
           />
@@ -103,15 +99,13 @@ const Login = () => {
             setValue={setPassword}
             setIsFocused={setIsPasswordFocused}
             autoFocus={false}
-            autoComplete={"off"}
+            autoComplete={'off'}
             maxLength={24}
             minLength={8}
           />
           <button
             className="login__submit"
-            disabled={
-              !isValidUsername || !isValidPassword || isLoading ? true : false
-            }
+            disabled={!isValidUsername || !isValidPassword || isLoading ? true : false}
           >
             Log In
           </button>

@@ -1,20 +1,15 @@
-import Layout from "../../Layout/Layout";
-import Post from "../../Components/Post/Post";
-import "./PostPage.scss";
-import { GET_POST_QUERY } from "../../GraphQL/Queries/postQueries";
-import { useParams } from "react-router-dom";
-import useFetch from "../../Hooks/useFetch";
-import { useEffect, useState } from "react";
-import useRedux from "../../Hooks/useRedux";
-import {
-  loadingPost,
-  loadingPostError,
-  resetPostState,
-  setPost,
-} from "../../Redux/Post";
-import { ILiteUser, IPost } from "../../interfaces";
-import MoreProfilePosts from "../../Components/MoreProfilePosts/MoreProfilePosts";
-import { Helmet } from "react-helmet";
+import Layout from '../../Layout/Layout';
+import Post from '../../Components/Post/Post';
+import './PostPage.scss';
+import { GET_POST_QUERY } from '../../GraphQL/Queries/postQueries';
+import { useParams } from 'react-router-dom';
+import useFetch from '../../Hooks/useFetch';
+import { useEffect, useState } from 'react';
+import useRedux from '../../Hooks/useRedux';
+import { loadingPost, loadingPostError, resetPostState, setPost } from '../../Redux/Post';
+import { ILiteUser, IPost } from '../../interfaces';
+import MoreProfilePosts from '../../Components/MoreProfilePosts/MoreProfilePosts';
+import { Helmet } from 'react-helmet';
 
 const PostPage = () => {
   const params = useParams();
@@ -22,7 +17,6 @@ const PostPage = () => {
   const [postOwner, setPostOwner] = useState<ILiteUser>();
   const [getPost, { error }] = useFetch({
     query: GET_POST_QUERY,
-    variables: { postId: params.postId, userId: authState.user?.id },
   });
   const { dispatch } = useRedux();
 
@@ -34,14 +28,14 @@ const PostPage = () => {
         success: boolean;
         message: string;
         post: IPost;
-      } = await getPost();
+      } = await getPost({ postId: params.postId, userId: authState.user?.id });
       if (response.success) {
         dispatch(setPost({ ...response.post }));
         setPostOwner(response.post.user);
       }
       dispatch(loadingPostError(error));
     } catch (error: any) {
-      dispatch(loadingPostError("Something went wrong..."));
+      dispatch(loadingPostError('Something went wrong...'));
     }
   };
 

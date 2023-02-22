@@ -1,41 +1,39 @@
-import { FormEvent, useEffect, useState } from "react";
-import useFetch from "../../Hooks/useFetch";
-import Logo from "../../Components/Logo/Logo";
+import { FormEvent, useEffect, useState } from 'react';
+import useFetch from '../../Hooks/useFetch';
+import Logo from '../../Components/Logo/Logo';
 import {
   RESET_PASSWORD_MUTATION,
   VERIFY_RESET_PASSWORD_TOKEN,
-} from "../../GraphQL/Mutations/authMutations";
-import InputGroup from "../../Components/InputGroup/InputGroup";
-import { PASSWORD_REGEX } from "../../Util/registerValidationRegex";
-import "./ResetPasswordPage.scss";
+} from '../../GraphQL/Mutations/authMutations';
+import InputGroup from '../../Components/InputGroup/InputGroup';
+import { PASSWORD_REGEX } from '../../Util/registerValidationRegex';
+import './ResetPasswordPage.scss';
 import {
   ConfirmPasswordNotes,
   PasswordNotes,
-} from "../../Components/InputGroup/Notes/Notes";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Spinner from "../../Ui/Spinner";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/Store";
+} from '../../Components/InputGroup/Notes/Notes';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Spinner from '../../Ui/Spinner';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/Store';
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const { token } = useParams();
 
-  const [verifyErrorMessage, setVerifyErrorMessage] = useState("");
+  const [verifyErrorMessage, setVerifyErrorMessage] = useState('');
 
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [newPassword, setNewPassword] = useState("");
+  const [newPassword, setNewPassword] = useState('');
   const [isValidNewPassword, setIsValidNewPassword] = useState(false);
   const [isNewPasswordFocused, setIsNewPasswordFocused] = useState(false);
 
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [isValidConfirmNewPassword, setIsValidConfirmNewPassword] =
-    useState(false);
-  const [isConfirmNewPasswordFocused, setIsConfirmNewPasswordFocused] =
-    useState(false);
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [isValidConfirmNewPassword, setIsValidConfirmNewPassword] = useState(false);
+  const [isConfirmNewPasswordFocused, setIsConfirmNewPasswordFocused] = useState(false);
 
   useEffect(() => {
     setIsValidNewPassword(PASSWORD_REGEX.test(newPassword));
@@ -45,44 +43,45 @@ const ResetPasswordPage = () => {
     setIsValidConfirmNewPassword(newPassword === confirmNewPassword);
   }, [newPassword, confirmNewPassword]);
 
-  const [verifyResetPasswordTokenRequest, { isLoading: isLoadingVerify }] =
-    useFetch({
-      query: VERIFY_RESET_PASSWORD_TOKEN,
-      variables: { token },
-    });
+  const [verifyResetPasswordTokenRequest, { isLoading: isLoadingVerify }] = useFetch({
+    query: VERIFY_RESET_PASSWORD_TOKEN,
+  });
 
   const handleVerifyToken = async () => {
     try {
-      const response = await verifyResetPasswordTokenRequest();
+      const response = await verifyResetPasswordTokenRequest({ token });
       if (!response.success) setVerifyErrorMessage(response.message);
     } catch (error) {
-      setVerifyErrorMessage("Something went wrong, please try again later.");
+      setVerifyErrorMessage('Something went wrong, please try again later.');
     }
   };
 
   useEffect(() => {
-    if (accessToken) return navigate("/");
+    if (accessToken) return navigate('/');
     handleVerifyToken();
   }, []);
 
   const [resetPasswordRequest, { isLoading: isLoadingReset }] = useFetch({
     query: RESET_PASSWORD_MUTATION,
-    variables: { token, newPassword, confirmNewPassword },
   });
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setSuccessMessage("");
-    setErrorMessage("");
+    setSuccessMessage('');
+    setErrorMessage('');
     try {
-      const response = await resetPasswordRequest();
+      const response = await resetPasswordRequest({
+        token,
+        newPassword,
+        confirmNewPassword,
+      });
       if (response.success) {
         setSuccessMessage(response.message);
         return;
       }
       setErrorMessage(response.message);
     } catch (error) {
-      setErrorMessage("Something went wrong, please try again later.");
+      setErrorMessage('Something went wrong, please try again later.');
     }
   };
 
@@ -95,9 +94,9 @@ const ResetPasswordPage = () => {
           <form className="resetPasswordPage__form" onSubmit={handleSubmit}>
             <InputGroup
               autoFocus={false}
-              autoComplete={"off"}
-              inputType={"password"}
-              label={"New Password"}
+              autoComplete={'off'}
+              inputType={'password'}
+              label={'New Password'}
               isValid={isValidNewPassword}
               setIsFocused={setIsNewPasswordFocused}
               setValue={setNewPassword}
@@ -113,9 +112,9 @@ const ResetPasswordPage = () => {
             </InputGroup>
             <InputGroup
               autoFocus={false}
-              autoComplete={"off"}
-              inputType={"password"}
-              label={"Confirm New Password"}
+              autoComplete={'off'}
+              inputType={'password'}
+              label={'Confirm New Password'}
               isValid={isValidConfirmNewPassword}
               setIsFocused={setIsConfirmNewPasswordFocused}
               setValue={setConfirmNewPassword}
@@ -132,24 +131,18 @@ const ResetPasswordPage = () => {
             <button
               className="resetPasswordPage__submit"
               disabled={
-                !isValidNewPassword ||
-                !isValidConfirmNewPassword ||
-                isLoadingReset
+                !isValidNewPassword || !isValidConfirmNewPassword || isLoadingReset
               }
             >
-              {!isLoadingReset ? "Reset password" : "Loading..."}
+              {!isLoadingReset ? 'Reset password' : 'Loading...'}
             </button>
           </form>
         )}
         {verifyErrorMessage && (
-          <p className="resetPasswordPage__resultMessage error">
-            {verifyErrorMessage}
-          </p>
+          <p className="resetPasswordPage__resultMessage error">{verifyErrorMessage}</p>
         )}
         {errorMessage && (
-          <p className="resetPasswordPage__resultMessage error">
-            {errorMessage}
-          </p>
+          <p className="resetPasswordPage__resultMessage error">{errorMessage}</p>
         )}
         {successMessage && (
           <>

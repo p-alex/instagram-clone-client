@@ -1,29 +1,27 @@
-import { useState } from "react";
-import { RootState } from "../Redux/Store";
-import { useSelector } from "react-redux";
-import { BASE_URL } from "../Util/baseURL";
+import { useState } from 'react';
+import { RootState } from '../Redux/Store';
+import { useSelector } from 'react-redux';
+import { BASE_URL } from '../Util/baseURL';
 
-const useFetch = ({
+function useFetch<Variables>({
   query,
-  variables,
 }: {
   query: string;
-  variables: any;
-}): [() => Promise<any>, { isLoading: boolean; error: any }] => {
+}): [(variables: Variables) => Promise<any>, { isLoading: boolean; error: any }] {
   const { accessToken } = useSelector((state: RootState) => state.auth);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
-  const apiRequest = async () => {
+  const apiRequest = async (variables: Variables) => {
     try {
       setIsLoading(true);
       const response = await fetch(BASE_URL, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `${accessToken && "Bearer " + accessToken}`,
+          'Content-Type': 'application/json',
+          Authorization: `${accessToken && 'Bearer ' + accessToken}`,
         },
         body: JSON.stringify({ query, variables }),
       });
@@ -42,6 +40,6 @@ const useFetch = ({
   };
 
   return [apiRequest, { isLoading, error }];
-};
+}
 
 export default useFetch;

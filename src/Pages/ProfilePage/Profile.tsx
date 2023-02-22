@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
-import FollowersModal from "../../Components/FollowersModal/FollowersModal";
-import ProfileDetails from "../../Components/ProfileDetails/ProfileDetails";
-import ProfileNav from "../../Components/ProfileNav/ProfileNav";
-import ProfilePosts from "../../Components/ProfilePosts/ProfilePosts";
-import { GET_USER_QUERY } from "../../GraphQL/Queries/userQueries";
-import useFetch from "../../Hooks/useFetch";
-import useRedux from "../../Hooks/useRedux";
-import { IUserProfileInfo } from "../../interfaces";
-import Layout from "../../Layout/Layout";
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useParams } from 'react-router-dom';
+import FollowersModal from '../../Components/FollowersModal/FollowersModal';
+import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails';
+import ProfileNav from '../../Components/ProfileNav/ProfileNav';
+import ProfilePosts from '../../Components/ProfilePosts/ProfilePosts';
+import { GET_USER_QUERY } from '../../GraphQL/Queries/userQueries';
+import useFetch from '../../Hooks/useFetch';
+import useRedux from '../../Hooks/useRedux';
+import { IUserProfileInfo } from '../../interfaces';
+import Layout from '../../Layout/Layout';
 import {
   closePostModal,
   loadingProfile,
   loadingProfileError,
   setProfileData,
-} from "../../Redux/Profile";
-import Spinner from "../../Ui/Spinner";
-import "./Profile.scss";
+} from '../../Redux/Profile';
+import Spinner from '../../Ui/Spinner';
+import './Profile.scss';
 
 interface IUserProfileResponse {
   statusCode: number;
@@ -32,21 +32,20 @@ const Profile = () => {
   const { authState, profileState, dispatch } = useRedux();
 
   const [selectedUsersModal, setSelectedUsersModal] = useState<
-    "followers" | "following" | null
+    'followers' | 'following' | null
   >(null);
 
   const [getProfile, { isLoading, error }] = useFetch({
     query: GET_USER_QUERY,
-    variables: {
-      username: params.username,
-      authenticatedUserId: authState.user !== null ? authState.user.id : null,
-    },
   });
 
   const handleGetProfileData = async () => {
     try {
       dispatch(loadingProfile());
-      const response: IUserProfileResponse = await getProfile();
+      const response: IUserProfileResponse = await getProfile({
+        username: params.username,
+        authenticatedUserId: authState.user !== null ? authState.user.id : null,
+      });
       if (response?.success)
         return dispatch(
           setProfileData({
@@ -56,7 +55,7 @@ const Profile = () => {
         );
       dispatch(loadingProfileError(error));
     } catch (error: any) {
-      dispatch(loadingProfileError("Something went wrong."));
+      dispatch(loadingProfileError('Something went wrong.'));
     }
   };
 
@@ -80,7 +79,7 @@ const Profile = () => {
             name="description"
             content={`${profileState.user?.username}'s profile page on Bubble.`}
           />
-          <title>{`${profileState.user?.fullname + " "}@${
+          <title>{`${profileState.user?.fullname + ' '}@${
             profileState.user?.username
           } • Bubble photos`}</title>
         </Helmet>

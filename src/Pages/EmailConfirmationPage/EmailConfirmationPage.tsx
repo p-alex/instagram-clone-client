@@ -1,11 +1,11 @@
-import Logo from "../../Components/Logo/Logo";
-import { CONFIRM_EMAIL_MUTATION } from "../../GraphQL/Mutations/authMutations";
-import useFetch from "../../Hooks/useFetch";
-import useRedux from "../../Hooks/useRedux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import "./EmailConfirmationPage.scss";
-import { useEffect, useState } from "react";
-import Spinner from "../../Ui/Spinner";
+import Logo from '../../Components/Logo/Logo';
+import { CONFIRM_EMAIL_MUTATION } from '../../GraphQL/Mutations/authMutations';
+import useFetch from '../../Hooks/useFetch';
+import useRedux from '../../Hooks/useRedux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import './EmailConfirmationPage.scss';
+import { useEffect, useState } from 'react';
+import Spinner from '../../Ui/Spinner';
 
 const EmailConfirmationPage = () => {
   const { authState } = useRedux();
@@ -17,24 +17,23 @@ const EmailConfirmationPage = () => {
 
   const [confirmEmailRequest, { isLoading, error }] = useFetch({
     query: CONFIRM_EMAIL_MUTATION,
-    variables: { confirmationCode },
   });
 
   const handleConfirmEmail = async () => {
     try {
-      const response = await confirmEmailRequest();
+      const response = await confirmEmailRequest({ confirmationCode });
       if (response.success) {
-        setSuccessMessage("Email confirmed!");
+        setSuccessMessage('Email confirmed!');
       } else {
         setErrorMessage(response.message);
       }
     } catch (error) {
-      setErrorMessage("Something went wrong...");
+      setErrorMessage('Something went wrong...');
     }
   };
 
   useEffect(() => {
-    if (authState.accessToken) return navigate("/");
+    if (authState.accessToken) return navigate('/');
     handleConfirmEmail();
   }, []);
 

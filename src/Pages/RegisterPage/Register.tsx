@@ -172,7 +172,6 @@ const Register = () => {
                   setIsFocused={setIsPasswordFocused}
                   autoFocus={false}
                   autoComplete={'new-password'}
-                  maxLength={24}
                   minLength={8}
                 >
                   <PasswordNotes
@@ -192,7 +191,6 @@ const Register = () => {
                   setIsFocused={setIsConfirmedPasswordFocused}
                   autoFocus={false}
                   autoComplete={'new-password'}
-                  maxLength={24}
                   minLength={8}
                 >
                   <ConfirmPasswordNotes

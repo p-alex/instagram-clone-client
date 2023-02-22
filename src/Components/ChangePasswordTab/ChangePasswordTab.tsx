@@ -1,28 +1,26 @@
-import { FormEvent, useEffect, useState } from "react";
-import { CHANGE_PASSWORD_MUTATION } from "../../GraphQL/Mutations/authMutations";
-import useFetchWithRetry from "../../Hooks/useFetchWithRetry";
-import useRedux from "../../Hooks/useRedux";
-import { PASSWORD_REGEX } from "../../Util/registerValidationRegex";
-import InputGroup from "../InputGroup/InputGroup";
-import { ConfirmPasswordNotes, PasswordNotes } from "../InputGroup/Notes/Notes";
-import "./ChangePasswordTab.scss";
+import { FormEvent, useEffect, useState } from 'react';
+import { CHANGE_PASSWORD_MUTATION } from '../../GraphQL/Mutations/authMutations';
+import useFetchWithRetry from '../../Hooks/useFetchWithRetry';
+import useRedux from '../../Hooks/useRedux';
+import { PASSWORD_REGEX } from '../../Util/registerValidationRegex';
+import InputGroup from '../InputGroup/InputGroup';
+import { ConfirmPasswordNotes, PasswordNotes } from '../InputGroup/Notes/Notes';
+import './ChangePasswordTab.scss';
 const ChangePasswordTab = () => {
   const { authState } = useRedux();
 
-  const [successMessage, setSuccessMesage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMesage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [oldPassword, setOldPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState('');
 
-  const [newPassword, setNewPassword] = useState("");
+  const [newPassword, setNewPassword] = useState('');
   const [isValidNewPassword, setIsValidNewPassword] = useState(false);
   const [isNewPasswordFocused, setIsNewPasswordFocused] = useState(false);
 
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [isValidConfirmNewPassword, setIsValidConfirmNewPassword] =
-    useState(false);
-  const [isConfirmNewPasswordFocused, setIsConfirmNewPasswordFocused] =
-    useState(false);
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [isValidConfirmNewPassword, setIsValidConfirmNewPassword] = useState(false);
+  const [isConfirmNewPasswordFocused, setIsConfirmNewPasswordFocused] = useState(false);
 
   useEffect(() => {
     setIsValidNewPassword(PASSWORD_REGEX.test(newPassword));
@@ -40,14 +38,14 @@ const ChangePasswordTab = () => {
 
   const handleChangePassword = async (event: FormEvent) => {
     event.preventDefault();
-    setSuccessMesage("");
-    setErrorMessage("");
+    setSuccessMesage('');
+    setErrorMessage('');
     try {
       const response = await changePasswordRequest();
       if (response.success) {
-        setOldPassword("");
-        setNewPassword("");
-        setConfirmNewPassword("");
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
         setSuccessMesage(response.message);
       } else {
         setErrorMessage(response.message);
@@ -71,40 +69,33 @@ const ChangePasswordTab = () => {
             <h1>{authState.user?.username}</h1>
           </div>
         </div>
-        <form
-          className="changePasswordTab__form"
-          onSubmit={handleChangePassword}
-        >
+        <form className="changePasswordTab__form" onSubmit={handleChangePassword}>
           {!isLoading && errorMessage && (
-            <p className="changePasswordTab__resultMessage error">
-              {errorMessage}
-            </p>
+            <p className="changePasswordTab__resultMessage error">{errorMessage}</p>
           )}
           {successMessage && (
             <p className="changePasswordTab__resultMessage">{successMessage}</p>
           )}
           <InputGroup
             autoFocus={false}
-            autoComplete={"off"}
-            inputType={"password"}
-            label={"Old Password"}
+            autoComplete={'off'}
+            inputType={'password'}
+            label={'Old Password'}
             isValid={oldPassword.length !== 0}
             setIsFocused={() => {}}
             setValue={setOldPassword}
             value={oldPassword}
-            maxLength={24}
             minLength={8}
           ></InputGroup>
           <InputGroup
             autoFocus={false}
-            autoComplete={"off"}
-            inputType={"password"}
-            label={"New Password"}
+            autoComplete={'off'}
+            inputType={'password'}
+            label={'New Password'}
             isValid={isValidNewPassword}
             setIsFocused={setIsNewPasswordFocused}
             setValue={setNewPassword}
             value={newPassword}
-            maxLength={24}
             minLength={8}
           >
             <PasswordNotes
@@ -115,14 +106,13 @@ const ChangePasswordTab = () => {
           </InputGroup>
           <InputGroup
             autoFocus={false}
-            autoComplete={"off"}
-            inputType={"password"}
-            label={"Confirm New Password"}
+            autoComplete={'off'}
+            inputType={'password'}
+            label={'Confirm New Password'}
             isValid={isValidConfirmNewPassword}
             setIsFocused={setIsConfirmNewPasswordFocused}
             setValue={setConfirmNewPassword}
             value={confirmNewPassword}
-            maxLength={24}
             minLength={8}
           >
             <ConfirmPasswordNotes
@@ -133,11 +123,9 @@ const ChangePasswordTab = () => {
           </InputGroup>
           <button
             type="submit"
-            disabled={
-              !isValidNewPassword || !isValidConfirmNewPassword || isLoading
-            }
+            disabled={!isValidNewPassword || !isValidConfirmNewPassword || isLoading}
           >
-            {isLoading ? "Loading..." : "Change Password"}
+            {isLoading ? 'Loading...' : 'Change Password'}
           </button>
         </form>
       </div>

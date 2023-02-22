@@ -1,11 +1,11 @@
-import { BASE_URL } from './baseURL';
+import { SERVER_BASE_URL } from './serverBaseURL';
 
 export const fetchRequest = async (
   query: string,
   variables: any,
   accessToken: string
 ) => {
-  const response = await fetch(BASE_URL, {
+  const response = await fetch(SERVER_BASE_URL, {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',

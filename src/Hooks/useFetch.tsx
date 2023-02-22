@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { RootState } from '../Redux/Store';
 import { useSelector } from 'react-redux';
-import { BASE_URL } from '../Util/baseURL';
+import { SERVER_BASE_URL } from '../Util/serverBaseURL';
 
 function useFetch<Variables>({
   query,
@@ -15,7 +15,7 @@ function useFetch<Variables>({
   const apiRequest = async (variables: Variables) => {
     try {
       setIsLoading(true);
-      const response = await fetch(BASE_URL, {
+      const response = await fetch(SERVER_BASE_URL, {
         method: 'POST',
         mode: 'cors',
         credentials: 'include',

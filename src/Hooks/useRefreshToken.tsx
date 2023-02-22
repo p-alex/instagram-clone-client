@@ -1,18 +1,18 @@
-import { REFRESH_TOKEN_MUTATION } from "../GraphQL/Mutations/authMutations";
-import { BASE_URL } from "../Util/baseURL";
-import { useDispatch } from "react-redux";
-import { logoutUser, refreshToken } from "../Redux/Auth";
+import { REFRESH_TOKEN_MUTATION } from '../GraphQL/Mutations/authMutations';
+import { SERVER_BASE_URL } from '../Util/serverBaseURL';
+import { useDispatch } from 'react-redux';
+import { logoutUser, refreshToken } from '../Redux/Auth';
 
 const useRefreshToken = () => {
   const dispatch = useDispatch();
   const refresh = async (): Promise<string> => {
     try {
-      const response = await fetch(BASE_URL, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
+      const response = await fetch(SERVER_BASE_URL, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query: REFRESH_TOKEN_MUTATION }),
       });
@@ -55,11 +55,11 @@ const useRefreshToken = () => {
         return data.user.accessToken;
       } else {
         dispatch(logoutUser());
-        return "";
+        return '';
       }
     } catch (error: any) {
       dispatch(logoutUser());
-      return "";
+      return '';
     }
   };
 

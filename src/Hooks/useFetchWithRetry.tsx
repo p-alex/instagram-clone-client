@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BASE_URL } from '../Util/baseURL';
+import { SERVER_BASE_URL } from '../Util/serverBaseURL';
 import useRefreshToken from './useRefreshToken';
 
 const useFetchWithRetry = ({
@@ -20,7 +20,7 @@ const useFetchWithRetry = ({
     setError('');
     try {
       if (accessToken) {
-        const response = await fetch(BASE_URL, {
+        const response = await fetch(SERVER_BASE_URL, {
           method: 'POST',
           mode: 'cors',
           credentials: 'include',

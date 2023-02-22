@@ -25,8 +25,8 @@ mutation RegisterUser(
 `;
 
 export const LOGIN_USER_MUTATION = `
-    mutation LoginUser($username: String!, $password: String!) {
-        loginUser(username: $username, password: $password) {
+    mutation LoginUser($username: String!, $password: String!, $recaptchaToken: String!) {
+        loginUser(username: $username, password: $password, recaptchaToken: $recaptchaToken) {
             statusCode
             success
             message

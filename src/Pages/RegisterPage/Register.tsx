@@ -20,6 +20,7 @@ import {
 import ReCAPTCHA from 'react-google-recaptcha';
 import './Register.scss';
 import { Helmet } from 'react-helmet';
+import RecaptchaProtection from '../../Components/RecaptchaProtection/RecaptchaProtection';
 
 const Register = () => {
   const authState = useSelector((state: RootState) => state.auth);
@@ -31,7 +32,7 @@ const Register = () => {
 
   const [successMessage, setSuccessMessage] = useState('');
 
-  const reRef = useRef<any>();
+  const reRef = useRef<ReCAPTCHA>(null);
   const formRef = useRef<any>();
 
   const [email, setEmail] = useState('');
@@ -103,9 +104,9 @@ const Register = () => {
           );
           return;
         }
-        reRef.current.reset();
+        reRef.current?.reset();
       } catch (error: any) {
-        reRef.current.reset();
+        reRef.current?.reset();
       }
     }
   };
@@ -219,13 +220,7 @@ const Register = () => {
           </div>
         )}
       </main>
-      {!successMessage && (
-        <ReCAPTCHA
-          sitekey="6Lcjl3cgAAAAAKE-Dj5sZ5dIvVLdEAc7CPScWwgC"
-          size="invisible"
-          ref={reRef}
-        />
-      )}
+      <RecaptchaProtection reference={reRef} />
     </>
   );
 };
